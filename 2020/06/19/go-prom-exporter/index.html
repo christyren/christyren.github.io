@@ -20,19 +20,22 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="记录生活点滴">
-    <meta name="description" content="记录生活点滴">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhangguanzhang">
-<meta property="og:url" content="http://zhangguanzhang.github.io/">
+    <meta name="description" content="市面上的例子太多都太简单了，这里详细写下我知道的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[未写完]使用go开发一个Prometheus的exporter">
+<meta property="og:url" content="http://zhangguanzhang.github.io/2020/06/19/go-prom-exporter/">
 <meta property="og:site_name" content="Zhangguanzhang">
-<meta property="og:description" content="记录生活点滴">
+<meta property="og:description" content="市面上的例子太多都太简单了，这里详细写下我知道的">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-06-19T20:24:09.000Z">
+<meta property="article:modified_time" content="2020-07-23T06:41:10.000Z">
 <meta property="article:author" content="Zhangguanzhang">
+<meta property="article:tag" content="exporter">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>zhangguanzhang&#39;s Blog</title>
+    <title>[未写完]使用go开发一个Prometheus的exporter · zhangguanzhang&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -87,6 +90,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -211,14 +216,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >zhangguanzhang&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">[未写完]使用go开发一个Prometheus的exporter</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>zhangguanzhang's Blog</a>
 </header>
@@ -237,17 +251,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            zhangguanzhang's Blog
-            <!-- 文章页  -->
+            [未写完]使用go开发一个Prometheus的exporter
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -255,12 +269,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                站在巨人的肩膀上
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "exporter">exporter</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">1.7k</span>阅读时长: <span class="post-count reading-time">7 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/06/19</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -361,663 +412,147 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/20/kylin-v10-k8s-overlay-error/" >
-            
-                <span>银河麒麟arm64系统上k8s集群跨节点不通的一次排查</span>
-        </a>
-        <div class="abstract-content">
-            由来同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。
-环境信息集群信息:
-12345678910111213141516171819202122232425$ kubectl version -o json&#123;  "clientVersion": &#123;    "major": "1",    "minor": "15",    "gitVersion": "v1.15...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Kylin">Kylin</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/18/ocp-4.5-install/" >
-            
-                <span>openshift 4.5.9 离线安装</span>
-        </a>
-        <div class="abstract-content">
-            本文是全部离线安装，也就是 UPI (User Provisioned Infrastructure) 模式安装，假设机器只能配置静态ip不能有网络配置权限和配置 dhcp 和 pxe。机器可以是物理机和虚拟机。
-前言介绍ocp介绍openshift 分为社区版本 okd 和企业版本 ocp(openshift container platform)，okd 的更新很慢，ocp 个人也是可以安装的，不购买 license 则不会享受 redhat 的官方支持。
-openshift 不像其他的 dashboard 诸如 rancher，k3s 之类的，它自己实现了 cs 的三个组件，也给 ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openshift">openshift</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ocp">ocp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/30/prometheus-rate-and-irate/" >
-            
-                <span>prometheus的rate与irate内部是如何计算的</span>
-        </a>
-        <div class="abstract-content">
-            由来市面上的翻译误导人，压根不是啥平均增长率，看了下源码和实际算下来让大家好理解
-rate主要代码是在 https://github.com/prometheus/prometheus/blob/master/promql/functions.go 的extrapolatedRate 和 funcRate，funcRate为
-123func funcRate(vals []parser.Value, args parser.Expressions, enh *EvalNodeHelper) Vector &#123;  return extrapolatedRate(vals, args...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Prometheus">Prometheus</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/23/fs-error-fix-k8s-master/" >
-            
-                <span>k8s master机器文件系统故障的一次恢复过程</span>
-        </a>
-        <div class="abstract-content">
-            由来研发反馈他们那边一套集群有台master文件系统损坏无法开机，他们是三台openstack上的虚机，是虚拟化宿主机故障导致的虚机文件系统损坏。三台机器是master+node，指导他修复后开机，修复过程和我之前文章opensuse的一次救援步骤一样
-起来后我上去看，因为做了 HA 的，所以只有这个node有问题，集群没影响
-12345[root@k8s-m1 ~]# kubectl get node -o wideNAME             STATUS     ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "etcd">etcd</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/23/host-gw-in-aliyun/" >
-            
-                <span>阿里云上使用flannel host-gw跨节点pod不通的解决</span>
-        </a>
-        <div class="abstract-content">
-            挺多人问的，写下解决办法
-前言首先主机得在同一个专有vpc下，跨vpc或者经典vpc就扯淡了。还有flannel别把网络信息存储在etcd里，目前flannel只支持v2的etcd api。但是现在k8s都是使用v3 etcd存储了。如果v2和v3共存会导致无法恢复etcd的备份
-所以网上那些etcdctl set flannel的cidr的文章别看了，都没做过备份恢复实验就到处发k8s搭建教程。flannel v3的话看我过往文章
-环境信息先来说下host-gw的包走向，假设两台机器
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>市面上的例子太多都太简单了，这里详细写下我知道的</p>
+<a id="more"></a>
+<h2 id="基本概念和前提"><a href="#基本概念和前提" class="headerlink" title="基本概念和前提"></a>基本概念和前提</h2><p>这里使用go mod开发，别问包怎么拉取</p>
+<p>Prometheus将所有数据存储为时间序列，这里先来了解一下prometheus中的一些基本概念</p>
+<h3 id="指标名和标签"><a href="#指标名和标签" class="headerlink" title="指标名和标签"></a>指标名和标签</h3><p>每个时间序列都由<code>指标名</code>和一组<code>键值对</code>（也称为标签）唯一标识。</p>
+<p>metric的格式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;metric name&gt;&#123;&lt;label name&gt;&#x3D;&lt;label value&gt;, ...&#125; metrics_value</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><code>metrics_value</code>的值只能是<code>float64</code>，<strong>那些想着收集日志的就别想了</strong></li>
+</ul>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http_requests_total&#123;host&#x3D;&quot;192.10.0.1&quot;, method&#x3D;&quot;POST&quot;, handler&#x3D;&quot;&#x2F;messages&quot;&#125; 278</span><br></pre></td></tr></table></figure>
 
+<ul>
+<li><code>http_requests_total</code>是指标名；</li>
+<li><code>host</code>、<code>method</code>、<code>handler</code>是三个标签(label)，也就是三个维度；</li>
+<li>值278，根据 metrics 的名字总体就是这个接口POST的次数是278；</li>
+<li>查询语句可以基于这些标签or维度进行过滤和聚合；</li>
+</ul>
+<p>prometheus的监控架构是server向提供了metrics信息的http(s)接口发起GET请求，目标进程或者exporter必须在web路由(例如<code>/metrics</code>)上暴漏metrics的指标。例如下面有三个指标:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># HELP harbor_exporter_collector_duration_seconds Collector time duration.</span><br><span class="line"># TYPE harbor_exporter_collector_duration_seconds gauge</span><br><span class="line">harbor_exporter_collector_duration_seconds&#123;collector&#x3D;&quot;logs&quot;&#125; 0.04826962</span><br><span class="line">harbor_exporter_collector_duration_seconds&#123;collector&#x3D;&quot;projects&quot;&#125; 0.174844256</span><br><span class="line">harbor_exporter_collector_duration_seconds&#123;collector&#x3D;&quot;reach&quot;&#125; 0.011827241</span><br><span class="line">harbor_exporter_collector_duration_seconds&#123;collector&#x3D;&quot;statistics&quot;&#125; 0.056164916</span><br><span class="line">harbor_exporter_collector_duration_seconds&#123;collector&#x3D;&quot;systeminfo&quot;&#125; 0.032053573</span><br><span class="line">harbor_exporter_collector_duration_seconds&#123;collector&#x3D;&quot;systeminfoVolumes&quot;&#125; 0.030168302</span><br><span class="line"># HELP harbor_exporter_last_scrape_error Whether the last scrape of metrics from harbor resulted in an error (1 for error, 0 for success).</span><br><span class="line"># TYPE harbor_exporter_last_scrape_error gauge</span><br><span class="line">harbor_exporter_last_scrape_error 0</span><br><span class="line"># HELP harbor_exporter_scrapes_total Total number of times harbor was scraped for metrics.</span><br><span class="line"># TYPE harbor_exporter_scrapes_total counter</span><br><span class="line">harbor_exporter_scrapes_total 697</span><br></pre></td></tr></table></figure>
 
-IP
-pod cidr
+<p>单独一个指标在web上的格式为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># HELP &lt;metric name&gt; &lt;help_msg&gt;</span><br><span class="line"># TYPE &lt;metric name&gt; &lt;metrics type&gt;</span><br><span class="line">&lt;metric name&gt;&#123;&lt;label1&gt;&#x3D;value1,label2&#x3D;value2&#125; &lt;metrics value1&gt;</span><br><span class="line">&lt;metric name&gt;&#123;&lt;label1&gt;&#x3D;value3,label2&#x3D;value4&#125; &lt;metrics value2&gt;</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
+<p>prometheus的client库已经封装好了这些，我们直接使用即可</p>
+<h3 id="指标类型-metrics-type"><a href="#指标类型-metrics-type" class="headerlink" title="指标类型(metrics type)"></a>指标类型(metrics type)</h3><p>Prometheus client库提供四种核心度量标准类型。注意是客户端。Prometheus服务端没有区分类型，将所有数据展平为无类型时间序列。</p>
+<p><strong>1、 Counter：只增不减的累加指标</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># HELP node_cpu_seconds_total Seconds the cpus spent in each mode.</span><br><span class="line"># TYPE node_cpu_seconds_total counter</span><br><span class="line">node_cpu_seconds_total&#123;cpu&#x3D;&quot;0&quot;,mode&#x3D;&quot;idle&quot;&#125; 380090.49</span><br><span class="line">node_cpu_seconds_total&#123;cpu&#x3D;&quot;0&quot;,mode&#x3D;&quot;iowait&quot;&#125; 114.2</span><br><span class="line">node_cpu_seconds_total&#123;cpu&#x3D;&quot;0&quot;,mode&#x3D;&quot;irq&quot;&#125; 0</span><br><span class="line">node_cpu_seconds_total&#123;cpu&#x3D;&quot;0&quot;,mode&#x3D;&quot;nice&quot;&#125; 0.05</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
+<p>Counter就是一个计数器，表示一种累积型指标，该指标只能<strong>单调递增</strong>或在重新启动时重置为零，例如，您可以使用计数器来表示所服务的请求数，已完成的任务或错误。</p>
+<p><strong>2、 Gauge：可增可减的测量指标</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># HELP node_filesystem_avail_bytes Filesystem space available to non-root users in bytes.</span><br><span class="line"># TYPE node_filesystem_avail_bytes gauge</span><br><span class="line">node_filesystem_avail_bytes&#123;device&#x3D;&quot;&#x2F;dev&#x2F;mapper&#x2F;centos-home&quot;,fstype&#x3D;&quot;xfs&quot;,mountpoint&#x3D;&quot;&#x2F;home&quot;&#125; 1.300291584e+10</span><br><span class="line">node_filesystem_avail_bytes&#123;device&#x3D;&quot;&#x2F;dev&#x2F;mapper&#x2F;centos-root&quot;,fstype&#x3D;&quot;xfs&quot;,mountpoint&#x3D;&quot;&#x2F;&quot;&#125; 1.300291584e+10</span><br><span class="line">node_filesystem_avail_bytes&#123;device&#x3D;&quot;rootfs&quot;,fstype&#x3D;&quot;rootfs&quot;,mountpoint&#x3D;&quot;&#x2F;&quot;&#125; 1.300291584e+10</span><br></pre></td></tr></table></figure>
 
-10.0.6.166
-10.200.1.0/24
+<p>Gauge是最简单的度量类型，只有一个简单的返回值，可增可减，也可以 set 为指定的值，例如是否down了，可以在1和0之间set。</p>
+<p>所以 Gauge 通常用于反映当前状态，比如当前温度或当前内存使用情况；是一种“可增加可减少”的计数指标。</p>
+<p><strong>3、Histogram：自带buckets区间用于统计分布的直方图</strong></p>
+<p>Histogram主要用于在设定的分布范围内(Buckets)记录个数，而不是值。</p>
+<p>例如http请求响应时间：0-100ms、100-200ms、200-300ms、&gt;300ms 的分布情况，Histogram会自动创建3个指标，分别为：</p>
+<ul>
+<li>事件发送的总次数<code>&lt;basename&gt;_count</code>：比如当前一共发生了2次http请求</li>
+<li>所有事件产生值的大小的总和<code>&lt;basename&gt;_sum</code>：比如发生的2次http请求总的响应时间为150ms</li>
+<li>事件产生的值分布在bucket中的次数<code>&lt;basename&gt;_bucket{le=&quot;上限&quot;}</code>：比如响应时间0-100ms的请求1次，100-200ms的请求1次，是累计的直方图</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># HELP rest_client_request_latency_seconds Request latency in seconds. Broken down by verb and URL.</span><br><span class="line"># TYPE rest_client_request_latency_seconds histogram</span><br><span class="line">rest_client_request_latency_seconds_bucket&#123;path&#x3D;&quot;&#x2F;&quot;,method&#x3D;&quot;GET&quot;,code&#x3D;&quot;200&quot;,le&#x3D;&quot;0.1&quot;&#125; 1.0</span><br><span class="line">rest_client_request_latency_seconds_bucket&#123;path&#x3D;&quot;&#x2F;&quot;,method&#x3D;&quot;GET&quot;,code&#x3D;&quot;200&quot;,le&#x3D;&quot;0.2&quot;&#125; 2.0</span><br><span class="line">rest_client_request_latency_seconds_bucket&#123;path&#x3D;&quot;&#x2F;&quot;,method&#x3D;&quot;GET&quot;,code&#x3D;&quot;200&quot;,le&#x3D;&quot;0.3&quot;&#125; 2.0</span><br><span class="line">rest_client_request_latency_seconds_bucket&#123;path&#x3D;&quot;&#x2F;&quot;,method&#x3D;&quot;GET&quot;,code&#x3D;&quot;200&quot;,le&#x3D;&quot;+Inf&quot;&#125; 2.0</span><br><span class="line">rest_client_request_latency_seconds_sum&#123;path&#x3D;&quot;&#x2F;&quot;,method&#x3D;&quot;GET&quot;,code&#x3D;&quot;200&quot;&#125; 0.150</span><br><span class="line">rest_client_request_latency_seconds_count&#123;path&#x3D;&quot;&#x2F;&quot;,method&#x3D;&quot;GET&quot;,code&#x3D;&quot;200&quot;&#125; 2.0</span><br></pre></td></tr></table></figure>
 
+<p><strong>4、Summary：数据分布统计图</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"># HELP go_gc_duration_seconds A summary of the pause duration of garbage collection cycles.</span><br><span class="line"># TYPE go_gc_duration_seconds summary</span><br><span class="line">go_gc_duration_seconds&#123;quantile&#x3D;&quot;0&quot;&#125; 1.4846e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile&#x3D;&quot;0.25&quot;&#125; 1.8948e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile&#x3D;&quot;0.5&quot;&#125; 3.9602e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile&#x3D;&quot;0.75&quot;&#125; 5.8061e-05</span><br><span class="line">go_gc_duration_seconds&#123;quantile&#x3D;&quot;1&quot;&#125; 9.6987e-05</span><br><span class="line">go_gc_duration_seconds_sum 0.000772525</span><br><span class="line">go_gc_duration_seconds_count 18</span><br></pre></td></tr></table></figure>
 
-10.0.6...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "host-gw">host-gw</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/19/go-prom-exporter/" >
-            
-                <span>[未写完]使用go开发一个Prometheus的exporter</span>
-        </a>
-        <div class="abstract-content">
-            <p>市面上的例子太多都太简单了，这里详细写下我知道的</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "exporter">exporter</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/23/k8s-vxlan-63-timeout/" >
-            
-                <span>v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位</span>
-        </a>
-        <div class="abstract-content">
-            这个问题 flannel 和 calico 的 VXLAN 模式下都会发生，部分人的现象是集群的A记录 UDP 下查询可能有问题，原因是v1.17+的k8s会引起内核的某个 UDP 相关 bug而不是cni的软件层面，weave没有，后面说。
-写这篇文章的日期是05/28，发现是上周五也就是05/23号，文章从时间线写起(因为很多时候想发文章但是没空，所以文章的发布日期是05/23)
-2020-07-19更新，版本v1.18.6, v1.16.13, v1.17.9+已经修复这个问题，可以同版本内升级，或者只切kube-proxy版本
-由来上周五我经过同事的工位看到同事的桌面是k8s的g...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "63s">63s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "timeout">timeout</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/13/x86-router-flash/" >
-            
-                <span>proxmox x86软路由笔记</span>
-        </a>
-        <div class="abstract-content">
-            由来办公室有台式机，不想整天带着N1上下班，整下x86的软路由，exsi性能会比pve好，但是pve毕竟Linux，兼容性和对接很多场景方便，这里我使用pve开机器安装openwrt。
-pve已经安装好系统(如果你还没安装且打算安装，安装完后可以看看我这个文章安装完proxmox的一些设置)，并且台式机的口子接主路由的lan口。主路由是我的路由器，它wan口接办公室的网口，台式机只有一个口子，所以软路由作为旁路由使用。
-前置工作虚机准备先去恩山论坛x86版块下一个固件，如果你有办公室—&gt; ecs &lt;— 个人家里组网的要求的话，推荐你去找个带wireguard的固件pve上开台...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "x86">x86</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/12/N1-flash/" >
-            
-                <span>斐讯N1刷机和旁路由的设置</span>
-        </a>
-        <div class="abstract-content">
-            由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前一直是使用k2p刷openwrt或者pandora跑v2用，前几天看到了个v2的订阅地址给写到openwrt上了。结果运行了几天发现web上任何配置都无法更改，ssh上去发现touch报错没有容量(而且重装后感觉还是有问题，github访问也不稳定了)，意识到k2p容量实在太小了，于是去恩山论坛逛了下准备买个N1盒子玩玩旁路由。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N1有8G的rom 2G的ram，cpu是armv8的。询问了...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "N1">N1</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/go-version-ifno/" >
-            
-                <span>git工作流下golang项目的version信息该如何处理</span>
-        </a>
-        <div class="abstract-content">
-            <p>来探讨下git工作流下golang项目的version信息该如何处理比较符合标准</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go">go</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/26/KubeXXXMismatch/" >
-            
-                <span>一次deploy,rs,sts Mismatch 的处理</span>
-        </a>
-        <div class="abstract-content">
-              这次文章是远程帮群友解决故障后的总结，以时间线描述  群友一开始是apiserver响应慢，使用角度上就是kubectl请求慢，如
-123E0326 07:49:37.586690       1 available_controller.go:416] v1beta1.metrics.k8s.io failed with: failing or missing response  from https:&#x2F;&#x2F;10.99.174.208:443&#x2F;apis&#x2F;metrics.k8s.io&#x2F;v1beta1: Get https:&#x2F;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Mismatch">Mismatch</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/10/go-mod-base-use/" >
-            
-                <span>go mod的基础使用-科普</span>
-        </a>
-        <div class="abstract-content">
-            go mod由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文章主要是针对新人来介绍go mod是啥以及新手如何使用，老手不用看。现阶段go mod已经完全GA了，你会用了的话会非常方便&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;像python的项目根目录有requirement.txt记录依赖包，nodejs是packages.json，同样go的包管理从早期的go dep(gopkg)到vendor到现在的go mod.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go mod">go mod</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/centos6-hung-while-booting/" >
-            
-                <span>centos6中毒重启后卡在启动页面</span>
-        </a>
-        <div class="abstract-content">
-            12345678910⣿⣿⣿⣿⣿⣿⢟⣡⣴⣶⣶⣦⣌⡛⠟⣋⣩⣬⣭⣭⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢰⣿⣿⠿⣛⣛⣙⣛⠻⢆⢻⣿⠿⠿⠿⣿⡄⠻⣿⣿⣿⣿⣿⣿⠃⢠⣿⣿⣶⣿⣿⡿⠿⢟⣛⣒⠐⠲⣶⡶⠿⠶⠶⠦⠄⠙⢿⣿⠋⣠⠄⣿⣿⣿⠟⡛⢅⣠⡵⡐⠲⣶⣶⣥⡠⣤⣵⠆⠄⠰⣦⣤⡀⠇⣰⣿⣼⣿⣿⣧⣤⡸⢿⣿⡀⠂⠁⣸⣿⣿⣿⣿⣇⠄⠈⢀⣿⣿⠿⣰⣿⣿⣿⣿⣿⣿⣿⣷⣤⣈⣙⠶⢾⠭⢉⣁⣴⢯⣭⣵⣶⠾⠓⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣉⣤⣴⣾⣿⣿⣦⣄⣤⣤⣄⠄⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠈⢿⣿⣿⣿⣿⣿⣿⡟⣰⣞⣛⡒⢒⠤⠦⢬⣉⣉⣉⣉⣉⣉⣉⡥⠴⠂⢸⠻⣿⣿⣿⣿⣏⠻⢌⣉⣉⣩⣉⡛⣛⠒⠶⠶⠶⠶⠶⠶⠶⠶⠂⣸⣿
+<p>其中 quantile 的0和1表示最小和最大值，其余例如 <code>go_gc_duration_seconds{quantile=&quot;0.75&quot;} 5.8061e-05</code>，有百分之75的值是<code>5.8061e-05</code></p>
+<p>Summary和Histogram类似，都可以统计事件发生的次数或者大小，以及其分布情况。</p>
+<p>如果需要聚合（aggregate），选择histograms。</p>
+<p>如果比较清楚要观测的指标的范围和分布情况，选择histograms。如果需要精确的分位数选择summary</p>
+<h3 id="作业和实例"><a href="#作业和实例" class="headerlink" title="作业和实例"></a>作业和实例</h3><p>在Prometheus中，一个可以拉取数据的端点<code>IP:Port</code>叫做一个实例（instance），而具有多个相同类型实例的集合称作一个作业（job）</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">-</span> <span class="attr">job:</span> <span class="string">api-server</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">instance 1:</span> <span class="number">1.2</span><span class="number">.3</span><span class="number">.4</span><span class="string">:5670</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">instance 2:</span> <span class="number">1.2</span><span class="number">.3</span><span class="number">.4</span><span class="string">:5671</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">instance 3:</span> <span class="number">5.6</span><span class="number">.7</span><span class="number">.8</span><span class="string">:5670</span></span><br><span class="line">     <span class="bullet">-</span> <span class="attr">instance 4:</span> <span class="number">5.6</span><span class="number">.7</span><span class="number">.8</span><span class="string">:5671</span></span><br></pre></td></tr></table></figure>
 
-昨晚刚整好那个ubuntu，今天下午又一台cen...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "centos6">centos6</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/binfmt-0000/" >
-            
-                <span>记录一次request_module: runaway loop modeprobe binfmt-0000</span>
-        </a>
-        <div class="abstract-content">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昨天一台gpu的主机的阵列卡突然坏了，最终整起来后上面的几台虚机恢复后有一台虚机无法正常开机，开机进emergency mode，同事看上面的报错以为是挂载了啥iscsi，当然无法开机应该找到最开始的错误，进到emergency mode这个视角的时候已经是雪崩的最后的错误了，多半是没有意义的。输入root密码后执行journalctl -xb翻看最开始的错误
+<p>当Prometheus拉取指标数据时，会自动生成一些标签（label）用于区别抓取的来源：</p>
+<ul>
+<li><code>job</code>：配置的作业名；</li>
+<li><code>instance</code>：配置的实例名，若没有实例名，则是抓取的<code>IP:Port</code>。</li>
+</ul>
+<p>对于每一个实例（instance）的抓取，Prometheus会默认保存以下数据：</p>
+<ul>
+<li><code>up{job=&quot;&lt;job&gt;&quot;, instance=&quot;&lt;instance&gt;&quot;}</code>：如果实例是健康的，即可达，值为1，否则为0；</li>
+<li><code>scrape_duration_seconds{job=&quot;&lt;job&gt;&quot;, instance=&quot;&lt;instance&gt;&quot;}</code>：抓取耗时；</li>
+<li><code>scrape_samples_post_metric_relabeling{job=&quot;&lt;job&gt;&quot;, instance=&quot;&lt;instance&gt;&quot;}</code>：指标重新标记后剩余的样本数。</li>
+<li><code>scrape_samples_scraped{job=&quot;&lt;job&gt;&quot;, instance=&quot;&lt;instance&gt;&quot;}</code>：实例暴露的样本数</li>
+</ul>
+<p>该<code>up</code>指标对于监控实例健康状态很有用。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考:"></a>参考:</h2><ul>
+<li><a href="https://github.com/SongLee24/prometheus-exporter" target="_blank" rel="noopener">https://github.com/SongLee24/prometheus-exporter</a></li>
+</ul>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按照关键字request_modul...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "kernel">kernel</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/27/microsoft-graph-for-onedrive/" >
-            
-                <span>使用microsoft-graph的api对接onedrive</span>
-        </a>
-        <div class="abstract-content">
-            前言这几天打算把文件备份下，最后看到有网友说onedrive不错，就是容量小了点只有5g，然后酷安去安装安卓客户端，下面看到一堆人送office e5子账户的。看了下大概是微软为了推广自己产品面向开发者送的优惠，账户有免费的5t存储，而且安装office啥的免费。试用30天，30天内调用api来保持活跃度的话就会延期。评论里一大堆都是搭建oneindex或者onelist的，主要作用就是把onedrive给抽象成一个公共的网盘使用，oneindex是php写的，我看issue居然385个，作者的github也在更新，而且作者学了golang，居然也不打算重构下，估计也是烂尾了。oneli...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://zhangguanzhang.github.io">Zhangguanzhang</a>
+            <p>原文链接：<a href="http://zhangguanzhang.github.io/2020/06/19/go-prom-exporter/">http://zhangguanzhang.github.io/2020/06/19/go-prom-exporter/</a>
+            <p>发表日期：<a href="http://zhangguanzhang.github.io/2020/06/19/go-prom-exporter/">June 19th 2020, 8:24:09 pm</a>
+            <p>更新日期：<a href="http://zhangguanzhang.github.io/2020/06/19/go-prom-exporter/">July 23rd 2020, 6:41:10 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "microsoft">microsoft</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "graph">graph</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "onedrive">onedrive</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
-    </nav>
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/dw.jpg >
-    <div class="profile-name">Zhangguanzhang</div>
-    
-    <div class="profile-signature">
-        on the way
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2020/06/23/host-gw-in-aliyun/" title= "阿里云上使用flannel host-gw跨节点pod不通的解决">
+                    <div class="nextTitle">阿里云上使用flannel host-gw跨节点pod不通的解决</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/05/23/k8s-vxlan-63-timeout/" title= "v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位">
+                    <div class="prevTitle">v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMzk1OC8xMDQ5Mw>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
     </div>
+
+<!-- City版安装代码已完成 -->
     
     
-    <div class="profile-social">
-        
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-            
-                <a href="mailto:zhangguanzhang@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/zhangguanzhang" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_wc.png" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/assets/zhifubao.png" class="iconfont-archer others" target="_blank" title=others></a>
-            
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //blog.cugxuan.cn target="_black">泫</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //linuxgeeks.github.io target="_black">传统老司机运维老村长</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //kuops.com target="_black">kuops</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //note.run-linux.com target="_black">Linus Lee</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //eryajf.net target="_black">二丫讲梵</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.k8stech.net target="_black">憨憨wolf7</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //sealyun.com/ target="_black">sealyun</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //blog.walkbc.com/ target="_black">golang后端dino</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= https://blog.k8s.fit target="_black">Happiness</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //yousali.me target="_black">yousa</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //i4t.com target="_black">abcdocker</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -1106,6 +641,24 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#基本概念和前提"><span class="toc-number">1.</span> <span class="toc-text">基本概念和前提</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#指标名和标签"><span class="toc-number">1.1.</span> <span class="toc-text">指标名和标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#指标类型-metrics-type"><span class="toc-number">1.2.</span> <span class="toc-text">指标类型(metrics type)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#作业和实例"><span class="toc-number">1.3.</span> <span class="toc-text">作业和实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">2.</span> <span class="toc-text">参考:</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -3353,6 +2906,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

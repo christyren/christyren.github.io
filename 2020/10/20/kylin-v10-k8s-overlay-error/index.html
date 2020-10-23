@@ -20,19 +20,22 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="记录生活点滴">
-    <meta name="description" content="记录生活点滴">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhangguanzhang">
-<meta property="og:url" content="http://zhangguanzhang.github.io/">
+    <meta name="description" content="由来同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。 环境信息集群信息: 12345678910111213141516171819202122232425$ kubectl version">
+<meta property="og:type" content="article">
+<meta property="og:title" content="银河麒麟arm64系统上k8s集群跨节点不通的一次排查">
+<meta property="og:url" content="http://zhangguanzhang.github.io/2020/10/20/kylin-v10-k8s-overlay-error/">
 <meta property="og:site_name" content="Zhangguanzhang">
-<meta property="og:description" content="记录生活点滴">
+<meta property="og:description" content="由来同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。 环境信息集群信息: 12345678910111213141516171819202122232425$ kubectl version">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-10-20T18:31:01.000Z">
+<meta property="article:modified_time" content="2020-10-20T10:54:15.000Z">
 <meta property="article:author" content="Zhangguanzhang">
+<meta property="article:tag" content="Kylin">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>zhangguanzhang&#39;s Blog</title>
+    <title>银河麒麟arm64系统上k8s集群跨节点不通的一次排查 · zhangguanzhang&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -87,6 +90,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -211,14 +216,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >zhangguanzhang&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">银河麒麟arm64系统上k8s集群跨节点不通的一次排查</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>zhangguanzhang's Blog</a>
 </header>
@@ -237,17 +251,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            zhangguanzhang's Blog
-            <!-- 文章页  -->
+            银河麒麟arm64系统上k8s集群跨节点不通的一次排查
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -255,12 +269,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                站在巨人的肩膀上
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "Kylin">Kylin</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.9k</span>阅读时长: <span class="post-count reading-time">16 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2020/10/20</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -361,663 +412,111 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/20/kylin-v10-k8s-overlay-error/" >
-            
-                <span>银河麒麟arm64系统上k8s集群跨节点不通的一次排查</span>
-        </a>
-        <div class="abstract-content">
-            由来同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。
-环境信息集群信息:
-12345678910111213141516171819202122232425$ kubectl version -o json&#123;  "clientVersion": &#123;    "major": "1",    "minor": "15",    "gitVersion": "v1.15...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Kylin">Kylin</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/18/ocp-4.5-install/" >
-            
-                <span>openshift 4.5.9 离线安装</span>
-        </a>
-        <div class="abstract-content">
-            本文是全部离线安装，也就是 UPI (User Provisioned Infrastructure) 模式安装，假设机器只能配置静态ip不能有网络配置权限和配置 dhcp 和 pxe。机器可以是物理机和虚拟机。
-前言介绍ocp介绍openshift 分为社区版本 okd 和企业版本 ocp(openshift container platform)，okd 的更新很慢，ocp 个人也是可以安装的，不购买 license 则不会享受 redhat 的官方支持。
-openshift 不像其他的 dashboard 诸如 rancher，k3s 之类的，它自己实现了 cs 的三个组件，也给 ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openshift">openshift</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ocp">ocp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/30/prometheus-rate-and-irate/" >
-            
-                <span>prometheus的rate与irate内部是如何计算的</span>
-        </a>
-        <div class="abstract-content">
-            由来市面上的翻译误导人，压根不是啥平均增长率，看了下源码和实际算下来让大家好理解
-rate主要代码是在 https://github.com/prometheus/prometheus/blob/master/promql/functions.go 的extrapolatedRate 和 funcRate，funcRate为
-123func funcRate(vals []parser.Value, args parser.Expressions, enh *EvalNodeHelper) Vector &#123;  return extrapolatedRate(vals, args...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Prometheus">Prometheus</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/23/fs-error-fix-k8s-master/" >
-            
-                <span>k8s master机器文件系统故障的一次恢复过程</span>
-        </a>
-        <div class="abstract-content">
-            由来研发反馈他们那边一套集群有台master文件系统损坏无法开机，他们是三台openstack上的虚机，是虚拟化宿主机故障导致的虚机文件系统损坏。三台机器是master+node，指导他修复后开机，修复过程和我之前文章opensuse的一次救援步骤一样
-起来后我上去看，因为做了 HA 的，所以只有这个node有问题，集群没影响
-12345[root@k8s-m1 ~]# kubectl get node -o wideNAME             STATUS     ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "etcd">etcd</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/23/host-gw-in-aliyun/" >
-            
-                <span>阿里云上使用flannel host-gw跨节点pod不通的解决</span>
-        </a>
-        <div class="abstract-content">
-            挺多人问的，写下解决办法
-前言首先主机得在同一个专有vpc下，跨vpc或者经典vpc就扯淡了。还有flannel别把网络信息存储在etcd里，目前flannel只支持v2的etcd api。但是现在k8s都是使用v3 etcd存储了。如果v2和v3共存会导致无法恢复etcd的备份
-所以网上那些etcdctl set flannel的cidr的文章别看了，都没做过备份恢复实验就到处发k8s搭建教程。flannel v3的话看我过往文章
-环境信息先来说下host-gw的包走向，假设两台机器
+            <main class="main post-page">
+    <article class="article-entry">
+        <h2 id="由来"><a href="#由来" class="headerlink" title="由来"></a>由来</h2><p>同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。</p>
+<h3 id="环境信息"><a href="#环境信息" class="headerlink" title="环境信息"></a>环境信息</h3><p>集群信息:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl version -o json</span></span><br><span class="line">&#123;</span><br><span class="line">  "clientVersion": &#123;</span><br><span class="line">    "major": "1",</span><br><span class="line">    "minor": "15",</span><br><span class="line">    "gitVersion": "v1.15.12",</span><br><span class="line">    "gitCommit": "e2a822d9f3c2fdb5c9bfbe64313cf9f657f0a725",</span><br><span class="line">    "gitTreeState": "clean",</span><br><span class="line">    "buildDate": "2020-05-06T05:17:59Z",</span><br><span class="line">    "goVersion": "go1.12.17",</span><br><span class="line">    "compiler": "gc",</span><br><span class="line">    "platform": "linux/arm64"</span><br><span class="line">  &#125;,</span><br><span class="line">  "serverVersion": &#123;</span><br><span class="line">    "major": "1",</span><br><span class="line">    "minor": "15",</span><br><span class="line">    "gitVersion": "v1.15.12",</span><br><span class="line">    "gitCommit": "e2a822d9f3c2fdb5c9bfbe64313cf9f657f0a725",</span><br><span class="line">    "gitTreeState": "clean",</span><br><span class="line">    "buildDate": "2020-05-06T05:09:48Z",</span><br><span class="line">    "goVersion": "go1.12.17",</span><br><span class="line">    "compiler": "gc",</span><br><span class="line">    "platform": "linux/arm64"</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>OS 是 arm64 的银河麒麟系统</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /etc/os-release</span></span><br><span class="line">NAME="Kylin Linux Advanced Server"</span><br><span class="line">VERSION="V10 (Tercel)"</span><br><span class="line">ID="kylin"</span><br><span class="line">VERSION_ID="V10"</span><br><span class="line">PRETTY_NAME="Kylin Linux Advanced Server V10 (Tercel)"</span><br><span class="line">ANSI_COLOR="0;31"</span><br><span class="line"><span class="meta">$</span><span class="bash"> uname -a</span></span><br><span class="line">Linux xxx 4.19.90-17.ky10.aarch64 #1 SMP Sun Jun 28 14:27:40 CST 2020 aarch64 aarch64 aarch64 GNU/Linux</span><br></pre></td></tr></table></figure>
 
+<h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>先看下集群 DNS 的 SVC IP。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n kube-system get svc -l k8s-app=kube-dns</span></span><br><span class="line">NAME                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)                      AGE</span><br><span class="line">kube-dns             ClusterIP   10.186.0.2       &lt;none&gt;        53/UDP,53/TCP,9153/TCP       87m</span><br></pre></td></tr></table></figure>
 
-IP
-pod cidr
+<p>手动用 dig 发 DNS 请求看看，刚开始是用的<code>cluster.local</code>，后面感觉不对劲看了下 kubelet 的参数发现<code>cluster.domain</code>是<code>cluster1.local</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> dig @10.186.0.2 kubernetes.default.svc.cluster1.local +tcp</span></span><br><span class="line">;; Connection to 10.186.0.2#53(10.186.0.2) for kubernetes.default.svc.cluster1.local failed: timed out.</span><br><span class="line">;; Connection to 10.186.0.2#53(10.186.0.2) for kubernetes.default.svc.cluster1.local failed: timed out.</span><br></pre></td></tr></table></figure>
 
+<p>超时，用 coredns 的 metrics 接口试试:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> curl -I 10.186.0.2:9153/metrics</span></span><br><span class="line">^C</span><br></pre></td></tr></table></figure>
 
+<p>还是超时，看下 flannel 的 vtep 都正确</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl get node -o yaml | grep -A3 Vtep</span></span><br><span class="line">      flannel.alpha.coreos.com/backend-data: '&#123;"VtepMAC":"ea:77:37:86:ee:bf"&#125;'</span><br><span class="line">      flannel.alpha.coreos.com/backend-type: vxlan</span><br><span class="line">      flannel.alpha.coreos.com/kube-subnet-manager: "true"</span><br><span class="line">      flannel.alpha.coreos.com/public-ip: 172.31.159.19</span><br><span class="line">--</span><br><span class="line">      flannel.alpha.coreos.com/backend-data: '&#123;"VtepMAC":"f2:d2:28:8e:4c:61"&#125;'</span><br><span class="line">      flannel.alpha.coreos.com/backend-type: vxlan</span><br><span class="line">      flannel.alpha.coreos.com/kube-subnet-manager: "true"</span><br><span class="line">      flannel.alpha.coreos.com/public-ip: 172.31.159.20</span><br><span class="line">--</span><br><span class="line">      flannel.alpha.coreos.com/backend-data: '&#123;"VtepMAC":"2a:f1:d4:d0:32:24"&#125;'</span><br><span class="line">      flannel.alpha.coreos.com/backend-type: vxlan</span><br><span class="line">      flannel.alpha.coreos.com/kube-subnet-manager: "true"</span><br><span class="line">      flannel.alpha.coreos.com/public-ip: 172.31.159.21</span><br><span class="line">--</span><br><span class="line">      flannel.alpha.coreos.com/backend-data: '&#123;"VtepMAC":"4a:e7:02:47:20:b8"&#125;'</span><br><span class="line">      flannel.alpha.coreos.com/backend-type: vxlan</span><br><span class="line">      flannel.alpha.coreos.com/kube-subnet-manager: "true"</span><br><span class="line">      flannel.alpha.coreos.com/public-ip: 172.31.159.22</span><br><span class="line">--</span><br><span class="line">      flannel.alpha.coreos.com/backend-data: '&#123;"VtepMAC":"ce:ce:f3:fc:3f:77"&#125;'</span><br><span class="line">      flannel.alpha.coreos.com/backend-type: vxlan</span><br><span class="line">      flannel.alpha.coreos.com/kube-subnet-manager: "true"</span><br><span class="line">      flannel.alpha.coreos.com/public-ip: 172.31.159.23</span><br></pre></td></tr></table></figure>
 
-10.0.6.166
-10.200.1.0/24
+<p>看下 coredns 的 pod ip，绕过集群 SVC 使用 pod ip 测试下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> kubectl -n kube-system get po -o wide -l k8s-app=kube-dns</span></span><br><span class="line">NAME                                  READY   STATUS    RESTARTS   AGE   IP              NODE            NOMINATED NODE   READINESS GATES</span><br><span class="line">coredns-677d9c57f-tdnd4               1/1     Running   0          10m   10.187.1.24     172.31.159.21   &lt;none&gt;           &lt;none&gt;</span><br><span class="line">coredns-677d9c57f-x274j               1/1     Running   0          10m   10.187.4.24     172.31.159.22   &lt;none&gt;           &lt;none&gt;</span><br><span class="line"><span class="meta">$</span><span class="bash"> curl -I 10.187.1.24:9153/metrics</span></span><br><span class="line">^C</span><br></pre></td></tr></table></figure>
 
+<p>还是超时，继续上面的 curl ，因为是 curl 的 9153 ，它不是常见的端口，否则下文的 tcpdump 过滤条件太麻烦了。这里去目的主机上抓包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -nn -i flannel.1 host 10.187.1.24 and port 9153 -vv</span></span><br><span class="line">tcpdump: listening on flannel.1, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">16:39:35.019165 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.45920: Flags [S.], cksum 0xe94e (correct), seq 1670919335, ack 1103099581, win 64308, options [mss 1410,sackOK,TS val 3440201878 ecr 632709592,nop,wscale 7], length 0</span><br><span class="line">16:39:35.068097 IP (tos 0x0, ttl 64, id 39684, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.45920 &gt; 10.187.1.24.9153: Flags [S], cksum 0x80ed (correct), seq 1103099580, win 64860, options [mss 1410,sackOK,TS val 632716806 ecr 0,nop,wscale 7], length 0</span><br><span class="line">16:39:35.068241 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.45920: Flags [S.], cksum 0xe91c (correct), seq 1670919335, ack 1103099581, win 64308, options [mss 1410,sackOK,TS val 3440201928 ecr 632709592,nop,wscale 7], length 0</span><br><span class="line">16:39:43.419197 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.45920: Flags [S.], cksum 0xc87e (correct), seq 1670919335, ack 1103099581, win 64308, options [mss 1410,sackOK,TS val 3440210278 ecr 632709592,nop,wscale 7], length 0</span><br><span class="line">16:39:43.708101 IP (tos 0x0, ttl 64, id 39685, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.45920 &gt; 10.187.1.24.9153: Flags [S], cksum 0x5f2d (correct), seq 1103099580, win 64860, options [mss 1410,sackOK,TS val 632725446 ecr 0,nop,wscale 7], length 0</span><br><span class="line">16:39:43.708233 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.45920: Flags [S.], cksum 0xc75c (correct), seq 1670919335, ack 1103099581, win 64308, options [mss 1410,sackOK,TS val 3440210568 ecr 632709592,nop,wscale 7], length 0</span><br><span class="line">16:39:54.141929 IP (tos 0x0, ttl 64, id 12300, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.46388 &gt; 10.187.1.24.9153: Flags [S], cksum 0x0a5a (correct), seq 3149899513, win 64860, options [mss 1410,sackOK,TS val 632735880 ecr 0,nop,wscale 7], length 0</span><br><span class="line">16:39:54.142080 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.46388: Flags [S.], cksum 0xeb46 (correct), seq 14530549, ack 3149899514, win 64308, options [mss 1410,sackOK,TS val 3440221001 ecr 632735880,nop,wscale 7], length 0</span><br><span class="line">16:39:55.148096 IP (tos 0x0, ttl 64, id 12301, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.46388 &gt; 10.187.1.24.9153: Flags [S], cksum 0x066c (correct), seq 3149899513, win 64860, options [mss 1410,sackOK,TS val 632736886 ecr 0,nop,wscale 7], length 0</span><br><span class="line">16:39:55.148381 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.46388: Flags [S.], cksum 0xe757 (correct), seq 14530549, ack 3149899514, win 64308, options [mss 1410,sackOK,TS val 3440222008 ecr 632735880,nop,wscale 7], length 0</span><br><span class="line">16:39:56.219200 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.46388: Flags [S.], cksum 0xe329 (correct), seq 14530549, ack 3149899514, win 64308, options [mss 1410,sackOK,TS val 3440223078 ecr 632735880,nop,wscale 7], length 0</span><br><span class="line">16:39:57.228103 IP (tos 0x0, ttl 64, id 12302, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.46388 &gt; 10.187.1.24.9153: Flags [S], cksum 0xfe4b (correct), seq 3149899513, win 64860, options [mss 1410,sackOK,TS val 632738966 ecr 0,nop,wscale 7], length 0</span><br><span class="line">16:39:57.228247 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.46388: Flags [S.], cksum 0xdf37 (correct), seq 14530549, ack 3149899514, win 64308, options [mss 1410,sackOK,TS val 3440224088 ecr 632735880,nop,wscale 7], length 0</span><br><span class="line">16:39:59.259269 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.46388: Flags [S.], cksum 0xd748 (correct), seq 14530549, ack 3149899514, win 64308, options [mss 1410,sackOK,TS val 3440226119 ecr 632735880,nop,wscale 7], length 0</span><br><span class="line">16:40:00.059221 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.45920: Flags [S.], cksum 0x877e (correct), seq 1670919335, ack 1103099581, win 64308, options [mss 1410,sackOK,TS val 3440226918 ecr 632709592,nop,wscale 7], length 0</span><br><span class="line">16:40:01.308098 IP (tos 0x0, ttl 64, id 12303, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.46388 &gt; 10.187.1.24.9153: Flags [S], cksum 0xee5b (correct), seq 3149899513, win 64860, options [mss 1410,sackOK,TS val 632743046 ecr 0,nop,wscale 7], length 0</span><br><span class="line">16:40:01.308248 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.46388: Flags [S.], cksum 0xcf47 (correct), seq 14530549, ack 3149899514, win 64308, options [mss 1410,sackOK,TS val 3440228168 ecr 632735880,nop,wscale 7], length 0</span><br></pre></td></tr></table></figure>
 
-10.0.6...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "host-gw">host-gw</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/19/go-prom-exporter/" >
-            
-                <span>[未写完]使用go开发一个Prometheus的exporter</span>
-        </a>
-        <div class="abstract-content">
-            <p>市面上的例子太多都太简单了，这里详细写下我知道的</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "exporter">exporter</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/23/k8s-vxlan-63-timeout/" >
-            
-                <span>v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位</span>
-        </a>
-        <div class="abstract-content">
-            这个问题 flannel 和 calico 的 VXLAN 模式下都会发生，部分人的现象是集群的A记录 UDP 下查询可能有问题，原因是v1.17+的k8s会引起内核的某个 UDP 相关 bug而不是cni的软件层面，weave没有，后面说。
-写这篇文章的日期是05/28，发现是上周五也就是05/23号，文章从时间线写起(因为很多时候想发文章但是没空，所以文章的发布日期是05/23)
-2020-07-19更新，版本v1.18.6, v1.16.13, v1.17.9+已经修复这个问题，可以同版本内升级，或者只切kube-proxy版本
-由来上周五我经过同事的工位看到同事的桌面是k8s的g...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "63s">63s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "timeout">timeout</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/13/x86-router-flash/" >
-            
-                <span>proxmox x86软路由笔记</span>
-        </a>
-        <div class="abstract-content">
-            由来办公室有台式机，不想整天带着N1上下班，整下x86的软路由，exsi性能会比pve好，但是pve毕竟Linux，兼容性和对接很多场景方便，这里我使用pve开机器安装openwrt。
-pve已经安装好系统(如果你还没安装且打算安装，安装完后可以看看我这个文章安装完proxmox的一些设置)，并且台式机的口子接主路由的lan口。主路由是我的路由器，它wan口接办公室的网口，台式机只有一个口子，所以软路由作为旁路由使用。
-前置工作虚机准备先去恩山论坛x86版块下一个固件，如果你有办公室—&gt; ecs &lt;— 个人家里组网的要求的话，推荐你去找个带wireguard的固件pve上开台...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "x86">x86</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/12/N1-flash/" >
-            
-                <span>斐讯N1刷机和旁路由的设置</span>
-        </a>
-        <div class="abstract-content">
-            由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前一直是使用k2p刷openwrt或者pandora跑v2用，前几天看到了个v2的订阅地址给写到openwrt上了。结果运行了几天发现web上任何配置都无法更改，ssh上去发现touch报错没有容量(而且重装后感觉还是有问题，github访问也不稳定了)，意识到k2p容量实在太小了，于是去恩山论坛逛了下准备买个N1盒子玩玩旁路由。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N1有8G的rom 2G的ram，cpu是armv8的。询问了...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "N1">N1</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/go-version-ifno/" >
-            
-                <span>git工作流下golang项目的version信息该如何处理</span>
-        </a>
-        <div class="abstract-content">
-            <p>来探讨下git工作流下golang项目的version信息该如何处理比较符合标准</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go">go</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/26/KubeXXXMismatch/" >
-            
-                <span>一次deploy,rs,sts Mismatch 的处理</span>
-        </a>
-        <div class="abstract-content">
-              这次文章是远程帮群友解决故障后的总结，以时间线描述  群友一开始是apiserver响应慢，使用角度上就是kubectl请求慢，如
-123E0326 07:49:37.586690       1 available_controller.go:416] v1beta1.metrics.k8s.io failed with: failing or missing response  from https:&#x2F;&#x2F;10.99.174.208:443&#x2F;apis&#x2F;metrics.k8s.io&#x2F;v1beta1: Get https:&#x2F;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Mismatch">Mismatch</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/10/go-mod-base-use/" >
-            
-                <span>go mod的基础使用-科普</span>
-        </a>
-        <div class="abstract-content">
-            go mod由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文章主要是针对新人来介绍go mod是啥以及新手如何使用，老手不用看。现阶段go mod已经完全GA了，你会用了的话会非常方便&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;像python的项目根目录有requirement.txt记录依赖包，nodejs是packages.json，同样go的包管理从早期的go dep(gopkg)到vendor到现在的go mod.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go mod">go mod</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/centos6-hung-while-booting/" >
-            
-                <span>centos6中毒重启后卡在启动页面</span>
-        </a>
-        <div class="abstract-content">
-            12345678910⣿⣿⣿⣿⣿⣿⢟⣡⣴⣶⣶⣦⣌⡛⠟⣋⣩⣬⣭⣭⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢰⣿⣿⠿⣛⣛⣙⣛⠻⢆⢻⣿⠿⠿⠿⣿⡄⠻⣿⣿⣿⣿⣿⣿⠃⢠⣿⣿⣶⣿⣿⡿⠿⢟⣛⣒⠐⠲⣶⡶⠿⠶⠶⠦⠄⠙⢿⣿⠋⣠⠄⣿⣿⣿⠟⡛⢅⣠⡵⡐⠲⣶⣶⣥⡠⣤⣵⠆⠄⠰⣦⣤⡀⠇⣰⣿⣼⣿⣿⣧⣤⡸⢿⣿⡀⠂⠁⣸⣿⣿⣿⣿⣇⠄⠈⢀⣿⣿⠿⣰⣿⣿⣿⣿⣿⣿⣿⣷⣤⣈⣙⠶⢾⠭⢉⣁⣴⢯⣭⣵⣶⠾⠓⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣉⣤⣴⣾⣿⣿⣦⣄⣤⣤⣄⠄⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠈⢿⣿⣿⣿⣿⣿⣿⡟⣰⣞⣛⡒⢒⠤⠦⢬⣉⣉⣉⣉⣉⣉⣉⡥⠴⠂⢸⠻⣿⣿⣿⣿⣏⠻⢌⣉⣉⣩⣉⡛⣛⠒⠶⠶⠶⠶⠶⠶⠶⠶⠂⣸⣿
+<p>可以看到回了包，但是报文都是 TCP 的 SYN 的报文重传了，回到 curl 的机器上，另开一个窗口抓包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> tcpdump -nn -i flannel.1 host 10.187.1.24 and port 9153 -vv</span></span><br><span class="line">tcpdump: listening on flannel.1, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">16:46:20.324596 IP (tos 0x0, ttl 64, id 7952, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.53748 &gt; 10.187.1.24.9153: Flags [S], cksum 0x29f7 (correct), seq 1340604575, win 64860, options [mss 1410,sackOK,TS val 633118295 ecr 0,nop,wscale 7], length 0</span><br><span class="line">16:46:20.324636 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.53748: Flags [S.], cksum 0xdf09 (correct), seq 1764271535, ack 1340604576, win 64308, options [mss 1410,sackOK,TS val 3440603416 ecr 633118295,nop,wscale 7], length 0</span><br><span class="line">16:46:21.346975 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.53748: Flags [S.], cksum 0xdb0b (correct), seq 1764271535, ack 1340604576, win 64308, options [mss 1410,sackOK,TS val 3440604438 ecr 633118295,nop,wscale 7], length 0</span><br><span class="line">16:46:21.395375 IP (tos 0x0, ttl 64, id 7953, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.53748 &gt; 10.187.1.24.9153: Flags [S], cksum 0x25c8 (correct), seq 1340604575, win 64860, options [mss 1410,sackOK,TS val 633119366 ecr 0,nop,wscale 7], length 0</span><br><span class="line">16:46:21.395409 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.53748: Flags [S.], cksum 0xdada (correct), seq 1764271535, ack 1340604576, win 64308, options [mss 1410,sackOK,TS val 3440604487 ecr 633118295,nop,wscale 7], length 0</span><br><span class="line">16:46:23.426969 IP (tos 0x0, ttl 63, id 0, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.1.24.9153 &gt; 10.187.0.0.53748: Flags [S.], cksum 0xd2eb (correct), seq 1764271535, ack 1340604576, win 64308, options [mss 1410,sackOK,TS val 3440606518 ecr 633118295,nop,wscale 7], length 0</span><br><span class="line">16:46:23.475374 IP (tos 0x0, ttl 64, id 7954, offset 0, flags [DF], proto TCP (6), length 60)</span><br><span class="line">    10.187.0.0.53748 &gt; 10.187.1.24.9153: Flags [S], cksum 0x1da8 (correct), seq 1340604575, win 64860, options [mss 1410,sackOK,TS val 633121446 ecr 0,nop,wscale 7], length 0</span><br></pre></td></tr></table></figure>
 
-昨晚刚整好那个ubuntu，今天下午又一台cen...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "centos6">centos6</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/binfmt-0000/" >
-            
-                <span>记录一次request_module: runaway loop modeprobe binfmt-0000</span>
-        </a>
-        <div class="abstract-content">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昨天一台gpu的主机的阵列卡突然坏了，最终整起来后上面的几台虚机恢复后有一台虚机无法正常开机，开机进emergency mode，同事看上面的报错以为是挂载了啥iscsi，当然无法开机应该找到最开始的错误，进到emergency mode这个视角的时候已经是雪崩的最后的错误了，多半是没有意义的。输入root密码后执行journalctl -xb翻看最开始的错误
+<p>当时没详细的看上面的报文，这里来仔细分析下上面的报文，收到<code>10.187.1.24.9153</code>回复的报文里<code>seq</code>都是<code>1340604575</code>，从抓包现象看是这个握手包确实回来了，但是从<code>seq</code>的数字看是没有接收者，也是就是目的主机上 pod 一直 tcp 重传。查看了下路由:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> cat /run/flannel/subnet.env</span></span><br><span class="line">FLANNEL_NETWORK=10.187.0.0/16</span><br><span class="line">FLANNEL_SUBNET=10.187.0.1/24</span><br><span class="line">FLANNEL_MTU=1450</span><br><span class="line">FLANNEL_IPMASQ=true</span><br><span class="line"><span class="meta">$</span><span class="bash"> ip a s flannel.1</span></span><br><span class="line">542: flannel.1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1450 qdisc noqueue state UNKNOWN group default </span><br><span class="line">    link/ether b6:9b:ed:b0:37:74 brd ff:ff:ff:ff:ff:ff</span><br><span class="line">    inet 10.187.0.0/32 scope global flannel.1</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line">    inet6 fe80::b49b:edff:feb0:3774/64 scope link</span><br><span class="line">       valid_lft forever preferred_lft forever</span><br><span class="line"><span class="meta">$</span><span class="bash"> ip route get 10.187.0.0</span></span><br><span class="line">local 10.187.0.0 dev lo src 10.187.0.0 uid 0</span><br><span class="line">    cache &lt;local&gt;</span><br></pre></td></tr></table></figure>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按照关键字request_modul...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "kernel">kernel</a>
-    
-</div>
-            
-        </div>
+<p>绝了，居然错了，莫名奇妙的是<code>lo</code>，看了下<code>NetworkManager</code>是开启的，重启了下它。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> systemctl restart NetworkManager</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> ip route get 10.187.0.0</span></span><br><span class="line">broadcast 10.187.0.0 dev cni0 src 10.187.0.1 uid 0</span><br><span class="line">    cache &lt;local,brd&gt;</span><br><span class="line"><span class="meta">$</span><span class="bash"> route -n</span></span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         172.31.159.254  0.0.0.0         UG    100    0        0 eno1</span><br><span class="line">10.185.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0</span><br><span class="line">10.187.0.0      0.0.0.0         255.255.255.0   U     0      0        0 cni0</span><br><span class="line">172.31.159.0    0.0.0.0         255.255.255.0   U     100    0        0 eno1</span><br></pre></td></tr></table></figure>
+
+<p>路由正确了，但是 flannel 到其他节点的路由消失了，得重启下 flannel。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> docker ps -a | grep flannel</span></span><br><span class="line">4b3f04e62b25        122cdb7aa710                                 "/opt/bin/flanneld -…"    2 hours ago         Up 2 hours                                             k8s_kube-flannel_kube-flannel-ds-22bwd_kube-system_6f5ce812-c5ae-4102-9398-c4a6fee4c7ab_0</span><br><span class="line"><span class="meta">$</span><span class="bash"> docker restart 4b3</span></span><br><span class="line">4b3</span><br><span class="line"><span class="meta">$</span><span class="bash"> route -n</span></span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         172.31.159.254  0.0.0.0         UG    100    0        0 eno1</span><br><span class="line">10.185.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0</span><br><span class="line">10.187.0.0      0.0.0.0         255.255.255.0   U     0      0        0 cni0</span><br><span class="line">10.187.1.0      10.187.1.0      255.255.255.0   UG    0      0        0 flannel.1</span><br><span class="line">10.187.2.0      10.187.2.0      255.255.255.0   UG    0      0        0 flannel.1</span><br><span class="line">10.187.3.0      10.187.3.0      255.255.255.0   UG    0      0        0 flannel.1</span><br><span class="line">10.187.4.0      10.187.4.0      255.255.255.0   UG    0      0        0 flannel.1</span><br><span class="line">172.31.159.0    0.0.0.0         255.255.255.0   U     100    0        0 eno1</span><br><span class="line"><span class="meta">$</span><span class="bash"> ip route get 10.187.0.0</span></span><br><span class="line">broadcast 10.187.0.0 dev cni0 src 10.187.0.1 uid 0</span><br><span class="line">    cache &lt;local,brd&gt;</span><br></pre></td></tr></table></figure>
+
+<p>再 curl 下试试：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl -I 10.187.4.24:9153/metrics</span><br><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Content-Length: 19491</span><br><span class="line">Content-Type: text/plain; version=0.0.4; charset=utf-8</span><br><span class="line">Date: Tue, 20 Oct 2020 10:14:42 GMT</span><br></pre></td></tr></table></figure>
+
+<p>然后每台机器上去操作了下，集群跨节点网络没有任何问题了。我们也有其他开了<code>NetworkManager</code>的 K8S 环境，但是麒麟系统上是头一次遇到这个</p>
+<h3 id="个人对于-NetworkManager-的一些看法"><a href="#个人对于-NetworkManager-的一些看法" class="headerlink" title="个人对于 NetworkManager 的一些看法"></a>个人对于 NetworkManager 的一些看法</h3><p>这个东西我个人角度讲是感觉不成熟，之前有次同事用 nmcli 配置的掩码导致 VIP 失效，配置文件里是 PREFIX ，最后我改回 NETMASK 正常。它是一个 daemon 进程，但是现在 Linux 上的网络技术层出不穷，它并没有适配好大多数，而且更新缓慢。</p>
+
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/27/microsoft-graph-for-onedrive/" >
-            
-                <span>使用microsoft-graph的api对接onedrive</span>
-        </a>
-        <div class="abstract-content">
-            前言这几天打算把文件备份下，最后看到有网友说onedrive不错，就是容量小了点只有5g，然后酷安去安装安卓客户端，下面看到一堆人送office e5子账户的。看了下大概是微软为了推广自己产品面向开发者送的优惠，账户有免费的5t存储，而且安装office啥的免费。试用30天，30天内调用api来保持活跃度的话就会延期。评论里一大堆都是搭建oneindex或者onelist的，主要作用就是把onedrive给抽象成一个公共的网盘使用，oneindex是php写的，我看issue居然385个，作者的github也在更新，而且作者学了golang，居然也不打算重构下，估计也是烂尾了。oneli...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://zhangguanzhang.github.io">Zhangguanzhang</a>
+            <p>原文链接：<a href="http://zhangguanzhang.github.io/2020/10/20/kylin-v10-k8s-overlay-error/">http://zhangguanzhang.github.io/2020/10/20/kylin-v10-k8s-overlay-error/</a>
+            <p>发表日期：<a href="http://zhangguanzhang.github.io/2020/10/20/kylin-v10-k8s-overlay-error/">October 20th 2020, 6:31:01 pm</a>
+            <p>更新日期：<a href="http://zhangguanzhang.github.io/2020/10/20/kylin-v10-k8s-overlay-error/">October 20th 2020, 10:54:15 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "microsoft">microsoft</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "graph">graph</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "onedrive">onedrive</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
-    </nav>
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/dw.jpg >
-    <div class="profile-name">Zhangguanzhang</div>
-    
-    <div class="profile-signature">
-        on the way
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2020/09/18/ocp-4.5-install/" title= "openshift 4.5.9 离线安装">
+                    <div class="prevTitle">openshift 4.5.9 离线安装</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMzk1OC8xMDQ5Mw>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
     </div>
+
+<!-- City版安装代码已完成 -->
     
     
-    <div class="profile-social">
-        
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-            
-                <a href="mailto:zhangguanzhang@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/zhangguanzhang" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_wc.png" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/assets/zhifubao.png" class="iconfont-archer others" target="_blank" title=others></a>
-            
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //blog.cugxuan.cn target="_black">泫</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //linuxgeeks.github.io target="_black">传统老司机运维老村长</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //kuops.com target="_black">kuops</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //note.run-linux.com target="_black">Linus Lee</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //eryajf.net target="_black">二丫讲梵</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.k8stech.net target="_black">憨憨wolf7</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //sealyun.com/ target="_black">sealyun</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //blog.walkbc.com/ target="_black">golang后端dino</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= https://blog.k8s.fit target="_black">Happiness</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //yousali.me target="_black">yousa</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //i4t.com target="_black">abcdocker</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -1106,6 +605,24 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#由来"><span class="toc-number">1.</span> <span class="toc-text">由来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#环境信息"><span class="toc-number">1.1.</span> <span class="toc-text">环境信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#排查"><span class="toc-number">2.</span> <span class="toc-text">排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#个人对于-NetworkManager-的一些看法"><span class="toc-number">2.1.</span> <span class="toc-text">个人对于 NetworkManager 的一些看法</span></a></li></ol></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -3353,6 +2870,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

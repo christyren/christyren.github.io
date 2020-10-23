@@ -23,7 +23,7 @@
     <meta name="description" content="记录生活点滴">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zhangguanzhang">
-<meta property="og:url" content="http://zhangguanzhang.github.io/">
+<meta property="og:url" content="http://zhangguanzhang.github.io/archives/2020/">
 <meta property="og:site_name" content="Zhangguanzhang">
 <meta property="og:description" content="记录生活点滴">
 <meta property="og:locale" content="zh_CN">
@@ -87,6 +87,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -211,10 +213,8 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
     
-    
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
@@ -230,34 +230,21 @@
 
 
 
-
-height:50vh;
 ">
     
     <!-- 主页  -->
-    
-    
-    <!-- 文章页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            zhangguanzhang's Blog
-            <!-- 文章页  -->
-            
         </h1>
         <!-- 副标题 -->
         <p class="intro-subtitle">
             <!-- 主页副标题  -->
-            
-            
-                站在巨人的肩膀上
-            
-            <!-- 文章页  -->
             
         </p>
         <!-- 文章页meta -->
@@ -693,331 +680,14 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
         </div>
     </article>
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/26/KubeXXXMismatch/" >
-            
-                <span>一次deploy,rs,sts Mismatch 的处理</span>
-        </a>
-        <div class="abstract-content">
-              这次文章是远程帮群友解决故障后的总结，以时间线描述  群友一开始是apiserver响应慢，使用角度上就是kubectl请求慢，如
-123E0326 07:49:37.586690       1 available_controller.go:416] v1beta1.metrics.k8s.io failed with: failing or missing response  from https:&#x2F;&#x2F;10.99.174.208:443&#x2F;apis&#x2F;metrics.k8s.io&#x2F;v1beta1: Get https:&#x2F;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Mismatch">Mismatch</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/10/go-mod-base-use/" >
-            
-                <span>go mod的基础使用-科普</span>
-        </a>
-        <div class="abstract-content">
-            go mod由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文章主要是针对新人来介绍go mod是啥以及新手如何使用，老手不用看。现阶段go mod已经完全GA了，你会用了的话会非常方便&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;像python的项目根目录有requirement.txt记录依赖包，nodejs是packages.json，同样go的包管理从早期的go dep(gopkg)到vendor到现在的go mod.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go mod">go mod</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/centos6-hung-while-booting/" >
-            
-                <span>centos6中毒重启后卡在启动页面</span>
-        </a>
-        <div class="abstract-content">
-            12345678910⣿⣿⣿⣿⣿⣿⢟⣡⣴⣶⣶⣦⣌⡛⠟⣋⣩⣬⣭⣭⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢰⣿⣿⠿⣛⣛⣙⣛⠻⢆⢻⣿⠿⠿⠿⣿⡄⠻⣿⣿⣿⣿⣿⣿⠃⢠⣿⣿⣶⣿⣿⡿⠿⢟⣛⣒⠐⠲⣶⡶⠿⠶⠶⠦⠄⠙⢿⣿⠋⣠⠄⣿⣿⣿⠟⡛⢅⣠⡵⡐⠲⣶⣶⣥⡠⣤⣵⠆⠄⠰⣦⣤⡀⠇⣰⣿⣼⣿⣿⣧⣤⡸⢿⣿⡀⠂⠁⣸⣿⣿⣿⣿⣇⠄⠈⢀⣿⣿⠿⣰⣿⣿⣿⣿⣿⣿⣿⣷⣤⣈⣙⠶⢾⠭⢉⣁⣴⢯⣭⣵⣶⠾⠓⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣉⣤⣴⣾⣿⣿⣦⣄⣤⣤⣄⠄⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠈⢿⣿⣿⣿⣿⣿⣿⡟⣰⣞⣛⡒⢒⠤⠦⢬⣉⣉⣉⣉⣉⣉⣉⡥⠴⠂⢸⠻⣿⣿⣿⣿⣏⠻⢌⣉⣉⣩⣉⡛⣛⠒⠶⠶⠶⠶⠶⠶⠶⠶⠂⣸⣿
-
-昨晚刚整好那个ubuntu，今天下午又一台cen...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "centos6">centos6</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/binfmt-0000/" >
-            
-                <span>记录一次request_module: runaway loop modeprobe binfmt-0000</span>
-        </a>
-        <div class="abstract-content">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昨天一台gpu的主机的阵列卡突然坏了，最终整起来后上面的几台虚机恢复后有一台虚机无法正常开机，开机进emergency mode，同事看上面的报错以为是挂载了啥iscsi，当然无法开机应该找到最开始的错误，进到emergency mode这个视角的时候已经是雪崩的最后的错误了，多半是没有意义的。输入root密码后执行journalctl -xb翻看最开始的错误
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按照关键字request_modul...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "kernel">kernel</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/27/microsoft-graph-for-onedrive/" >
-            
-                <span>使用microsoft-graph的api对接onedrive</span>
-        </a>
-        <div class="abstract-content">
-            前言这几天打算把文件备份下，最后看到有网友说onedrive不错，就是容量小了点只有5g，然后酷安去安装安卓客户端，下面看到一堆人送office e5子账户的。看了下大概是微软为了推广自己产品面向开发者送的优惠，账户有免费的5t存储，而且安装office啥的免费。试用30天，30天内调用api来保持活跃度的话就会延期。评论里一大堆都是搭建oneindex或者onelist的，主要作用就是把onedrive给抽象成一个公共的网盘使用，oneindex是php写的，我看issue居然385个，作者的github也在更新，而且作者学了golang，居然也不打算重构下，估计也是烂尾了。oneli...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "microsoft">microsoft</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "graph">graph</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "onedrive">onedrive</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
+        <span class="page-number current">1</span><a class="page-number" href="/archives/2020/page/2/">2</a><a class="extend next" rel="next" href="/archives/2020/page/2/">NEXT &gt;</a>
     </nav>
     
 </main>
             <!-- profile -->
-            
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/dw.jpg >
-    <div class="profile-name">Zhangguanzhang</div>
-    
-    <div class="profile-signature">
-        on the way
-    </div>
-    
-    
-    <div class="profile-social">
-        
-    
-        
-            
-                <a href="mailto:zhangguanzhang@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/zhangguanzhang" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_wc.png" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/assets/zhifubao.png" class="iconfont-archer others" target="_blank" title=others></a>
-            
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
-    
-
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //blog.cugxuan.cn target="_black">泫</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //linuxgeeks.github.io target="_black">传统老司机运维老村长</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //kuops.com target="_black">kuops</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //note.run-linux.com target="_black">Linus Lee</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //eryajf.net target="_black">二丫讲梵</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.k8stech.net target="_black">憨憨wolf7</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //sealyun.com/ target="_black">sealyun</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //blog.walkbc.com/ target="_black">golang后端dino</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= https://blog.k8s.fit target="_black">Happiness</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //yousali.me target="_black">yousa</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //i4t.com target="_black">abcdocker</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
             
         </div>
         <footer class="footer footer-unloaded">

@@ -23,7 +23,7 @@
     <meta name="description" content="记录生活点滴">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zhangguanzhang">
-<meta property="og:url" content="http://zhangguanzhang.github.io/">
+<meta property="og:url" content="http://zhangguanzhang.github.io/page/2/">
 <meta property="og:site_name" content="Zhangguanzhang">
 <meta property="og:description" content="记录生活点滴">
 <meta property="og:locale" content="zh_CN">
@@ -369,114 +369,18 @@ height:50vh;
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/20/kylin-v10-k8s-overlay-error/" >
+        <a class="abstract-title" href = "/2020/01/08/docker-panic-invalid-page-type/" >
             
-                <span>银河麒麟arm64系统上k8s集群跨节点不通的一次排查</span>
+                <span>docker-18.06.3-ce启动panic: invalid page type: 0: 0的解决处理</span>
         </a>
         <div class="abstract-content">
-            由来同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。
-环境信息集群信息:
-12345678910111213141516171819202122232425$ kubectl version -o json&#123;  "clientVersion": &#123;    "major": "1",    "minor": "15",    "gitVersion": "v1.15...
+            凌晨pod状态异常且没有恢复，上线查看后docker ps -a命令无响应，kubelet日志也刷和docker的rpc通信context deadline cancel重启了docker后docker无法启动，前台运行开debug log level刚开始刷了个/var/lib/docker/tmp是个文件，对比了下其他机器上这个路径应该是个目录，然后改名后创建个权限和正常docker下权限一样的tmp文件夹再起
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Kylin">Kylin</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/18/ocp-4.5-install/" >
-            
-                <span>openshift 4.5.9 离线安装</span>
-        </a>
-        <div class="abstract-content">
-            本文是全部离线安装，也就是 UPI (User Provisioned Infrastructure) 模式安装，假设机器只能配置静态ip不能有网络配置权限和配置 dhcp 和 pxe。机器可以是物理机和虚拟机。
-前言介绍ocp介绍openshift 分为社区版本 okd 和企业版本 ocp(openshift container platform)，okd 的更新很慢，ocp 个人也是可以安装的，不购买 license 则不会享受 redhat 的官方支持。
-openshift 不像其他的 dashboard 诸如 rancher，k3s 之类的，它自己实现了 cs 的三个组件，也给 ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openshift">openshift</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ocp">ocp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/30/prometheus-rate-and-irate/" >
-            
-                <span>prometheus的rate与irate内部是如何计算的</span>
-        </a>
-        <div class="abstract-content">
-            由来市面上的翻译误导人，压根不是啥平均增长率，看了下源码和实际算下来让大家好理解
-rate主要代码是在 https://github.com/prometheus/prometheus/blob/master/promql/functions.go 的extrapolatedRate 和 funcRate，funcRate为
-123func funcRate(vals []parser.Value, args parser.Expressions, enh *EvalNodeHelper) Vector &#123;  return extrapolatedRate(vals, args...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Prometheus">Prometheus</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/23/fs-error-fix-k8s-master/" >
-            
-                <span>k8s master机器文件系统故障的一次恢复过程</span>
-        </a>
-        <div class="abstract-content">
-            由来研发反馈他们那边一套集群有台master文件系统损坏无法开机，他们是三台openstack上的虚机，是虚拟化宿主机故障导致的虚机文件系统损坏。三台机器是master+node，指导他修复后开机，修复过程和我之前文章opensuse的一次救援步骤一样
-起来后我上去看，因为做了 HA 的，所以只有这个node有问题，集群没影响
-12345[root@k8s-m1 ~]# kubectl get node -o wideNAME             STATUS     ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/23</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/01/08</span>
             </div>
             <!-- tags  -->
             
@@ -484,7 +388,7 @@ rate主要代码是在 https://github.com/prometheus/prometheus/blob/master/prom
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "etcd">etcd</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "docker">docker</a>
     
 </div>
             
@@ -497,39 +401,273 @@ rate主要代码是在 https://github.com/prometheus/prometheus/blob/master/prom
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/23/host-gw-in-aliyun/" >
+        <a class="abstract-title" href = "/2019/12/05/suse-fix-data-but-device-busy/" >
             
-                <span>阿里云上使用flannel host-gw跨节点pod不通的解决</span>
+                <span>opensuse的一次救援</span>
         </a>
         <div class="abstract-content">
-            挺多人问的，写下解决办法
-前言首先主机得在同一个专有vpc下，跨vpc或者经典vpc就扯淡了。还有flannel别把网络信息存储在etcd里，目前flannel只支持v2的etcd api。但是现在k8s都是使用v3 etcd存储了。如果v2和v3共存会导致无法恢复etcd的备份
-所以网上那些etcdctl set flannel的cidr的文章别看了，都没做过备份恢复实验就到处发k8s搭建教程。flannel v3的话看我过往文章
-环境信息先来说下host-gw的包走向，假设两台机器
+            昨晚吃完晚饭回到办公室，右边同事在控制台看着一个suse起不来一直启动的时候卡在suse的蜥蜴logo背景图那。见我来了叫我看下，他们已经尝试过恢复快照，但是还不行，应该是很久之前损坏的，只不过因为没重启没发现，我叫他重启下看看卡在哪，重启后进入内核后显示背景图那按下esc然后看卡在/sysroot挂载那。目测分区损坏了，经历了ubuntu的安装iso的rescue mode就是渣渣后，我还是信任centos的iso。
+处理先备份和准备工作关闭虚机，后台拷贝下系统盘的卷先备份下。然后给虚机的IDE光驱挂载了个centos 7.5 DVD的iso，修改虚机启动顺序到ISO，进Trouble...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/05</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "grub">grub</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "suse">suse</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/12/03/dos-to-gpt/" >
+            
+                <span>从PTTYPE=&#34;dos&#34;到TYPE=&#34;LVM2_member&#34;的救援</span>
+        </a>
+        <div class="abstract-content">
+            同事叫我救援一台云主机，虽说是虚拟机，但是类比到硬件服务器还是一样的操作，这里记录下给后来者查阅
+故障信息控制台进去看到centos7的背景虚化的数字7+转圈，重启下看下完整的错误，重启选了内核然后进到图形界面的时候按下ecs取消，观察终端
+123456789101112131415161718192021222324[  OK ] Started Show Plymouth Boot Screen.[  OK ] Reached target Paths.[  OK ] Reached target Basic System.[  124.522110] dracut-initqueu...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/12/03</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "grub">grub</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/11/24/kubeadm-base-use/" >
+            
+                <span>[长期更新]--应大多数人要求写下kubeadm的基础使用</span>
+        </a>
+        <div class="abstract-content">
+            市面上很多kubeadm的文章都是错误示范或者不够详细，大多数都没写系统设置之类的就直接kubeadm init导致很多跟着做的人会报错
+我期望看到本文的读者最少具备以下知识:
+
+Linux一些目录规范和systemd
+学过一点docker
+懂dns和/etc/hosts、curl互相结合来测试一些web的接口响应状态
+不要求github有自己项目，至少会浏览github
+
+本教学将以下列节点数与规格来进行部署Kubernetes集群,系统CentOS 7.6+，有条件7.8，不要使用centos7.4以及一下，容器技术依赖于内核技术，低版本系统部署和运行后问题会非常多。有读者用debi...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/11/24</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "kubeadm">kubeadm</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/24/deployment-consul-in-k8s/" >
+            
+                <span>consul仅当服务发现在k8s无状态部署使用</span>
+        </a>
+        <div class="abstract-content">
+            由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;consul server在机器上的部署已经写完了，但是dba还是希望部署在k8s上，昨天搜了下相关文章扣出来部分步骤自己验证实现了。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;先说下需求，三台物理机单独跑mysql主从mha，利用consul client的服务注册+ttl向consul server注册成域名，然后配置k8s内部的coredns把域名*.service.consul转发到consul server。架构为下图
+123456789101112131415161718P...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/24</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "consul">consul</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/21/k8s-v1.14-v1.15-fix-issue/" >
+            
+                <span>手动修复v1.14-v1.15版本k8s的issue:76956</span>
+        </a>
+        <div class="abstract-content">
+            由来该issue见 https://github.com/kubernetes/kubernetes/issues/76956, apiserver和controller-manager每次start的时候会刷下面信息。不影响使用，但是有强迫症可以按照本文思路手动修改。当然本文也是自己编译k8s的教程
+123456E0423 17:35:58.491576       1 prometheus.go:138] failed to register depth metric admission_quota_controller: duplicate metrics collector re...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/21</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "golang">golang</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/12/boot-grub-rescue/" >
+            
+                <span>/boot目录被清空下物理机无法开机的一次救援</span>
+        </a>
+        <div class="abstract-content">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;今天下午到公司被通知苏州一个节点的客户的裸金属无法开机，14:00上去到16:50终于给整好了，这里记录下笔记分享下
+故障现象物理机裸金属，连上跳板机通过带外连上去(等同于现场接了一个显示屏+键盘一样)错误为
+1234.errorL file &#96;&#x2F;grub2&#x2F;i386-pc&#x2F;normal.mod&#39; not found.Entering rescue mode...grub rescue&gt;
+&nbsp;&nbsp;&nbsp;&nbsp;&nb...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/12</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "grub">grub</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/10/11/ansible-count-Idempotency/" >
+            
+                <span>ansible数量限制上的幂等性</span>
+        </a>
+        <div class="abstract-content">
+            由来准备写上一篇文章的consul成ansible，在证书方面，cli和ca需要执行一次生成，而server和agent证书需要多次执行产生。另外我们也要考虑，dc1-server-consul-0*.pem需要拷贝到机器1，1拷贝到机器2.如何在生成证书的时候中断后再次运行也会达到目标的数量来实现幂等性，而不是证书生成多了另外证书还得按照index去拷贝到指定机器，也就是类似下面的
+123scp 001.pem ip1:&#x2F;etc&#x2F;xxxscp 002.pem ip2:&#x2F;etc&#x2F;xxxscp 003.pem ip3:&#x2F;etc&#x2F;x...
+        </div>
+        <div class="abstract-post-meta">
+            <!-- date  -->
+            <div class="abstract-date">
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/10/11</span>
+            </div>
+            <!-- tags  -->
+            
+            <div class= abstract-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "ansible">ansible</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "consul">consul</a>
+    
+</div>
+            
+        </div>
+    </article>
+    
+    
+    
+    
+    
+    
+    <article class="index-post">
+        <a class="abstract-title" href = "/2019/09/27/consul-tls/" >
+            
+                <span>高可用的SSL consul cluster实践</span>
+        </a>
+        <div class="abstract-content">
+            同事dnsmasq + consul 整服务自动发现，但是不是tls且consul server是单点，而且进程启动用的nohub而不是systemd，这里查了下资料实践了下
+部署过程已经写成了ansible，地址 https://github.com/zhangguanzhang/consul-tls-ansible
+开了五台云主机，总体规划为下面，角色那有条件的可以分开，例如client单独一台。不分开的话得配置client的端口和server的分开，自己去探索
 
 
 
 IP
-pod cidr
+Hostname
+CPU
+Memory
+role
+nodeName
 
 
 
-10.0.6.166
-10.200.1.0/24
-
-
-10.0.6...
+172.19.0.3
+consul1...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/23</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/27</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "host-gw">host-gw</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "consul">consul</a>
     
 </div>
             
@@ -542,23 +680,27 @@ pod cidr
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/19/go-prom-exporter/" >
+        <a class="abstract-title" href = "/2019/09/05/prometheus-change-timezone/" >
             
-                <span>[未写完]使用go开发一个Prometheus的exporter</span>
+                <span>修改源码更改prometheus的时区问题</span>
         </a>
         <div class="abstract-content">
-            <p>市面上的例子太多都太简单了，这里详细写下我知道的</p>
+            先说明一点，时区UTC不影响prometheus和grafana，这篇文章只是提供一个修改的思路和步骤
+日志时区修改代码分析先起最新的prometheus挂载时区文件
+1234567docker run --net host -v &#x2F;etc&#x2F;localtime:&#x2F;etc&#x2F;localtime prom&#x2F;prometheuslevel&#x3D;info ts&#x3D;2019-09-05T09:44:40.409Z caller&#x3D;main.go:293 msg&#x3D;&quot;no time or size retenti...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/19</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/09/05</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "exporter">exporter</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "prometheus">prometheus</a>
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "timezone">timezone</a>
     
 </div>
             
@@ -571,28 +713,26 @@ pod cidr
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/23/k8s-vxlan-63-timeout/" >
+        <a class="abstract-title" href = "/2019/08/24/gobot-build/" >
             
-                <span>v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位</span>
+                <span>gobot控制esp8266</span>
         </a>
         <div class="abstract-content">
-            这个问题 flannel 和 calico 的 VXLAN 模式下都会发生，部分人的现象是集群的A记录 UDP 下查询可能有问题，原因是v1.17+的k8s会引起内核的某个 UDP 相关 bug而不是cni的软件层面，weave没有，后面说。
-写这篇文章的日期是05/28，发现是上周五也就是05/23号，文章从时间线写起(因为很多时候想发文章但是没空，所以文章的发布日期是05/23)
-2020-07-19更新，版本v1.18.6, v1.16.13, v1.17.9+已经修复这个问题，可以同版本内升级，或者只切kube-proxy版本
-由来上周五我经过同事的工位看到同事的桌面是k8s的g...
+            材料gobot官网是Arduino的demo，官网上看了下支持esp8266，整好之前整wifi攻击器的时候有就玩了下。我是在windows编译的，没有8266的话自己去淘宝上一块儿node-mcu+数据线(本质上就是个带串口和排针的esp8266-12，买驱动是CH340G的，就是usb口旁边有个长条形ic，方的是cp2102不稳定会导致windows蓝屏)
+环境搭建用goland写代码，不推荐vscode写golang，自行安装golang(记得设置好环境变量)和goland，现在golang最新版本是12.9整个demo分为两部分，客户端gobot去设置和控制esp8266，826...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/23</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/24</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "63s">63s</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "gobot">gobot</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "timeout">timeout</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "esp8266">esp8266</a>
     
 </div>
             
@@ -605,27 +745,24 @@ pod cidr
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/13/x86-router-flash/" >
+        <a class="abstract-title" href = "/2019/08/06/preseed/" >
             
-                <span>proxmox x86软路由笔记</span>
+                <span>ubuntu preseed无人应答安装</span>
         </a>
         <div class="abstract-content">
-            由来办公室有台式机，不想整天带着N1上下班，整下x86的软路由，exsi性能会比pve好，但是pve毕竟Linux，兼容性和对接很多场景方便，这里我使用pve开机器安装openwrt。
-pve已经安装好系统(如果你还没安装且打算安装，安装完后可以看看我这个文章安装完proxmox的一些设置)，并且台式机的口子接主路由的lan口。主路由是我的路由器，它wan口接办公室的网口，台式机只有一个口子，所以软路由作为旁路由使用。
-前置工作虚机准备先去恩山论坛x86版块下一个固件，如果你有办公室—&gt; ecs &lt;— 个人家里组网的要求的话，推荐你去找个带wireguard的固件pve上开台...
+            之前的centos自动安装整得差不多了，今天有空研究下ubuntu的自动应答安装，过程是按照我遇到的问题的时间线的角度来描述，并不是总结后正确的开始姿势。kickstart是red hat开发的。ubuntu的安装界面是一个debian-installer的二进制文件进程运行tty1提供的选择交互安装界面:
+ubuntu自带的应答是preseed，相关文档页面是 https://help.ubuntu.com/lts/installation-guide/amd64/apb.html实际上安装完成后我们可以安装debconf-utils后使用debconf-get-selections ...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/13</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/08/06</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "x86">x86</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "preseed">preseed</a>
     
 </div>
             
@@ -638,26 +775,25 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/12/N1-flash/" >
+        <a class="abstract-title" href = "/2019/07/14/chromedp/" >
             
-                <span>斐讯N1刷机和旁路由的设置</span>
+                <span>golang headless browser包chromedp初探</span>
         </a>
         <div class="abstract-content">
-            由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前一直是使用k2p刷openwrt或者pandora跑v2用，前几天看到了个v2的订阅地址给写到openwrt上了。结果运行了几天发现web上任何配置都无法更改，ssh上去发现touch报错没有容量(而且重装后感觉还是有问题，github访问也不稳定了)，意识到k2p容量实在太小了，于是去恩山论坛逛了下准备买个N1盒子玩玩旁路由。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N1有8G的rom 2G的ram，cpu是armv8的。询问了...
+            什么是cdp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;前天晚上想写个网站自动投稿，但是chrome F12抓的包里请求的几个参数里的值不知道js咋生成的，看不懂js。询问了下网友，网友看我截图请求蛮多的，说有空帮我看看。并且他说到了模拟过程虽然能成功但是可能反爬措施强会导致封号，建议我用无头浏览器整。&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;搜了下相关概念，无头浏览器的话python里就是selenium驱动的，广泛使用的headless browser解决方案PhantomJS已...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/12</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/14</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "N1">N1</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "golang">golang</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "chromedp">chromedp</a>
     
 </div>
             
@@ -670,47 +806,18 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/go-version-ifno/" >
+        <a class="abstract-title" href = "/2019/07/08/nodeport-err/" >
             
-                <span>git工作流下golang项目的version信息该如何处理</span>
+                <span>为什么我不用nodePort之偶然中奖几率</span>
         </a>
         <div class="abstract-content">
-            <p>来探讨下git工作流下golang项目的version信息该如何处理比较符合标准</p>
+            嗯，1.6.7的老集群。早上反应数据库实例创建不出来。发现接口port的tcp不可达，查看kube-proxy的日志如下
+123456[root@HB1-xxxxx-S03 kubernetes]# tailf  kube-proxy.INFO E0708 09:44:03.437284  394350 proxier.go:1062] can&#39;t open &quot;nodePort for cloudify&#x2F;cloudae-cfy-nginx:port1&quot; (:16081&#x2F;tcp), skipping this nodePort: listen...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go">go</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/26/KubeXXXMismatch/" >
-            
-                <span>一次deploy,rs,sts Mismatch 的处理</span>
-        </a>
-        <div class="abstract-content">
-              这次文章是远程帮群友解决故障后的总结，以时间线描述  群友一开始是apiserver响应慢，使用角度上就是kubectl请求慢，如
-123E0326 07:49:37.586690       1 available_controller.go:416] v1beta1.metrics.k8s.io failed with: failing or missing response  from https:&#x2F;&#x2F;10.99.174.208:443&#x2F;apis&#x2F;metrics.k8s.io&#x2F;v1beta1: Get https:&#x2F;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/26</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/08</span>
             </div>
             <!-- tags  -->
             
@@ -718,7 +825,7 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
     
         <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Mismatch">Mismatch</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "nodeport">nodeport</a>
     
 </div>
             
@@ -731,124 +838,25 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
     
     
     <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/10/go-mod-base-use/" >
+        <a class="abstract-title" href = "/2019/07/07/golang-http/" >
             
-                <span>go mod的基础使用-科普</span>
+                <span>golang的net/http包的客户端简单科普</span>
         </a>
         <div class="abstract-content">
-            go mod由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文章主要是针对新人来介绍go mod是啥以及新手如何使用，老手不用看。现阶段go mod已经完全GA了，你会用了的话会非常方便&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;像python的项目根目录有requirement.txt记录依赖包，nodejs是packages.json，同样go的包管理从早期的go dep(gopkg)到vendor到现在的go mod.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&...
+            之前准备写个简单的api的调用，百度和问了很多人后发现基本对于http的客户端熟悉的人非常少。或者对包的不了解自己造了效率很低的轮子，而且官方一些包里有坑，被坑过，这里简单科普下
+简单的get和posthttp包里下列可以直接使用的请求方法
+1234func Head(url string) (resp *Response, err error)func Get(url string) (resp *Response, err error)func Post(url string, bodyType string, body io.Reader) (resp *Response, err...
         </div>
         <div class="abstract-post-meta">
             <!-- date  -->
             <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/10</span>
+                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2019/07/07</span>
             </div>
             <!-- tags  -->
             
             <div class= abstract-tags >
     
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go mod">go mod</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/centos6-hung-while-booting/" >
-            
-                <span>centos6中毒重启后卡在启动页面</span>
-        </a>
-        <div class="abstract-content">
-            12345678910⣿⣿⣿⣿⣿⣿⢟⣡⣴⣶⣶⣦⣌⡛⠟⣋⣩⣬⣭⣭⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢰⣿⣿⠿⣛⣛⣙⣛⠻⢆⢻⣿⠿⠿⠿⣿⡄⠻⣿⣿⣿⣿⣿⣿⠃⢠⣿⣿⣶⣿⣿⡿⠿⢟⣛⣒⠐⠲⣶⡶⠿⠶⠶⠦⠄⠙⢿⣿⠋⣠⠄⣿⣿⣿⠟⡛⢅⣠⡵⡐⠲⣶⣶⣥⡠⣤⣵⠆⠄⠰⣦⣤⡀⠇⣰⣿⣼⣿⣿⣧⣤⡸⢿⣿⡀⠂⠁⣸⣿⣿⣿⣿⣇⠄⠈⢀⣿⣿⠿⣰⣿⣿⣿⣿⣿⣿⣿⣷⣤⣈⣙⠶⢾⠭⢉⣁⣴⢯⣭⣵⣶⠾⠓⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣉⣤⣴⣾⣿⣿⣦⣄⣤⣤⣄⠄⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠈⢿⣿⣿⣿⣿⣿⣿⡟⣰⣞⣛⡒⢒⠤⠦⢬⣉⣉⣉⣉⣉⣉⣉⡥⠴⠂⢸⠻⣿⣿⣿⣿⣏⠻⢌⣉⣉⣩⣉⡛⣛⠒⠶⠶⠶⠶⠶⠶⠶⠶⠂⣸⣿
-
-昨晚刚整好那个ubuntu，今天下午又一台cen...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "centos6">centos6</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/binfmt-0000/" >
-            
-                <span>记录一次request_module: runaway loop modeprobe binfmt-0000</span>
-        </a>
-        <div class="abstract-content">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昨天一台gpu的主机的阵列卡突然坏了，最终整起来后上面的几台虚机恢复后有一台虚机无法正常开机，开机进emergency mode，同事看上面的报错以为是挂载了啥iscsi，当然无法开机应该找到最开始的错误，进到emergency mode这个视角的时候已经是雪崩的最后的错误了，多半是没有意义的。输入root密码后执行journalctl -xb翻看最开始的错误
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按照关键字request_modul...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "kernel">kernel</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/27/microsoft-graph-for-onedrive/" >
-            
-                <span>使用microsoft-graph的api对接onedrive</span>
-        </a>
-        <div class="abstract-content">
-            前言这几天打算把文件备份下，最后看到有网友说onedrive不错，就是容量小了点只有5g，然后酷安去安装安卓客户端，下面看到一堆人送office e5子账户的。看了下大概是微软为了推广自己产品面向开发者送的优惠，账户有免费的5t存储，而且安装office啥的免费。试用30天，30天内调用api来保持活跃度的话就会延期。评论里一大堆都是搭建oneindex或者onelist的，主要作用就是把onedrive给抽象成一个公共的网盘使用，oneindex是php写的，我看issue居然385个，作者的github也在更新，而且作者学了golang，居然也不打算重构下，估计也是烂尾了。oneli...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "microsoft">microsoft</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "graph">graph</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "onedrive">onedrive</a>
+        <a class="post-tag" href="javascript:void(0);" data-tags = "http">http</a>
     
 </div>
             
@@ -858,7 +866,7 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
     <!-- paginator  -->
     
     <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
+        <a class="extend prev" rel="prev" href="/">&lt; PREV</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">NEXT &gt;</a>
     </nav>
     
 </main>

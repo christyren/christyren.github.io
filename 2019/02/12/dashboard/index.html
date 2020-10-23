@@ -20,19 +20,27 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="记录生活点滴">
-    <meta name="description" content="记录生活点滴">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhangguanzhang">
-<meta property="og:url" content="http://zhangguanzhang.github.io/">
+    <meta name="description" content="详细的讲解下部署dashboard，比市面上更详细和更多场景的选择，本文dashboard的暴露不会用nodeport(不喜欢使用它)和apiserver的web proxy代理也就是&#x2F;api&#x2F;v1&#x2F;namespaces&#x2F;kube-system&#x2F;services&#x2F;https:kubernetes-dashboard:&#x2F;proxy&#x2F;这种 讲下四种场景方式：   纯dashboard http和htt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通用的dashboard部署和tls，SSL相关部署">
+<meta property="og:url" content="http://zhangguanzhang.github.io/2019/02/12/dashboard/">
 <meta property="og:site_name" content="Zhangguanzhang">
-<meta property="og:description" content="记录生活点滴">
+<meta property="og:description" content="详细的讲解下部署dashboard，比市面上更详细和更多场景的选择，本文dashboard的暴露不会用nodeport(不喜欢使用它)和apiserver的web proxy代理也就是&#x2F;api&#x2F;v1&#x2F;namespaces&#x2F;kube-system&#x2F;services&#x2F;https:kubernetes-dashboard:&#x2F;proxy&#x2F;这种 讲下四种场景方式：   纯dashboard http和htt">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/1.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/2.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/3.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/4.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/5.png">
+<meta property="article:published_time" content="2019-02-12T12:01:01.000Z">
+<meta property="article:modified_time" content="2020-05-04T08:41:58.000Z">
 <meta property="article:author" content="Zhangguanzhang">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/1.png">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>zhangguanzhang&#39;s Blog</title>
+    <title>通用的dashboard部署和tls，SSL相关部署 · zhangguanzhang&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -87,6 +95,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -211,14 +221,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >zhangguanzhang&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">通用的dashboard部署和tls，SSL相关部署</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>zhangguanzhang's Blog</a>
 </header>
@@ -237,17 +256,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            zhangguanzhang's Blog
-            <!-- 文章页  -->
+            通用的dashboard部署和tls，SSL相关部署
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -255,12 +274,43 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                站在巨人的肩膀上
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">3.5k</span>阅读时长: <span class="post-count reading-time">15 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/02/12</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -361,663 +411,155 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/20/kylin-v10-k8s-overlay-error/" >
-            
-                <span>银河麒麟arm64系统上k8s集群跨节点不通的一次排查</span>
-        </a>
-        <div class="abstract-content">
-            由来同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。
-环境信息集群信息:
-12345678910111213141516171819202122232425$ kubectl version -o json&#123;  "clientVersion": &#123;    "major": "1",    "minor": "15",    "gitVersion": "v1.15...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Kylin">Kylin</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/18/ocp-4.5-install/" >
-            
-                <span>openshift 4.5.9 离线安装</span>
-        </a>
-        <div class="abstract-content">
-            本文是全部离线安装，也就是 UPI (User Provisioned Infrastructure) 模式安装，假设机器只能配置静态ip不能有网络配置权限和配置 dhcp 和 pxe。机器可以是物理机和虚拟机。
-前言介绍ocp介绍openshift 分为社区版本 okd 和企业版本 ocp(openshift container platform)，okd 的更新很慢，ocp 个人也是可以安装的，不购买 license 则不会享受 redhat 的官方支持。
-openshift 不像其他的 dashboard 诸如 rancher，k3s 之类的，它自己实现了 cs 的三个组件，也给 ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openshift">openshift</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ocp">ocp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/30/prometheus-rate-and-irate/" >
-            
-                <span>prometheus的rate与irate内部是如何计算的</span>
-        </a>
-        <div class="abstract-content">
-            由来市面上的翻译误导人，压根不是啥平均增长率，看了下源码和实际算下来让大家好理解
-rate主要代码是在 https://github.com/prometheus/prometheus/blob/master/promql/functions.go 的extrapolatedRate 和 funcRate，funcRate为
-123func funcRate(vals []parser.Value, args parser.Expressions, enh *EvalNodeHelper) Vector &#123;  return extrapolatedRate(vals, args...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Prometheus">Prometheus</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/23/fs-error-fix-k8s-master/" >
-            
-                <span>k8s master机器文件系统故障的一次恢复过程</span>
-        </a>
-        <div class="abstract-content">
-            由来研发反馈他们那边一套集群有台master文件系统损坏无法开机，他们是三台openstack上的虚机，是虚拟化宿主机故障导致的虚机文件系统损坏。三台机器是master+node，指导他修复后开机，修复过程和我之前文章opensuse的一次救援步骤一样
-起来后我上去看，因为做了 HA 的，所以只有这个node有问题，集群没影响
-12345[root@k8s-m1 ~]# kubectl get node -o wideNAME             STATUS     ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "etcd">etcd</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/23/host-gw-in-aliyun/" >
-            
-                <span>阿里云上使用flannel host-gw跨节点pod不通的解决</span>
-        </a>
-        <div class="abstract-content">
-            挺多人问的，写下解决办法
-前言首先主机得在同一个专有vpc下，跨vpc或者经典vpc就扯淡了。还有flannel别把网络信息存储在etcd里，目前flannel只支持v2的etcd api。但是现在k8s都是使用v3 etcd存储了。如果v2和v3共存会导致无法恢复etcd的备份
-所以网上那些etcdctl set flannel的cidr的文章别看了，都没做过备份恢复实验就到处发k8s搭建教程。flannel v3的话看我过往文章
-环境信息先来说下host-gw的包走向，假设两台机器
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>详细的讲解下部署dashboard，比市面上更详细和更多场景的选择，本文dashboard的暴露不会用nodeport(不喜欢使用它)和apiserver的web proxy代理也就是<code>/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/</code>这种</p>
+<p>讲下四种场景方式：</p>
+<blockquote>
+<ul>
+<li>纯dashboard http和https不惨合外部证书</li>
+<li>openssl 证书给dashboard当https</li>
+<li>个人向域名使用https小绿锁</li>
+<li>ingress tls 代理http[s]的dashboard<br>以及最后讲解的如何定义带权限的token去利用token登陆dashboard</li>
+</ul>
+</blockquote>
+<p>  先要理解的一点就是JWT(JSON Web Tokens)思想，k8s的很多addon都是pod形式跑的，addon的pod都是要连接kube-apiserver来操作集群来减少运维的工作量和提供方便。addon都是pod，pod操作和查看集群信息需要鉴权。<br>  为此k8s使用了RBAC的思想(RBAC思想不是k8s独有的)，资源对象和对声明的资源对象的操作权限组合最终落实到<code>ServiceAccount</code>上，而每个名为<code>name</code>的sa会关联着一个名为<code>name-token-xxxxx</code>的secret。<br>可以通过kubectl describe命令或者api看这个secret实际上就是个token和一个ca.crt。下列命令列出缺省sa default的token和整个集群的ca.crt(jsonpath打印的时候敏感信息是base64编码需要自己解码)</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl get secret -o jsonpath&#x3D;&#39;&#123;range .items[?(@.metadata.annotations.kubernetes\.io&#x2F;service-account\.name&#x3D;&#x3D;&quot;default&quot;)].data&#125;&#123;&quot;token: &quot;&#125;&#123;.token&#125;&#123;&quot;\n\n&quot;&#125;&#123;&quot;ca.crt: &quot;&#125;&#123;.ca\.crt&#125;&#123;&quot;\n&quot;&#125;&#123;end&#125;&#39;</span><br><span class="line">token: ZXlKaGJHY2lPaUpGVXpVeE1pSXNJbXR................</span><br><span class="line"></span><br><span class="line">ca.crt: LS0tLS1CRUdJTiBDRVJUS..........................</span><br></pre></td></tr></table></figure>
+<p>每个pod都会被kubelet挂载pod声明的ServiceAccount关联的secret的里的ca.crt和token到容器里路径<code>/var/run/secrets/kubernetes.io/serviceaccount</code></p>
+<p>部署的yaml的话不推荐直接使用官方的yaml，我们需要看场景修改或者删减一些东西<br>这里先放下官方的yaml链接，后面以文件讲解。同时也推荐把本文看完了后再开始部署</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;kubernetes&#x2F;dashboard&#x2F;v1.10.1&#x2F;src&#x2F;deploy&#x2F;recommended&#x2F;kubernetes-dashboard.yaml</span><br></pre></td></tr></table></figure>
 
+<p>全文我基本都是用的<code>hostNetwork</code>和<code>nodeName</code>固定在一台上，如果对k8s的几种svc和<code>hostNetwork</code>以及<code>hostPort</code>以及<code>ingress</code>熟悉的话可以自己决定暴露方式<br>这里我是使用的下面这种方式暴露出去，也就意味着我们不需要svc可以删掉官方yaml里最后那段<code>Dashboard Service</code>，访问的话用node的ip带上端口访问即可，改成大概下面这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">    spec:</span><br><span class="line">      hostNetwork: true</span><br><span class="line">      dnsPolicy: ClusterFirstWithHostNet</span><br><span class="line">      containers:</span><br><span class="line">      - name: kubernetes-dashboard</span><br><span class="line">        image: gcr.azk8s.cn&#x2F;google_containers&#x2F;kubernetes-dashboard-amd64:v1.10.1</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">      nodeName: k8s-m1</span><br><span class="line">      volumes:</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
+<h2 id="纯dashboard"><a href="#纯dashboard" class="headerlink" title="纯dashboard"></a>纯dashboard</h2><p>分为两种: http和开https，其中开https又分为使用自带的cert和openssl生成的</p>
+<h3 id="默认自带的https"><a href="#默认自带的https" class="headerlink" title="默认自带的https"></a>默认自带的https</h3><p>首先说说自带的https</p>
+<p>镜像默认的<code>entrypoint</code>是这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">            &quot;Entrypoint&quot;: [</span><br><span class="line">                &quot;&#x2F;dashboard&quot;,</span><br><span class="line">                &quot;--insecure-bind-address&#x3D;0.0.0.0&quot;,</span><br><span class="line">                &quot;--bind-address&#x3D;0.0.0.0&quot;</span><br><span class="line">            ],</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>默认定义的容器启动参数为下面这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">        args:</span><br><span class="line">          - --auto-generate-certificates</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>这里我宿主机的8443被占用了，我修改了下dashboard的端口，后面同理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">        ports:</span><br><span class="line">        - containerPort: 5443</span><br><span class="line">          protocol: TCP</span><br><span class="line">        command:</span><br><span class="line">          - &#x2F;dashboard</span><br><span class="line">          - --bind-address&#x3D;0.0.0.0</span><br><span class="line">        args:</span><br><span class="line">          - --auto-generate-certificates</span><br><span class="line">          - --port&#x3D;5443</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">        livenessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            scheme: HTTPS</span><br><span class="line">            path: &#x2F;</span><br><span class="line">            port: 5443</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><code>--auto-generate-certificates</code>从字面意思看是dashboard自己生成https的证书，但是实际上如下面的图这个证书chrome浏览器是不认的其他浏览器不清楚，chrome打开后在网页上是没有无视警告继续的选项，可以自行去试试看，网上也没找到添加例外只找到了全局关闭非权威SSL警告。不推荐这种(或者说这种完全行不通?)</p>
+<p><img src="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/1.png" alt="certnot"></p>
+<h3 id="使用http"><a href="#使用http" class="headerlink" title="使用http"></a>使用http</h3><p>使用http我们要小心有几个坑<br>使用http我们只要使用选项<code>--insecure-port</code>修改成下面即可端口不一定需要和我一样，pod的健康检查记得把<code>HTTPS</code>改成<code>HTTP</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">        ports:</span><br><span class="line">        - containerPort: 5443</span><br><span class="line">          protocol: TCP</span><br><span class="line">        command:</span><br><span class="line">          - &#x2F;dashboard</span><br><span class="line">          - --insecure-bind-address&#x3D;0.0.0.0</span><br><span class="line">        args:</span><br><span class="line">          - --insecure-port&#x3D;5443</span><br><span class="line">...</span><br><span class="line">        livenessProbe:</span><br><span class="line">          httpGet:</span><br><span class="line">            scheme: HTTP</span><br><span class="line">            path: &#x2F;</span><br><span class="line">            port: 5443</span><br></pre></td></tr></table></figure>
+<p>默认http是不需要登陆的，所有人进去都是可以的，我们可以注意到dashboard默认带了一个sa以及一个Role</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"># ------------------- Dashboard Role &amp; Role Binding ------------------- #</span><br><span class="line">kind: Role</span><br><span class="line">apiVersion: rbac.authorization.k8s.io&#x2F;v1</span><br><span class="line">metadata:</span><br><span class="line">  name: kubernetes-dashboard-minimal</span><br><span class="line">  namespace: kube-system</span><br><span class="line">rules:</span><br><span class="line">  # Allow Dashboard to create &#39;kubernetes-dashboard-key-holder&#39; secret.</span><br><span class="line">- apiGroups: [&quot;&quot;]</span><br><span class="line">  resources: [&quot;secrets&quot;]</span><br><span class="line">  verbs: [&quot;create&quot;]</span><br><span class="line">  # Allow Dashboard to create &#39;kubernetes-dashboard-settings&#39; config map.</span><br><span class="line">- apiGroups: [&quot;&quot;]</span><br><span class="line">  resources: [&quot;configmaps&quot;]</span><br><span class="line">  verbs: [&quot;create&quot;]</span><br><span class="line">  # Allow Dashboard to get, update and delete Dashboard exclusive secrets.</span><br><span class="line">- apiGroups: [&quot;&quot;]</span><br><span class="line">  resources: [&quot;secrets&quot;]</span><br><span class="line">  resourceNames: [&quot;kubernetes-dashboard-key-holder&quot;, &quot;kubernetes-dashboard-certs&quot;]</span><br><span class="line">  verbs: [&quot;get&quot;, &quot;update&quot;, &quot;delete&quot;]</span><br><span class="line">  # Allow Dashboard to get and update &#39;kubernetes-dashboard-settings&#39; config map.</span><br><span class="line">- apiGroups: [&quot;&quot;]</span><br><span class="line">  resources: [&quot;configmaps&quot;]</span><br><span class="line">  resourceNames: [&quot;kubernetes-dashboard-settings&quot;]</span><br><span class="line">  verbs: [&quot;get&quot;, &quot;update&quot;]</span><br><span class="line">  # Allow Dashboard to get metrics from heapster.</span><br><span class="line">- apiGroups: [&quot;&quot;]</span><br><span class="line">  resources: [&quot;services&quot;]</span><br><span class="line">  resourceNames: [&quot;heapster&quot;]</span><br><span class="line">  verbs: [&quot;proxy&quot;]</span><br><span class="line">- apiGroups: [&quot;&quot;]</span><br><span class="line">  resources: [&quot;services&#x2F;proxy&quot;]</span><br><span class="line">  resourceNames: [&quot;heapster&quot;, &quot;http:heapster:&quot;, &quot;https:heapster:&quot;]</span><br><span class="line">  verbs: [&quot;get&quot;]</span><br><span class="line">---</span><br><span class="line">apiVersion: rbac.authorization.k8s.io&#x2F;v1</span><br><span class="line">kind: RoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: kubernetes-dashboard-minimal</span><br><span class="line">  namespace: kube-system</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: Role</span><br><span class="line">  name: kubernetes-dashboard-minimal</span><br><span class="line">subjects:</span><br><span class="line">- kind: ServiceAccount</span><br><span class="line">  name: kubernetes-dashboard</span><br><span class="line">  namespace: kube-system</span><br></pre></td></tr></table></figure>
+<p>这样绕过登陆的话所有人都是上面的权限了，所以我们得使用选项<code>--enable-insecure-login</code>开启登陆界面，最终的args为下面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">        args:</span><br><span class="line">          - --insecure-port&#x3D;5443</span><br><span class="line">          - --enable-insecure-login&#x3D;true</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>这样下进去是强制让登录了，但是token的话(后面说这个token如何创建和获取)是无法登陆的，找到issue说通过kubectl proxy出去的http和直接的http将无法登陆(但是实际上我测了下百度浏览器可以登录。。。。)<br><a href="https://github.com/kubernetes/dashboard/issues/3216" target="_blank" rel="noopener">https://github.com/kubernetes/dashboard/issues/3216</a><br><a href="https://github.com/kubernetes/dashboard/issues/2735" target="_blank" rel="noopener">https://github.com/kubernetes/dashboard/issues/2735</a><br>但是也不是意味着完全不能用这种方法，可以sa kubernetes-dashboard绑定到集群角色cluster-admin然后外面套层nginx的auth到它，然后配置iptables或者网络设备ACL让dashboard只收到来源ip是nginx</p>
+<h2 id="openssl生成证书给dashboard当https证书"><a href="#openssl生成证书给dashboard当https证书" class="headerlink" title="openssl生成证书给dashboard当https证书"></a>openssl生成证书给dashboard当https证书</h2><p>如果我们使用openssl生成证书给dashboard使用的话，浏览器会有跳过继续前往页面的选项，能够在内网没域名下使用，我们内网给研发搭建dashboard目前就是这样使用的。具体就是openssl命令生成证书并根据证书生成tls类型的secret</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir certs</span><br><span class="line">openssl req -nodes -newkey rsa:2048 -keyout certs&#x2F;dashboard.key -out certs&#x2F;dashboard.csr -subj &quot;&#x2F;C&#x3D;&#x2F;ST&#x3D;&#x2F;L&#x3D;&#x2F;O&#x3D;&#x2F;OU&#x3D;&#x2F;CN&#x3D;kubernetes-dashboard&quot;</span><br><span class="line">openssl x509 -req -sha256 -days 10000 -in certs&#x2F;dashboard.csr -signkey certs&#x2F;dashboard.key -out certs&#x2F;dashboard.crt</span><br><span class="line">kubectl create secret generic kubernetes-dashboard-certs --from-file&#x3D;certs -n kube-system</span><br></pre></td></tr></table></figure>
+<p>这里生成secret后我们先分析下官方的yaml，我们可以用命令帮助<code>--help</code>查看到dashboard的默认cert-dir是<code>/certs</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ docker run --rm -ti --entrypoint &#x2F;dashboard \</span><br><span class="line">  gcr.azk8s.cn&#x2F;google_containers&#x2F;kubernetes-dashboard-amd64:v1.10.1 \</span><br><span class="line">  --help | grep cert-dir  #下面是输出</span><br><span class="line">      --default-cert-dir string          Directory path containing &#39;--tls-cert-file&#39; and &#39;--tls-key-file&#39; files. Used also when auto-generating certificates flag is set. (default &quot;&#x2F;certs&quot;)</span><br></pre></td></tr></table></figure>
 
-IP
-pod cidr
+<p>而且可以注意到他有个挂载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">        volumeMounts:</span><br><span class="line">        - name: kubernetes-dashboard-certs</span><br><span class="line">          mountPath: &#x2F;certs</span><br><span class="line">...</span><br><span class="line">...</span><br><span class="line">      volumes:</span><br><span class="line">      - name: kubernetes-dashboard-certs</span><br><span class="line">        secret:</span><br><span class="line">          secretName: kubernetes-dashboard-certs</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>上面挂载的secret来源于官方yaml里的secret，也就说默认情况下这个secret是给选项<code>--auto-generate-certificates</code>使用的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">  name: kubernetes-dashboard-certs</span><br><span class="line">  namespace: kube-system</span><br><span class="line">type: Opaque</span><br></pre></td></tr></table></figure>
+<p>所以我们使用openssl部署dashboard的步骤是先上面openssl生成证书然后导入生成secret，然后yaml里删掉<code>Dashboard Secret</code>然后修改dashboard的运行选项</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">        command:</span><br><span class="line">          - &#x2F;dashboard</span><br><span class="line">          - --bind-address&#x3D;0.0.0.0</span><br><span class="line">        args:</span><br><span class="line">          - --auto-generate-certificates</span><br><span class="line">          - --port&#x3D;5443</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>上面为啥我开了自动生成证书的选项呢，这个选项开启时不会覆盖我们的挂载的certs文件的同时它还是全局https的开关- -坑了我好久</p>
+<h2 id="个人向域名使用https小绿锁-有单点故障风险"><a href="#个人向域名使用https小绿锁-有单点故障风险" class="headerlink" title="个人向域名使用https小绿锁(有单点故障风险)"></a>个人向域名使用https小绿锁(有单点故障风险)</h2><p>这里是通过域名+https访问，证书的话可以买的也可以免费签署的SSL证书都行<br>我使用的是<code>acme.sh + token</code>使用<code>Let’s Encrypt</code>签署免费的SSL证书，也是我个人用的。另外acme申请证书的时候不一定非得通配符域名<br>安装acme.sh脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">curl  -s https:&#x2F;&#x2F;get.acme.sh | sh</span><br><span class="line"># 设置别名方便使用命令</span><br><span class="line">alias acme.sh&#x3D;~&#x2F;.acme.sh&#x2F;acme.sh</span><br></pre></td></tr></table></figure>
+<p>DNS API ，阿里云 RAM 策略对应为 AliyunDNSFullAccess然后控制台获取API的token，腾讯的话确保域名解析是dnspod，其他的域名提供商请查看 <a href="https://github.com/Neilpang/acme.sh/wiki/dnsapi" target="_blank" rel="noopener">https://github.com/Neilpang/acme.sh/wiki/dnsapi</a><br>例如阿里的话去阿里云上生成token然后下面执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export Ali_Key&#x3D;&quot;yourkey&quot;</span><br><span class="line">export Ali_Secret&#x3D;&quot;yoursecret&quot;</span><br><span class="line"></span><br><span class="line"># 申请证书</span><br><span class="line">acme.sh --issue --dns dns_ali -d *.k8s.youdomain.com</span><br></pre></td></tr></table></figure>
+<p>域名在腾讯云的话确保nameserver设置的是dnspod(好像默认就是这个)，我们去dnspod的官网上使用登陆腾讯云的账号(例如我是qq登陆)后在开发者api里开启dnspod的api token<br>注意token在创建的时候只显示一次，记得截图发给自己的时候别点错地方关了，不然得再创建个<br><img src="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/2.png" alt="certnot"><br><img src="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/3.png" alt="certnot"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export DP_Id&#x3D;&quot;1234&quot;</span><br><span class="line">export DP_Key&#x3D;&quot;sADDsdasdgdsfsdfsdfasfdsfasfasfds&quot;</span><br><span class="line">acme.sh --issue --dns dns_dp -d *.zhangguanzhang.com</span><br></pre></td></tr></table></figure>
+<p>运行后会看到文件路径<br><img src="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/4.png" alt="certnot"><br>前面证书生成以后， 接下来需要把证书 copy 到真正需要用它的地方。<br>注意， 默认生成的证书都放在安装目录下: <del>/.acme.sh/， 请不要直接使用此目录下的文件， 例如: 不要直接让 nginx/apache 的配置文件使用这下面的文件. 这里面的文件都是内部使用， 而且目录结构可能会变化。<br>正确的使用方法是使用<code>--installcert</code>命令，并指定目标位置， 然后证书文件会被copy到相应的位置:<br>COPY 证书，安装到 `</del>/cert` 目录中，cert 证书使用的是 fullchain cert， keyfile和fullchain的证书名字随意，自己记住就行了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p ~&#x2F;cert</span><br><span class="line">acme.sh  --installcert  -d  *.zhangguanzhang.com   \</span><br><span class="line">        --key-file           ~&#x2F;cert&#x2F;zhangguanzhang.com.key \</span><br><span class="line">        --fullchain-file     ~&#x2F;cert&#x2F;zhangguanzhang.com.crt</span><br></pre></td></tr></table></figure>
 
+<p>然后从证书创建tls类型的secret</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system create secret tls kubernetes-dashboard-certs \</span><br><span class="line">  --key ~&#x2F;cert&#x2F;zhangguanzhang.com.key \</span><br><span class="line">  --cert ~&#x2F;cert&#x2F;zhangguanzhang.com.crt</span><br></pre></td></tr></table></figure>
 
+<p>删掉官方yaml文件里的<code>Dashboard Secret</code>，我们发现tls的secret是下面俩文件名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl -n kube-system get secrets kubernetes-dashboard-certs -o yaml</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  tls.crt: ....</span><br><span class="line">  tls.key: ....</span><br><span class="line">kind: Secret</span><br><span class="line">metadata:</span><br><span class="line">  name: kubernetes-dashboard-certs</span><br><span class="line">  namespace: kube-system</span><br><span class="line">type: kubernetes.io&#x2F;tls</span><br></pre></td></tr></table></figure>
 
-10.0.6.166
-10.200.1.0/24
+<p>我们修改运行参数关闭insecure和指定使用证书文件，这里用5443是因为我公网ip没备案，如果ip备案了可以5443改成443(记得yaml其他地方端口也修改下)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">        command:</span><br><span class="line">          - &#x2F;dashboard</span><br><span class="line">        args:</span><br><span class="line">          - --auto-generate-certificates</span><br><span class="line">          - --bind-address&#x3D;0.0.0.0</span><br><span class="line">          - --port&#x3D;5443</span><br><span class="line">          - --tls-cert-file&#x3D;tls.crt</span><br><span class="line">          - --tls-key-file&#x3D;tls.key</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 
+<p>创建dashboard后在云上的域名控制台设置解析过来，通过https的域名访问<br><img src="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/k8s/dashboard/5.png" alt="certnot"></p>
+<h2 id="Ingress-Controller使用域名证书代理dashboard"><a href="#Ingress-Controller使用域名证书代理dashboard" class="headerlink" title="Ingress Controller使用域名证书代理dashboard"></a>Ingress Controller使用域名证书代理dashboard</h2><p>上面直接dashboard使用域名证书会有单点故障，所以实际应用我们可以用高可用的ingress nginx(详见之前的文章)来代理集群内部的dashboard<br>这里我使用的是<code>Ingress nginx</code><br>从证书创建tls类型的secret</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -nodes -days 10000 -newkey rsa:2048 -keyout zhangguanzhang.com.key -out zhangguanzhang.com.crt -subj &quot;&#x2F;CN&#x3D;dashboard.zhangguanzhang&#x2F;O&#x3D;dashboard.zhangguanzhang.com&quot;</span><br></pre></td></tr></table></figure>
+<p>这里我是上面acme.sh申请的证书，如果是自己没申请内网啥的可以上面openssl生成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system create secret tls dashboard-tls \</span><br><span class="line">  --key ~&#x2F;cert&#x2F;zhangguanzhang.com.key \</span><br><span class="line">  --cert ~&#x2F;cert&#x2F;zhangguanzhang.com.crt</span><br></pre></td></tr></table></figure>
 
-10.0.6...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "host-gw">host-gw</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/19/go-prom-exporter/" >
-            
-                <span>[未写完]使用go开发一个Prometheus的exporter</span>
-        </a>
-        <div class="abstract-content">
-            <p>市面上的例子太多都太简单了，这里详细写下我知道的</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "exporter">exporter</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/23/k8s-vxlan-63-timeout/" >
-            
-                <span>v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位</span>
-        </a>
-        <div class="abstract-content">
-            这个问题 flannel 和 calico 的 VXLAN 模式下都会发生，部分人的现象是集群的A记录 UDP 下查询可能有问题，原因是v1.17+的k8s会引起内核的某个 UDP 相关 bug而不是cni的软件层面，weave没有，后面说。
-写这篇文章的日期是05/28，发现是上周五也就是05/23号，文章从时间线写起(因为很多时候想发文章但是没空，所以文章的发布日期是05/23)
-2020-07-19更新，版本v1.18.6, v1.16.13, v1.17.9+已经修复这个问题，可以同版本内升级，或者只切kube-proxy版本
-由来上周五我经过同事的工位看到同事的桌面是k8s的g...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "63s">63s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "timeout">timeout</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/13/x86-router-flash/" >
-            
-                <span>proxmox x86软路由笔记</span>
-        </a>
-        <div class="abstract-content">
-            由来办公室有台式机，不想整天带着N1上下班，整下x86的软路由，exsi性能会比pve好，但是pve毕竟Linux，兼容性和对接很多场景方便，这里我使用pve开机器安装openwrt。
-pve已经安装好系统(如果你还没安装且打算安装，安装完后可以看看我这个文章安装完proxmox的一些设置)，并且台式机的口子接主路由的lan口。主路由是我的路由器，它wan口接办公室的网口，台式机只有一个口子，所以软路由作为旁路由使用。
-前置工作虚机准备先去恩山论坛x86版块下一个固件，如果你有办公室—&gt; ecs &lt;— 个人家里组网的要求的话，推荐你去找个带wireguard的固件pve上开台...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "x86">x86</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/12/N1-flash/" >
-            
-                <span>斐讯N1刷机和旁路由的设置</span>
-        </a>
-        <div class="abstract-content">
-            由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前一直是使用k2p刷openwrt或者pandora跑v2用，前几天看到了个v2的订阅地址给写到openwrt上了。结果运行了几天发现web上任何配置都无法更改，ssh上去发现touch报错没有容量(而且重装后感觉还是有问题，github访问也不稳定了)，意识到k2p容量实在太小了，于是去恩山论坛逛了下准备买个N1盒子玩玩旁路由。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N1有8G的rom 2G的ram，cpu是armv8的。询问了...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "N1">N1</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/go-version-ifno/" >
-            
-                <span>git工作流下golang项目的version信息该如何处理</span>
-        </a>
-        <div class="abstract-content">
-            <p>来探讨下git工作流下golang项目的version信息该如何处理比较符合标准</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go">go</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/26/KubeXXXMismatch/" >
-            
-                <span>一次deploy,rs,sts Mismatch 的处理</span>
-        </a>
-        <div class="abstract-content">
-              这次文章是远程帮群友解决故障后的总结，以时间线描述  群友一开始是apiserver响应慢，使用角度上就是kubectl请求慢，如
-123E0326 07:49:37.586690       1 available_controller.go:416] v1beta1.metrics.k8s.io failed with: failing or missing response  from https:&#x2F;&#x2F;10.99.174.208:443&#x2F;apis&#x2F;metrics.k8s.io&#x2F;v1beta1: Get https:&#x2F;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Mismatch">Mismatch</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/10/go-mod-base-use/" >
-            
-                <span>go mod的基础使用-科普</span>
-        </a>
-        <div class="abstract-content">
-            go mod由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文章主要是针对新人来介绍go mod是啥以及新手如何使用，老手不用看。现阶段go mod已经完全GA了，你会用了的话会非常方便&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;像python的项目根目录有requirement.txt记录依赖包，nodejs是packages.json，同样go的包管理从早期的go dep(gopkg)到vendor到现在的go mod.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go mod">go mod</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/centos6-hung-while-booting/" >
-            
-                <span>centos6中毒重启后卡在启动页面</span>
-        </a>
-        <div class="abstract-content">
-            12345678910⣿⣿⣿⣿⣿⣿⢟⣡⣴⣶⣶⣦⣌⡛⠟⣋⣩⣬⣭⣭⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢰⣿⣿⠿⣛⣛⣙⣛⠻⢆⢻⣿⠿⠿⠿⣿⡄⠻⣿⣿⣿⣿⣿⣿⠃⢠⣿⣿⣶⣿⣿⡿⠿⢟⣛⣒⠐⠲⣶⡶⠿⠶⠶⠦⠄⠙⢿⣿⠋⣠⠄⣿⣿⣿⠟⡛⢅⣠⡵⡐⠲⣶⣶⣥⡠⣤⣵⠆⠄⠰⣦⣤⡀⠇⣰⣿⣼⣿⣿⣧⣤⡸⢿⣿⡀⠂⠁⣸⣿⣿⣿⣿⣇⠄⠈⢀⣿⣿⠿⣰⣿⣿⣿⣿⣿⣿⣿⣷⣤⣈⣙⠶⢾⠭⢉⣁⣴⢯⣭⣵⣶⠾⠓⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣉⣤⣴⣾⣿⣿⣦⣄⣤⣤⣄⠄⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠈⢿⣿⣿⣿⣿⣿⣿⡟⣰⣞⣛⡒⢒⠤⠦⢬⣉⣉⣉⣉⣉⣉⣉⡥⠴⠂⢸⠻⣿⣿⣿⣿⣏⠻⢌⣉⣉⣩⣉⡛⣛⠒⠶⠶⠶⠶⠶⠶⠶⠶⠂⣸⣿
+<p>官方yaml的deploy数量改多个后直接使用创建即可，然后创建下面ingress</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: extensions&#x2F;v1beta1 #如果是1.14以上集群，该地方的apiVersion应该为networking.k8s.io&#x2F;v1beta1</span><br><span class="line">kind: Ingress</span><br><span class="line">metadata:</span><br><span class="line">  name: dashboard-ingress</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  annotations:</span><br><span class="line">    kubernetes.io&#x2F;ingress.class: &quot;nginx&quot;</span><br><span class="line">    nginx.ingress.kubernetes.io&#x2F;ssl-redirect: &quot;true&quot;</span><br><span class="line">    nginx.ingress.kubernetes.io&#x2F;rewrite-target: &#x2F;</span><br><span class="line">    #nginx.ingress.kubernetes.io&#x2F;secure-backends: &quot;true&quot;  该注释在0.18.0中被弃用，并在0.20.0发布后被删除，使用下面</span><br><span class="line">    nginx.ingress.kubernetes.io&#x2F;backend-protocol: &quot;HTTPS&quot;</span><br><span class="line">spec:</span><br><span class="line">  tls:</span><br><span class="line">  - hosts:</span><br><span class="line">    - dashboard.zhangguanzhang.com</span><br><span class="line">    secretName: dashboard-tls</span><br><span class="line">  rules:</span><br><span class="line">  - host: dashboard.zhangguanzhang.com</span><br><span class="line">    http:</span><br><span class="line">      paths:</span><br><span class="line">      - backend:</span><br><span class="line">          serviceName: kubernetes-dashboard</span><br><span class="line">          servicePort: 443</span><br></pre></td></tr></table></figure>
 
-昨晚刚整好那个ubuntu，今天下午又一台cen...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "centos6">centos6</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/binfmt-0000/" >
-            
-                <span>记录一次request_module: runaway loop modeprobe binfmt-0000</span>
-        </a>
-        <div class="abstract-content">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昨天一台gpu的主机的阵列卡突然坏了，最终整起来后上面的几台虚机恢复后有一台虚机无法正常开机，开机进emergency mode，同事看上面的报错以为是挂载了啥iscsi，当然无法开机应该找到最开始的错误，进到emergency mode这个视角的时候已经是雪崩的最后的错误了，多半是没有意义的。输入root密码后执行journalctl -xb翻看最开始的错误
+<p>在ingress是tls的情况下dashboard是http的可以去掉上面三个annotations(这种情况我未测试，有兴趣可以自己试试)</p>
+<h2 id="token"><a href="#token" class="headerlink" title="token"></a>token</h2><p>dashboard登陆的话可以选择kubeconfig和token，kubeconfig一般是集群外使用的，例如管理组件之间想和apiserver tls下通信都得使用kubeconfig，里面实际上就是ca签署的客户端证书+各自CN和O签署的证书。而token里的ca.crt也是客户端证书和kubeconfig里<code>client-certificate-data</code>的是一样的，RBAC落实在它那个token字段。<br>很多addon可以看到他们的<code>--help</code>选项看到也支持kubeconfig的，他们的默认逻辑是没有用kubeconfig选项下起来的时候会去查看secret路径<code>/var/run/secrets/kubernetes.io/serviceaccount</code>获取token(也是在pod里运行的逻辑)，当然也并不意味着token一定在集群内用可以把secret的token获取到后制作成kubeconfig。<br>dashboard登陆的token如果使用管理员的话可以用rbac绑定集群管理员角色，这也是最常见的使用方法，像kubectl拥有集群管理员那样。如果对RBAC熟悉可以单独给不用部门生成不同权限的RBAC取token给人员登陆</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: ServiceAccount</span><br><span class="line">metadata:</span><br><span class="line">  name: dashboard     # sa名字随意</span><br><span class="line">  namespace: kube-system</span><br><span class="line">  labels:</span><br><span class="line">    k8s-app: kubernetes-dashboard</span><br><span class="line">---</span><br><span class="line">apiVersion: rbac.authorization.k8s.io&#x2F;v1</span><br><span class="line">kind: ClusterRoleBinding</span><br><span class="line">metadata:</span><br><span class="line">  name: dashboard</span><br><span class="line">  namespace: &quot;&quot;</span><br><span class="line">roleRef:</span><br><span class="line">  apiGroup: rbac.authorization.k8s.io</span><br><span class="line">  kind: ClusterRole     # 权限来源于集群角色</span><br><span class="line">  name: cluster-admin   # 这个是集群管理员角色名</span><br><span class="line">subjects:</span><br><span class="line">  - kind: ServiceAccount</span><br><span class="line">    name: dashboard    # 和上面名字一样</span><br><span class="line">    namespace: kube-system</span><br></pre></td></tr></table></figure>
+<p>取它token用于登陆dashboard，你在dashboardweb上操作集群的时候实际上是拿着你登陆的token的去以api调用kube-apiserver<br>取上面创建的sa的token</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kubectl -n kube-system get secret -o jsonpath&#x3D;&#39;&#123;range .items[?(@.metadata.annotations.kubernetes\.io&#x2F;service-account\.name&#x3D;&#x3D;&quot;dashboard&quot;)].data&#125;&#123;.token&#125;&#123;end&#125;&#39; | base64 -d</span><br><span class="line">xxxxxxxxxxxxxx</span><br></pre></td></tr></table></figure>
+<p>最后<code>Let’s Encrypt</code>的证书是一次3个月，可以看脚本官方文档去定时获取新的证书然后导入<br><a href="https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E" target="_blank" rel="noopener">https://github.com/Neilpang/acme.sh/wiki/%E8%AF%B4%E6%98%8E</a></p>
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按照关键字request_modul...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "kernel">kernel</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/27/microsoft-graph-for-onedrive/" >
-            
-                <span>使用microsoft-graph的api对接onedrive</span>
-        </a>
-        <div class="abstract-content">
-            前言这几天打算把文件备份下，最后看到有网友说onedrive不错，就是容量小了点只有5g，然后酷安去安装安卓客户端，下面看到一堆人送office e5子账户的。看了下大概是微软为了推广自己产品面向开发者送的优惠，账户有免费的5t存储，而且安装office啥的免费。试用30天，30天内调用api来保持活跃度的话就会延期。评论里一大堆都是搭建oneindex或者onelist的，主要作用就是把onedrive给抽象成一个公共的网盘使用，oneindex是php写的，我看issue居然385个，作者的github也在更新，而且作者学了golang，居然也不打算重构下，估计也是烂尾了。oneli...
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://zhangguanzhang.github.io">Zhangguanzhang</a>
+            <p>原文链接：<a href="http://zhangguanzhang.github.io/2019/02/12/dashboard/">http://zhangguanzhang.github.io/2019/02/12/dashboard/</a>
+            <p>发表日期：<a href="http://zhangguanzhang.github.io/2019/02/12/dashboard/">February 12th 2019, 12:01:01 pm</a>
+            <p>更新日期：<a href="http://zhangguanzhang.github.io/2019/02/12/dashboard/">May 4th 2020, 8:41:58 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "microsoft">microsoft</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "graph">graph</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "onedrive">onedrive</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
-    </nav>
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/dw.jpg >
-    <div class="profile-name">Zhangguanzhang</div>
-    
-    <div class="profile-signature">
-        on the way
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/02/19/jira-confluence/" title= "docker部署jira(8.0.0)和confluence(6.14.1)">
+                    <div class="nextTitle">docker部署jira(8.0.0)和confluence(6.14.1)</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/01/30/fstab/" title= "fstab与systemd.mount自动挂载的一点研究和见解">
+                    <div class="prevTitle">fstab与systemd.mount自动挂载的一点研究和见解</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMzk1OC8xMDQ5Mw>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
     </div>
+
+<!-- City版安装代码已完成 -->
     
     
-    <div class="profile-social">
-        
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-            
-                <a href="mailto:zhangguanzhang@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/zhangguanzhang" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_wc.png" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/assets/zhifubao.png" class="iconfont-archer others" target="_blank" title=others></a>
-            
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //blog.cugxuan.cn target="_black">泫</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //linuxgeeks.github.io target="_black">传统老司机运维老村长</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //kuops.com target="_black">kuops</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //note.run-linux.com target="_black">Linus Lee</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //eryajf.net target="_black">二丫讲梵</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.k8stech.net target="_black">憨憨wolf7</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //sealyun.com/ target="_black">sealyun</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //blog.walkbc.com/ target="_black">golang后端dino</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= https://blog.k8s.fit target="_black">Happiness</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //yousali.me target="_black">yousa</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //i4t.com target="_black">abcdocker</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -1106,6 +648,24 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#纯dashboard"><span class="toc-number">1.</span> <span class="toc-text">纯dashboard</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#默认自带的https"><span class="toc-number">1.1.</span> <span class="toc-text">默认自带的https</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#使用http"><span class="toc-number">1.2.</span> <span class="toc-text">使用http</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#openssl生成证书给dashboard当https证书"><span class="toc-number">2.</span> <span class="toc-text">openssl生成证书给dashboard当https证书</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#个人向域名使用https小绿锁-有单点故障风险"><span class="toc-number">3.</span> <span class="toc-text">个人向域名使用https小绿锁(有单点故障风险)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ingress-Controller使用域名证书代理dashboard"><span class="toc-number">4.</span> <span class="toc-text">Ingress Controller使用域名证书代理dashboard</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#token"><span class="toc-number">5.</span> <span class="toc-text">token</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -3353,6 +2913,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

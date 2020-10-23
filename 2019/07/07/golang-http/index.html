@@ -1,0 +1,2919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <!-- title -->
+
+
+
+
+<!-- keywords -->
+
+
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <meta name="author" content="Zhangguanzhang">
+    <meta name="renderer" content="webkit">
+    <meta name="copyright" content="Zhangguanzhang">
+    
+    <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
+    
+    <meta name="description" content="记录生活点滴">
+    <meta name="description" content="之前准备写个简单的api的调用，百度和问了很多人后发现基本对于http的客户端熟悉的人非常少。或者对包的不了解自己造了效率很低的轮子，而且官方一些包里有坑，被坑过，这里简单科普下 简单的get和posthttp包里下列可以直接使用的请求方法 1234func Head(url string) (resp *Response, err error)func Get(url string) (resp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="golang的net&#x2F;http包的客户端简单科普">
+<meta property="og:url" content="http://zhangguanzhang.github.io/2019/07/07/golang-http/">
+<meta property="og:site_name" content="Zhangguanzhang">
+<meta property="og:description" content="之前准备写个简单的api的调用，百度和问了很多人后发现基本对于http的客户端熟悉的人非常少。或者对包的不了解自己造了效率很低的轮子，而且官方一些包里有坑，被坑过，这里简单科普下 简单的get和posthttp包里下列可以直接使用的请求方法 1234func Head(url string) (resp *Response, err error)func Get(url string) (resp">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/golang/http/001.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/golang/http/002.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/golang/http/003.jpg">
+<meta property="article:published_time" content="2019-07-07T15:53:47.000Z">
+<meta property="article:modified_time" content="2020-05-04T08:41:59.000Z">
+<meta property="article:author" content="Zhangguanzhang">
+<meta property="article:tag" content="http">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/golang/http/001.png">
+    <meta http-equiv="Cache-control" content="no-cache">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    
+    <title>golang的net/http包的客户端简单科普 · zhangguanzhang&#39;s Blog</title>
+    <style type="text/css">
+    @font-face {
+        font-family: 'Oswald-Regular';
+        src: url("/font/Oswald-Regular.ttf");
+    }
+
+    body {
+        margin: 0;
+    }
+
+    header,
+    footer,
+    .back-top,
+    .sidebar,
+    .container,
+    .site-intro-meta,
+    .toc-wrapper {
+        display: none;
+    }
+
+    .site-intro {
+        position: relative;
+        z-index: 3;
+        width: 100%;
+        /* height: 50vh; */
+        overflow: hidden;
+    }
+
+    .site-intro-placeholder {
+        position: absolute;
+        z-index: -2;
+        top: 0;
+        left: 0;
+        width: calc(100% + 300px);
+        height: 100%;
+        background: repeating-linear-gradient(-45deg, #444 0, #444 80px, #333 80px, #333 160px);
+        background-position: center center;
+        transform: translate3d(-226px, 0, 0);
+        animation: gradient-move 2.5s ease-out 0s infinite;
+    }
+
+    @keyframes gradient-move {
+        0% {
+            transform: translate3d(-226px, 0, 0);
+        }
+        100% {
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+</style>
+
+    <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+    
+    <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
+/* This file is meant as a standalone workflow for
+- testing support for link[rel=preload]
+- enabling async CSS loading in browsers that do not support rel=preload
+- applying rel preload css once loaded, whether supported or not.
+*/ -->
+<script>
+(function( w ){
+	"use strict";
+	// rel=preload support test
+	if( !w.loadCSS ){
+		w.loadCSS = function(){};
+	}
+	// define on the loadCSS obj
+	var rp = loadCSS.relpreload = {};
+	// rel=preload feature support test
+	// runs once and returns a function for compat purposes
+	rp.support = (function(){
+		var ret;
+		try {
+			ret = w.document.createElement( "link" ).relList.supports( "preload" );
+		} catch (e) {
+			ret = false;
+		}
+		return function(){
+			return ret;
+		};
+	})();
+
+	// if preload isn't supported, get an asynchronous load by using a non-matching media attribute
+	// then change that media back to its intended value on load
+	rp.bindMediaToggle = function( link ){
+		// remember existing media attr for ultimate state, or default to 'all'
+		var finalMedia = link.media || "all";
+
+		function enableStylesheet(){
+			link.media = finalMedia;
+		}
+
+		// bind load handlers to enable media
+		if( link.addEventListener ){
+			link.addEventListener( "load", enableStylesheet );
+		} else if( link.attachEvent ){
+			link.attachEvent( "onload", enableStylesheet );
+		}
+
+		// Set rel and non-applicable media type to start an async request
+		// note: timeout allows this to happen async to let rendering continue in IE
+		setTimeout(function(){
+			link.rel = "stylesheet";
+			link.media = "only x";
+		});
+		// also enable media after 3 seconds,
+		// which will catch very old browsers (android 2.x, old firefox) that don't support onload on link
+		setTimeout( enableStylesheet, 3000 );
+	};
+
+	// loop through link elements in DOM
+	rp.poly = function(){
+		// double check this to prevent external calls from running
+		if( rp.support() ){
+			return;
+		}
+		var links = w.document.getElementsByTagName( "link" );
+		for( var i = 0; i < links.length; i++ ){
+			var link = links[ i ];
+			// qualify links to those with rel=preload and as=style attrs
+			if( link.rel === "preload" && link.getAttribute( "as" ) === "style" && !link.getAttribute( "data-loadcss" ) ){
+				// prevent rerunning on link
+				link.setAttribute( "data-loadcss", true );
+				// bind listeners to toggle media back
+				rp.bindMediaToggle( link );
+			}
+		}
+	};
+
+	// if unsupported, run the polyfill
+	if( !rp.support() ){
+		// run once at least
+		rp.poly();
+
+		// rerun poly on an interval until onload
+		var run = w.setInterval( rp.poly, 500 );
+		if( w.addEventListener ){
+			w.addEventListener( "load", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		} else if( w.attachEvent ){
+			w.attachEvent( "onload", function(){
+				rp.poly();
+				w.clearInterval( run );
+			} );
+		}
+	}
+
+
+	// commonjs
+	if( typeof exports !== "undefined" ){
+		exports.loadCSS = loadCSS;
+	}
+	else {
+		w.loadCSS = loadCSS;
+	}
+}( typeof global !== "undefined" ? global : this ) );
+</script>
+
+    <link rel="icon" href= "/assets/favicon.ico" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js" as="script" />
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js" as="script" />
+    <link rel="preload" href="/scripts/main.js" as="script" />
+    <link rel="preload" as="font" href="/font/Oswald-Regular.ttf" crossorigin>
+    <link rel="preload" as="font" href="https://at.alicdn.com/t/font_327081_1dta1rlogw17zaor.woff" crossorigin>
+    
+    <!-- fancybox -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" defer></script>
+    <!-- 百度统计  -->
+    
+    <!-- 谷歌统计  -->
+    
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+    
+        <body class="post-body">
+    
+    
+<header class="header">
+
+    <div class="read-progress"></div>
+    <div class="header-sidebar-menu">&#xe775;</div>
+    <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >zhangguanzhang&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">golang的net/http包的客户端简单科普</a>
+            </div>
+    </div>
+    
+    <a class="home-link" href=/>zhangguanzhang's Blog</a>
+</header>
+    <div class="wrapper">
+        <div class="site-intro" style="
+
+
+
+
+
+
+
+height:50vh;
+">
+    
+    <!-- 主页  -->
+    
+    
+    <!-- 404页  -->
+            
+    <div class="site-intro-placeholder"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
+    <div class="site-intro-meta">
+        <!-- 标题  -->
+        <h1 class="intro-title">
+            <!-- 主页  -->
+            
+            golang的net/http包的客户端简单科普
+            <!-- 404 -->
+            
+        </h1>
+        <!-- 副标题 -->
+        <p class="intro-subtitle">
+            <!-- 主页副标题  -->
+            
+            
+            <!-- 404 -->
+            
+        </p>
+        <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "http">http</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">3.5k</span>阅读时长: <span class="post-count reading-time">17 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/07/07</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
+        
+    </div>
+</div>
+        <script>
+ 
+  // get user agent
+  var browser = {
+    versions: function () {
+      var u = window.navigator.userAgent;
+      return {
+        userAgent: u,
+        trident: u.indexOf('Trident') > -1, //IE内核
+        presto: u.indexOf('Presto') > -1, //opera内核
+        webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+        gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+        mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+        ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+        android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+        iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+        iPad: u.indexOf('iPad') > -1, //是否为iPad
+        webApp: u.indexOf('Safari') == -1, //是否为web应用程序，没有头部与底部
+        weixin: u.indexOf('MicroMessenger') == -1, //是否为微信浏览器
+        uc: u.indexOf('UCBrowser') > -1 //是否为android下的UC浏览器
+      };
+    }()
+  }
+  console.log("userAgent:" + browser.versions.userAgent);
+
+  // callback
+  function fontLoaded() {
+    console.log('font loaded');
+    if (document.getElementsByClassName('site-intro-meta')) {
+      document.getElementsByClassName('intro-title')[0].classList.add('intro-fade-in');
+      document.getElementsByClassName('intro-subtitle')[0].classList.add('intro-fade-in');
+      var postIntros = document.getElementsByClassName('post-intros')[0]
+      if (postIntros) {
+        postIntros.classList.add('post-fade-in');
+      }
+    }
+  }
+
+  // UC不支持跨域，所以直接显示
+  function asyncCb(){
+    if (browser.versions.uc) {
+      console.log("UCBrowser");
+      fontLoaded();
+    } else {
+      WebFont.load({
+        custom: {
+          families: ['Oswald-Regular']
+        },
+        loading: function () {  //所有字体开始加载
+          // console.log('loading');
+        },
+        active: function () {  //所有字体已渲染
+          fontLoaded();
+        },
+        inactive: function () { //字体预加载失败，无效字体或浏览器不支持加载
+          console.log('inactive: timeout');
+          fontLoaded();
+        },
+        timeout: 5000 // Set the timeout to two seconds
+      });
+    }
+  }
+
+  function asyncErr(){
+    console.warn('script load from CDN failed, will load local script')
+  }
+
+  // load webfont-loader async, and add callback function
+  function async(u, cb, err) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (cb) { o.addEventListener('load', function (e) { cb(null, e); }, false); }
+    if (err) { o.addEventListener('error', function (e) { err(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+
+  var asyncLoadWithFallBack = function(arr, success, reject) {
+      var currReject = function(){
+        reject()
+        arr.shift()
+        if(arr.length)
+          async(arr[0], success, currReject)
+        }
+
+      async(arr[0], success, currReject)
+  }
+
+  asyncLoadWithFallBack([
+    "https://cdn.jsdelivr.net/npm/webfontloader@1.6.28/webfontloader.min.js", 
+    "https://cdn.bootcss.com/webfont/1.6.28/webfontloader.js",
+    "/lib/webfontloader.min.js"
+  ], asyncCb, asyncErr)
+</script>        
+        <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
+        <div class="container container-unloaded">
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>之前准备写个简单的api的调用，百度和问了很多人后发现基本对于http的客户端熟悉的人非常少。或者对包的不了解自己造了效率很低的轮子，而且官方一些包里有坑，被坑过，这里简单科普下</p>
+<h2 id="简单的get和post"><a href="#简单的get和post" class="headerlink" title="简单的get和post"></a>简单的get和post</h2><p>http包里下列可以直接使用的请求方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Head</span><span class="params">(url <span class="keyword">string</span>)</span> <span class="params">(resp *Response, err error)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Get</span><span class="params">(url <span class="keyword">string</span>)</span> <span class="params">(resp *Response, err error)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Post</span><span class="params">(url <span class="keyword">string</span>, bodyType <span class="keyword">string</span>, body io.Reader)</span> <span class="params">(resp *Response, err error)</span></span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PostForm</span><span class="params">(url <span class="keyword">string</span>, data url.Values)</span> <span class="params">(resp *Response, err error)</span></span></span><br></pre></td></tr></table></figure>
+<p>变量<code>DefaultClient</code>是用于包函数Get、Head和Post的默认Client。</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DefaultClient = &amp;Client&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>例如简单的直接调用</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">"net/http"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    resp, err := http.Get(<span class="string">"http://example.com/"</span>)</span><br><span class="line">    ...</span><br><span class="line">    resp, err := http.Post(<span class="string">"http://example.com/upload"</span>, <span class="string">"image/jpeg"</span>, &amp;buf)</span><br><span class="line">    ...</span><br><span class="line">    resp, err := http.PostForm(<span class="string">"http://example.com/form"</span>,</span><br><span class="line">        url.Values&#123;<span class="string">"key"</span>: &#123;<span class="string">"Value"</span>&#125;, <span class="string">"id"</span>: &#123;<span class="string">"123"</span>&#125;&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="设置header"><a href="#设置header" class="headerlink" title="设置header"></a>设置header</h2><p>看源码，发现默认的http.Get是调用默认客户端的Get方法</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">Get</span><span class="params">(url <span class="keyword">string</span>)</span> <span class="params">(resp *Response, err error)</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> DefaultClient.Get(url)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而Client的Get方法里是先new了一个request对象后调用<code>Client.Do</code>方法来发请求</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Client)</span> <span class="title">Get</span><span class="params">(url <span class="keyword">string</span>)</span> <span class="params">(resp *Response, err error)</span></span> &#123;</span><br><span class="line">	req, err := NewRequest(<span class="string">"GET"</span>, url, <span class="literal">nil</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> c.Do(req)</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Client)</span> <span class="title">Do</span><span class="params">(req *Request)</span> <span class="params">(*Response, error)</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> c.do(req)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>http.NewRequest返回一个<code>*Request</code>，<code>Request</code>结构体里有header成员</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Request <span class="keyword">struct</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">    Header Header</span><br></pre></td></tr></table></figure>
+<p>而<code>Header</code>类型实现了以下方法来设置和获取发请求时候的请求头</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Header <span class="keyword">map</span>[<span class="keyword">string</span>][]<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h Header)</span> <span class="title">Add</span><span class="params">(key, value <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	textproto.MIMEHeader(h).Add(key, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h Header)</span> <span class="title">Set</span><span class="params">(key, value <span class="keyword">string</span>)</span></span> &#123;</span><br><span class="line">	textproto.MIMEHeader(h).Set(key, value)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(h Header)</span> <span class="title">Get</span><span class="params">(key <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">return</span> textproto.MIMEHeader(h).Get(key)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以自定制header可以这样写，用<code>http.NewRequest</code>来new一个请求，然后用请求的<code>Header.Set</code>去设置header，然后最后去调用客户端的<code>Do(req)</code>发起请求</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> main</span><br><span class="line"><span class="keyword">import</span> <span class="string">"net/http"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    req, err := http.NewRequest(<span class="string">"GET"</span>, <span class="string">"http://example.com/"</span>, <span class="literal">nil</span>)</span><br><span class="line">    req.Header.Set(<span class="string">"Origin"</span>, <span class="string">"xxxxxx"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"Accept-Encoding"</span>, <span class="string">"gzip, deflate, br"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"Accept-Language"</span>, <span class="string">"zh-CN,zh;q=0.9"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"User-Agent"</span>, <span class="string">"Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"Accept"</span>, <span class="string">"application/json, text/javascript, */*; q=0.01"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"Referer"</span>, <span class="string">"xxxxxx"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"X-Requested-With"</span>, <span class="string">"XMLHttpRequest"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"Connection"</span>, <span class="string">"keep-alive"</span>)</span><br><span class="line">    req.Header.Set(<span class="string">"X-Csrftoken"</span>, <span class="string">"xxxxxx"</span>)</span><br><span class="line"></span><br><span class="line">    resp, err := http.DefaultClient.Do(req)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>例如发起一个post请求</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">jar, _ := cookiejar.New(<span class="literal">nil</span>)</span><br><span class="line">http = &amp;http.Client&#123;&#125;</span><br><span class="line"></span><br><span class="line">body := strings.NewReader(<span class="string">`username=admin&amp;password=Password%40_`</span>)</span><br><span class="line">req, err := http.NewRequest(<span class="string">"POST"</span>, sessionUrl, body)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> h, err</span><br><span class="line"></span><br><span class="line">req.Header.Set(<span class="string">"Accept-Encoding"</span>, <span class="string">"gzip, deflate, br"</span>)</span><br><span class="line">req.Header.Set(<span class="string">"Accept-Language"</span>, <span class="string">"zh-CN,zh;q=0.9"</span>)</span><br><span class="line">req.Header.Set(<span class="string">"User-Agent"</span>, <span class="string">"Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"</span>)</span><br><span class="line">req.Header.Set(<span class="string">"Content-Type"</span>, <span class="string">"application/x-www-form-urlencoded; charset=UTF-8"</span>)</span><br><span class="line">req.Header.Set(<span class="string">"Accept"</span>, <span class="string">"application/json, text/javascript, */*; q=0.01"</span>)</span><br><span class="line">req.Header.Set(<span class="string">"Referer"</span>, baseUrl)</span><br><span class="line">req.Header.Set(<span class="string">"X-Requested-With"</span>, <span class="string">"XMLHttpRequest"</span>)</span><br><span class="line">req.Header.Set(<span class="string">"Connection"</span>, <span class="string">"keep-alive"</span>)</span><br><span class="line"></span><br><span class="line">resp, err := http.Do(req)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> err <span class="comment">//errors.New("Login Timeout")</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line"></span><br><span class="line">respBody, err := ioutil.ReadAll(resp.Body)</span><br><span class="line"><span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> data = &amp;CSR&#123;&#125;</span><br><span class="line"><span class="keyword">if</span> err := json.Unmarshal(respBody, data); err != <span class="literal">nil</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> err</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//fmt.Println(string(respBody))</span></span><br><span class="line"><span class="keyword">if</span> data.PasswordModify != <span class="number">0</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> errors.New(<span class="string">"Password Wrong"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="literal">nil</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义客户端"><a href="#自定义客户端" class="headerlink" title="自定义客户端"></a>自定义客户端</h2><p>上面都是使用的包里定义的默认客户端，例如有些网站的证书不是权威证书，我们得关闭客户端的权威证书检查，类似于<code>curl -k</code>那样。或者设置客户端超时时间</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">client = &amp;http.Client&#123;</span><br><span class="line">        Timeout: time.Second * <span class="number">3</span>, </span><br><span class="line">        Transport: &amp;http.Transport&#123;</span><br><span class="line">            TLSClientConfig: &amp;tls.Config&#123;InsecureSkipVerify: <span class="literal">true</span>&#125;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;</span><br><span class="line">req, err := http.NewRequest(<span class="string">"GET"</span>, <span class="string">"http://example.com/"</span>, <span class="literal">nil</span>)</span><br><span class="line">resp, err := client.Do(req)</span><br></pre></td></tr></table></figure>
+
+<h2 id="cookies"><a href="#cookies" class="headerlink" title="cookies"></a>cookies</h2><p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;上面都是些不需要登陆的，或者说不是那种接口式的网站，接口的网站一般是先basicAuth或者oAuth2啥的请求了获取了一个token，后续调接口带上token请求就行了，不需要设置header啥的。但是也有网站不提供接口的，所以一般需要http客户端的记录session模拟人为登陆。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;而session就是体现在http的header的<code>cookie: xxx=yyy; aaa=bbb; session_id=93728560xxxx; .....</code>里(http的header的key不区分大小写)，客户端请求后，服务器端回应的时候会带上<code>Set-cookie</code>然后客户端会自行去把键值对写到cookie里。有的网站把token放在cookies里作为认证的身份，例如以前的百度贴吧的自动签到和pandownload的登陆下载都是叫用户自己找cookie里的那几个字段的值写进去，程序会带着它去请求。cookie里的很多字段看各个web server的控制了，这里不细致讨论。<br>我们使用浏览器会自动的去<code>Set-cookie</code>，那么源码里肯定也有对应的代码段,Do方法最后调用的send方法发送请求</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *Client)</span> <span class="title">send</span><span class="params">(req *Request, deadline time.Time)</span> <span class="params">(resp *Response, didTimeout <span class="keyword">func</span>()</span> <span class="title">bool</span>, <span class="title">err</span> <span class="title">error</span>)</span> &#123;</span><br><span class="line">	<span class="keyword">if</span> c.Jar != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> _, cookie := <span class="keyword">range</span> c.Jar.Cookies(req.URL) &#123;</span><br><span class="line">			req.AddCookie(cookie)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	resp, didTimeout, err = send(req, c.transport(), deadline)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, didTimeout, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> c.Jar != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> rc := resp.Cookies(); <span class="built_in">len</span>(rc) &gt; <span class="number">0</span> &#123;</span><br><span class="line">			c.Jar.SetCookies(req.URL, rc)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> resp, <span class="literal">nil</span>, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果客户端的<code>.Jar</code>不为空就会去<code>SetCookies</code>，所以我们使用cookies也可以自行在header里自动去写，这样做法是浏览器登录后F12打开network抓包，点击到请求里找<br><img src="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/golang/http/001.png" alt="http"><br>找到后自行<code>req.Header.Set(&quot;Cookie&quot;, &quot;xxxxxx&quot;)</code>或者<code>req.AddCookie(xxx)</code>，这样非常繁琐，所以一般我们是新建一个客户端把客户端的Jar不设置为空就行了</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">jar, _ := cookiejar.New(<span class="literal">nil</span>)</span><br><span class="line">h.http = &amp;http.Client&#123;</span><br><span class="line">	...</span><br><span class="line">       Jar: jar,</span><br><span class="line">       ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样后续使用这个客户端的时候就和我们使用浏览器一样会自动处理服务端发的cookie操作了，会保持住session</p>
+<h2 id="multipart-form-data"><a href="#multipart-form-data" class="headerlink" title="multipart/form-data"></a>multipart/form-data</h2><p>http上传文件的时候是把文件分段上传的，会生成一个随机字符(boundary)来分割每段<br><img src="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/golang/http/002.png" alt="http"><br>boundary是各自的http客户端生成的，chrome好像和其他的不一样，总之上传文件的type为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: multipart&#x2F;form-data; boundary&#x3D;分割文件时候的随机字符</span><br></pre></td></tr></table></figure>
+<p>type里的boundary是随机的，所以我们得用包<code>&quot;mime/multipart&quot;</code>处理</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> (</span><br><span class="line">    <span class="string">"bytes"</span></span><br><span class="line">    <span class="string">"fmt"</span></span><br><span class="line">    <span class="string">"io"</span></span><br><span class="line">    <span class="string">"io/ioutil"</span></span><br><span class="line">    <span class="string">"mime/multipart"</span></span><br><span class="line">    <span class="string">"net/http"</span></span><br><span class="line">    <span class="string">"os"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">postFile</span><span class="params">(filename <span class="keyword">string</span>, targetUrl <span class="keyword">string</span>)</span> <span class="title">error</span></span> &#123;</span><br><span class="line">    bodyBuf := &amp;bytes.Buffer&#123;&#125;  <span class="comment">//创建缓存</span></span><br><span class="line">    bodyWriter := multipart.NewWriter(bodyBuf) <span class="comment">// 创建part的writer</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//关键的一步操作，fwimage自行看上图抓包里的，而且这里最好用filepath.Base取文件名不要带路径</span></span><br><span class="line">    fileWriter, err := bodyWriter.CreateFormFile(<span class="string">"file"</span>, filepath.Base(filename))</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">"error writing to buffer"</span>)</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    fh, err := os.Open(filename)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        fmt.Println(<span class="string">"error opening file"</span>)</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">defer</span> fh.Close()</span><br><span class="line"></span><br><span class="line">    <span class="comment">//iocopy</span></span><br><span class="line">    _, err = io.Copy(fileWriter, fh)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">	_ = bodyWriter.WriteField(<span class="string">"id"</span>, <span class="string">"WU_FILE_0"</span>)</span><br><span class="line"></span><br><span class="line">    bodyWriter.Close()   <span class="comment">// 必须在发请求之前关闭，不然不会读到EOF</span></span><br><span class="line"></span><br><span class="line">    req, err := http.NewRequest(<span class="string">"POST"</span>, Url, bodyBuf)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line">    req.Header.Set(<span class="string">"Content-Type"</span>, bodyWriter.FormDataContentType()) <span class="comment">//获取Content-Type的值</span></span><br><span class="line"></span><br><span class="line">    resp, err := http.Do(req)  <span class="comment">//自己的客户端去do，不要照抄</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">    resp_body, err := ioutil.ReadAll(resp.Body)</span><br><span class="line">    <span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> err</span><br><span class="line">    &#125;</span><br><span class="line">    fmt.Println(resp.Status)</span><br><span class="line">    fmt.Println(<span class="keyword">string</span>(resp_body))</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="digest-auth"><a href="#digest-auth" class="headerlink" title="digest auth"></a>digest auth</h2><p>先看一段curl的digest auth的过程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">curl -svX GET --digest -u admin:&#39;xxxxxxx&#39; http:&#x2F;&#x2F;100.64.16.10:8080&#x2F;cas&#x2F;casrs&#x2F;operator&#x2F;getAuthUrl -H &#39;Accept: application&#x2F;json&#39;</span><br><span class="line">* About to connect() to 100.64.16.10 port 8080 (#0)</span><br><span class="line">*   Trying 100.64.16.10...</span><br><span class="line">* Connected to 100.64.16.10 (100.64.16.10) port 8080 (#0)</span><br><span class="line">* Server auth using Digest with user &#39;admin&#39;</span><br><span class="line">&gt; GET &#x2F;cas&#x2F;casrs&#x2F;operator&#x2F;getAuthUrl HTTP&#x2F;1.1</span><br><span class="line">&gt; User-Agent: curl&#x2F;7.29.0</span><br><span class="line">&gt; Host: 100.64.16.10:8080</span><br><span class="line">&gt; Accept: application&#x2F;json</span><br><span class="line">&gt; </span><br><span class="line">&lt; HTTP&#x2F;1.1 401 Unauthorized</span><br><span class="line">&lt; Cache-Control: no-cache, no-store, max-age&#x3D;0, must-revalidate</span><br><span class="line">&lt; Pragma: no-cache</span><br><span class="line">&lt; Expires: 0</span><br><span class="line">&lt; X-XSS-Protection: 1; mode&#x3D;block</span><br><span class="line">&lt; X-Frame-Options: DENY</span><br><span class="line">&lt; X-Content-Type-Options: nosniff</span><br><span class="line">&lt; Set-Cookie: JSESSIONID&#x3D;F65AC0489A30F3A69175FD59B10F9CC5; Path&#x3D;&#x2F;cas&#x2F;; HttpOnly</span><br><span class="line">&lt; WWW-Authenticate: Digest realm&#x3D;&quot;VMC RESTful Web Services&quot;, qop&#x3D;&quot;auth&quot;, nonce&#x3D;&quot;MTU2NDUzNjE3MTUwMzo0MTJjOGM3MGU1MDlmZDhiMDlhM2YzNTBhYjExOGRhMg&#x3D;&#x3D;&quot;</span><br><span class="line">&lt; Content-Type: text&#x2F;html;charset&#x3D;ISO-8859-1</span><br><span class="line">&lt; Content-Length: 686</span><br><span class="line">&lt; Date: Wed, 31 Jul 2019 01:17:51 GMT</span><br><span class="line">&lt; Server: CVM</span><br><span class="line">&lt; </span><br><span class="line">* Ignoring the response-body</span><br><span class="line">* Connection #0 to host 100.64.16.10 left intact</span><br><span class="line">* Issue another request to this URL: &#39;http:&#x2F;&#x2F;100.64.16.10:8080&#x2F;cas&#x2F;casrs&#x2F;operator&#x2F;getAuthUrl&#39;</span><br><span class="line">* Found bundle for host 100.64.16.10: 0xb50040</span><br><span class="line">* Re-using existing connection! (#0) with host 100.64.16.10</span><br><span class="line">* Connected to 100.64.16.10 (100.64.16.10) port 8080 (#0)</span><br><span class="line">* Server auth using Digest with user &#39;admin&#39;</span><br><span class="line">&gt; GET &#x2F;cas&#x2F;casrs&#x2F;operator&#x2F;getAuthUrl HTTP&#x2F;1.1</span><br><span class="line">&gt; Authorization: Digest username&#x3D;&quot;admin&quot;, realm&#x3D;&quot;VMC RESTful Web Services&quot;, nonce&#x3D;&quot;MTU2NDUzNjE3MTUwMzo0MTJjOGM3MGU1MDlmZDhiMDlhM2YzNTBhYjExOGRhMg&#x3D;&#x3D;&quot;, uri&#x3D;&quot;&#x2F;cas&#x2F;casrs&#x2F;operator&#x2F;getAuthUrl&quot;, cnonce&#x3D;&quot;ICAgICAgICAgICAgICAgICAgICAgICAgIDIxMTgzODA&#x3D;&quot;, nc&#x3D;00000001, qop&#x3D;auth, response&#x3D;&quot;bc0c68695d1d51daa364d7a4976566b7&quot;</span><br><span class="line">&gt; User-Agent: curl&#x2F;7.29.0</span><br><span class="line">&gt; Host: 100.64.16.10:8080</span><br><span class="line">&gt; Accept: application&#x2F;json</span><br><span class="line">&gt; </span><br><span class="line">&lt; HTTP&#x2F;1.1 200 OK</span><br><span class="line">&lt; Cache-Control: no-cache, no-store, max-age&#x3D;0, must-revalidate</span><br><span class="line">&lt; Pragma: no-cache</span><br><span class="line">&lt; Expires: 0</span><br><span class="line">&lt; X-XSS-Protection: 1; mode&#x3D;block</span><br><span class="line">&lt; X-Frame-Options: DENY</span><br><span class="line">&lt; X-Content-Type-Options: nosniff</span><br><span class="line">&lt; Set-Cookie: JSESSIONID&#x3D;F06F0016DB0589032994C4D2C296B604; Path&#x3D;&#x2F;cas&#x2F;; HttpOnly</span><br><span class="line">&lt; Content-Type: application&#x2F;json</span><br><span class="line">&lt; Transfer-Encoding: chunked</span><br><span class="line">&lt; Date: Wed, 31 Jul 2019 01:17:51 GMT</span><br><span class="line">&lt; Server: CVM</span><br><span class="line">&lt; </span><br><span class="line">* Connection #0 to host 100.64.16.10 left intact</span><br></pre></td></tr></table></figure>
+<p>http digest auth过程是:</p>
+<ul>
+<li>初次请求后server端返回401请求，并发送curl一个里header为<code>WWW-Authenticate</code>的请求，里面拥有三个字段<code>Digest realm</code>、<code>qop</code>、<code>nonce</code></li>
+<li>curl回复请求，header为<code>Authorization</code>，内容为:<ul>
+<li><code>Digest username</code>为用户名</li>
+<li><code>realm</code>为<code>Digest realm</code>的值，<code>nonce</code>、<code>qop</code>为server端返回</li>
+<li><code>uri</code>为去掉host字段的url部分</li>
+<li><code>nc</code>就是<code>nonceCount</code>，用于标记，计数，防止重放攻击，所以这次为1</li>
+<li><code>cnonce</code>客户端发给服务器的随机字符串</li>
+<li><code>response</code>的值是由俩个hash加密的，加密的表达式决于<code>qop</code>字段，这里直接写伪代码吧<ul>
+<li>如果<code>algorithm</code>未定义或者值为<code>MD5</code>:<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HA1 = MD5(fmt.Sprintf(<span class="string">"%s:%s:%s"</span>, username, realm, password))</span><br></pre></td></tr></table></figure></li>
+<li>如果<code>algorithm</code>值为<code>MD5-sess</code>(和上面差不多，只不过多了<code>:nonce:cnonce</code>):<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HA1 = MD5(fmt.Sprintf(<span class="string">"%s:%s:%s"</span>, MD5(fmt.Sprintf(<span class="string">"%s:%s:%s"</span>, username, realm, password)), nonce, cnonce)</span><br></pre></td></tr></table></figure></li>
+<li>如果<code>qop</code>未定义或者值为<code>auth</code>:<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HA2 = MD5(fmt.Sprintf(<span class="string">"%s:%s"</span>, method, digestURI))</span><br></pre></td></tr></table></figure></li>
+<li>如果<code>qop</code>值为<code>auth-int</code>:<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HA2 = MD5(fmt.Sprintf(<span class="string">"%s:%s:%s"</span>, method, digestURI, MD5(entityBody)))</span><br></pre></td></tr></table></figure></li>
+<li>如果<code>qop</code>值为<code>auth-int</code>，response为:<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response = MD5(fmt.Sprintf(<span class="string">"%s:%s:%s:%s:%s:%s"</span>, HA1, nonce, nonceCount, cnonce, qop, HA2))</span><br></pre></td></tr></table></figure></li>
+<li>如果<code>qop</code>未定义<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response = MD5(fmt.Sprintf(<span class="string">"%s:%s:%s"</span>, HA1, nonce, HA2))</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>所以可以写代码</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> cas</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> (</span><br><span class="line">	<span class="string">"crypto/md5"</span></span><br><span class="line">	<span class="string">"crypto/rand"</span></span><br><span class="line">	<span class="string">"encoding/hex"</span></span><br><span class="line">	<span class="string">"encoding/json"</span></span><br><span class="line">	<span class="string">"errors"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">	<span class="string">"io"</span></span><br><span class="line">	<span class="string">"io/ioutil"</span></span><br><span class="line">	<span class="string">"net/http"</span></span><br><span class="line">	<span class="string">"net/http/cookiejar"</span></span><br><span class="line">	<span class="string">"strings"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="keyword">type</span> CAS <span class="keyword">struct</span> &#123;</span><br><span class="line">	client  *http.Client</span><br><span class="line">	baseUrl <span class="keyword">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">NewCAS</span><span class="params">(url, user, pass <span class="keyword">string</span>)</span> <span class="params">(*CAS, error)</span></span> &#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> err error</span><br><span class="line">	c := &amp;CAS&#123;</span><br><span class="line">		baseUrl: url,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//tr := &amp;http.Transport&#123;</span></span><br><span class="line">	<span class="comment">//	TLSClientConfig: &amp;tls.Config&#123;InsecureSkipVerify: true&#125;,</span></span><br><span class="line">	<span class="comment">//&#125;</span></span><br><span class="line">	jar, _ := cookiejar.New(<span class="literal">nil</span>)</span><br><span class="line">	c.client = &amp;http.Client&#123;</span><br><span class="line">		Jar: jar,</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	req, err := c.NewRequest(<span class="string">"GET"</span>, <span class="string">"/cas/casrs/operator/getAuthUrl"</span>, <span class="literal">nil</span>)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	resp, err := c.client.Do(req)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">	<span class="keyword">if</span> resp.StatusCode == http.StatusUnauthorized &#123;</span><br><span class="line">		digestParts := getDigestParts(resp)</span><br><span class="line">		digestParts[<span class="string">"uri"</span>] = url</span><br><span class="line">		digestParts[<span class="string">"method"</span>] = req.Method</span><br><span class="line">		digestParts[<span class="string">"username"</span>] = user</span><br><span class="line">		digestParts[<span class="string">"password"</span>] = pass</span><br><span class="line">		req, err = c.NewRequest(<span class="string">"GET"</span>, <span class="string">"/cas/casrs/operator/getAuthUrl"</span>, <span class="literal">nil</span>)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line">		req.Header.Set(<span class="string">"Authorization"</span>, getDigestAuthrization(digestParts))</span><br><span class="line">		req.Header.Set(<span class="string">"Content-Type"</span>, <span class="string">"application/json"</span>)</span><br><span class="line">		resp, err = c.client.Do(req)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">defer</span> resp.Body.Close()</span><br><span class="line">		body, _ := ioutil.ReadAll(resp.Body)</span><br><span class="line"></span><br><span class="line">		<span class="keyword">var</span> data = <span class="keyword">struct</span> &#123;</span><br><span class="line">			URI <span class="keyword">string</span> <span class="string">`json:"uri"`</span></span><br><span class="line">		&#125;&#123;&#125;</span><br><span class="line">		err = json.Unmarshal(body, &amp;data)</span><br><span class="line">		<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Println(<span class="keyword">string</span>(body))</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, fmt.Errorf(<span class="string">"NewCAS:json.Unmarshal failed|%s"</span>, err.Error())</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> data.URI == <span class="string">""</span> &#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="literal">nil</span>, errors.New(<span class="string">"maybe username or password error!"</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> c, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="params">(c *CAS)</span> <span class="title">NewRequest</span><span class="params">(method, url <span class="keyword">string</span>, body io.Reader)</span> <span class="params">(*http.Request, error)</span></span> &#123;</span><br><span class="line">	req, err := http.NewRequest(method, fmt.Sprintf(<span class="string">"%s%s"</span>, c.baseUrl, url), body)</span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">nil</span>, err</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	req.Header.Set(<span class="string">"Accept"</span>, <span class="string">"application/json, text/plain, */*"</span>)</span><br><span class="line">	req.Header.Set(<span class="string">"Connection"</span>, <span class="string">"keep-alive"</span>)</span><br><span class="line">	<span class="keyword">if</span> body != <span class="literal">nil</span> &#123;</span><br><span class="line">		req.Header.Set(<span class="string">"Content-Type"</span>, <span class="string">"application/json;charset=UTF-8"</span>)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> req, <span class="literal">nil</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getDigestParts</span><span class="params">(resp *http.Response)</span> <span class="title">map</span>[<span class="title">string</span>]<span class="title">string</span></span> &#123;</span><br><span class="line">	result := <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>&#123;&#125;</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(resp.Header[<span class="string">"WWW-Authenticate"</span>]) &gt; <span class="number">0</span> &#123;</span><br><span class="line">		wantedHeaders := []<span class="keyword">string</span>&#123;<span class="string">"nonce"</span>, <span class="string">"realm"</span>, <span class="string">"qop"</span>, <span class="string">"algorithm"</span>&#125;</span><br><span class="line">		responseHeaders := strings.Split(resp.Header[<span class="string">"WWW-Authenticate"</span>][<span class="number">0</span>], <span class="string">","</span>)</span><br><span class="line">		<span class="keyword">for</span> _, r := <span class="keyword">range</span> responseHeaders &#123;</span><br><span class="line">			<span class="keyword">for</span> _, w := <span class="keyword">range</span> wantedHeaders &#123;</span><br><span class="line">				<span class="keyword">if</span> strings.Contains(r, w) &#123;</span><br><span class="line">					result[w] = strings.Split(r, <span class="string">`"`</span>)[<span class="number">1</span>]</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">getDigestAuthrization</span><span class="params">(digestParts <span class="keyword">map</span>[<span class="keyword">string</span>]<span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> ha1, ha2, response <span class="keyword">string</span></span><br><span class="line">	d := digestParts</span><br><span class="line"></span><br><span class="line">	getMD5 := <span class="function"><span class="keyword">func</span><span class="params">(text <span class="keyword">string</span>)</span> <span class="title">string</span></span> &#123;</span><br><span class="line">		hasher := md5.New()</span><br><span class="line">		hasher.Write([]<span class="keyword">byte</span>(text))</span><br><span class="line">		<span class="keyword">return</span> hex.EncodeToString(hasher.Sum(<span class="literal">nil</span>))</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	getCnonce := <span class="function"><span class="keyword">func</span><span class="params">()</span> <span class="title">string</span></span> &#123;</span><br><span class="line">		b := <span class="built_in">make</span>([]<span class="keyword">byte</span>, <span class="number">8</span>)</span><br><span class="line">		_, _ = io.ReadFull(rand.Reader, b)</span><br><span class="line">		<span class="keyword">return</span> fmt.Sprintf(<span class="string">"%x"</span>, b)[:<span class="number">16</span>]</span><br><span class="line">	&#125;</span><br><span class="line">	cnonce := getCnonce()</span><br><span class="line">	ha1 = getMD5(d[<span class="string">"username"</span>] + <span class="string">":"</span> + d[<span class="string">"realm"</span>] + <span class="string">":"</span> + d[<span class="string">"password"</span>])</span><br><span class="line">	<span class="keyword">if</span> strings.Compare(d[<span class="string">"algorithm"</span>], <span class="string">"MD5-sess"</span>) == <span class="number">0</span> &#123;</span><br><span class="line">		ha1 = getMD5(ha1 + <span class="string">":"</span> + d[<span class="string">"nonce"</span>] + <span class="string">":"</span> + cnonce)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> strings.Compare(d[<span class="string">"qop"</span>], <span class="string">"auth-int"</span>) != <span class="number">0</span> &#123;</span><br><span class="line">		ha2 = getMD5(d[<span class="string">"method"</span>] + <span class="string">":"</span> + d[<span class="string">"uri"</span>])</span><br><span class="line">	&#125;</span><br><span class="line">	nonceCount := <span class="number">00000001</span></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(d[<span class="string">"qop"</span>]) == <span class="number">0</span> &#123;</span><br><span class="line">		response = getMD5(fmt.Sprintf(<span class="string">"%s:%v:%s"</span>, ha1, nonceCount, ha2))</span><br><span class="line">	&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">		response = getMD5(fmt.Sprintf(<span class="string">"%s:%s:%v:%s:%s:%s"</span>, ha1, d[<span class="string">"nonce"</span>], nonceCount, cnonce, d[<span class="string">"qop"</span>], ha2))</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	authorization := fmt.Sprintf(<span class="string">`Digest username="%s", realm="%s", nonce="%s", uri="%s", cnonce="%s", nc="%v", qop="%s", response="%s"`</span>,</span><br><span class="line">		d[<span class="string">"username"</span>], d[<span class="string">"realm"</span>], d[<span class="string">"nonce"</span>], d[<span class="string">"uri"</span>], cnonce, nonceCount, d[<span class="string">"qop"</span>], response)</span><br><span class="line">	<span class="keyword">return</span> authorization</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>entityBody还没搞清楚是啥，所在qop是<code>auth-int</code>的没写</p>
+<h2 id="一些坑"><a href="#一些坑" class="headerlink" title="一些坑"></a>一些坑</h2><h3 id="header的host字段"><a href="#header的host字段" class="headerlink" title="header的host字段"></a>header的host字段</h3><p>之前把curl写的一套逻辑尝试写到go里，发现一直不对，最后发现了host字段的锅。抓包的接口host字段和请求的url不一样(这种情况虽然不是很热门，但是是存在的，例如我们命令行访问ip，设置header模拟访问域名)，后面没办法去掉host的header设定就可以了<br>具体移步 <a href="https://github.com/golang/go/issues/7682" target="_blank" rel="noopener">https://github.com/golang/go/issues/7682</a></p>
+<h3 id="上传文件的type"><a href="#上传文件的type" class="headerlink" title="上传文件的type"></a>上传文件的type</h3><p>官方函数CreateFormFile限制了Content-Type为<code>application/octet-stream</code>而且并不打算改，很多时候后端的时候会重视这个type。可以看到之前我的浏览器抓包的type是<code>application/octet-binary</code>所以我们可以写个下面的函数处理</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">createAudioFormFile</span><span class="params">(w *multipart.Writer, fieldname, filename <span class="keyword">string</span>)</span> <span class="params">(io.Writer, error)</span></span> &#123;</span><br><span class="line">	h := <span class="built_in">make</span>(textproto.MIMEHeader)</span><br><span class="line">	h.Set(<span class="string">"Content-Disposition"</span>, fmt.Sprintf(<span class="string">`form-data; name="%s"; filename="%s"`</span>, fieldname, filename))</span><br><span class="line">	h.Set(<span class="string">"Content-Type"</span>, <span class="string">"application/octet-binary"</span>)</span><br><span class="line">	<span class="keyword">return</span> w.CreatePart(h)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们可以这样用</p>
+<figure class="highlight golang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">fileWriter, err := bodyWriter.CreateFormFile(<span class="string">"fwimage"</span>, filepath.Base(filename))</span><br><span class="line">改为</span><br><span class="line">fileWriter, _ := createAudioFormFile(bodyWriter,<span class="string">"fwimage"</span>, filepath.Base(filename))</span><br></pre></td></tr></table></figure>
+<h3 id="json的坑"><a href="#json的坑" class="headerlink" title="json的坑"></a>json的坑</h3><p>下面这张图可能看不出啥问题，但是是问题的一部分，调用的接口的数据经过了cdn，int类型经常出现<code>.0</code>的数字导致我写错类型json.Unmarshal报错，jq也会把.0的去掉取整<br><img src="https://raw.githubusercontent.com/zhangguanzhang/Image-Hosting/master/golang/http/003.jpg" alt="http3"></p>
+<p>参考：</p>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Digest_access_authentication" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Digest_access_authentication</a></li>
+<li><a href="https://stackoverflow.com/questions/39474284/how-do-you-do-a-http-post-with-digest-authentication-in-golang" target="_blank" rel="noopener">https://stackoverflow.com/questions/39474284/how-do-you-do-a-http-post-with-digest-authentication-in-golang</a></li>
+<li><a href="https://matt.aimonetti.net/posts/2013-07-golang-multipart-file-upload-example/" target="_blank" rel="noopener">https://matt.aimonetti.net/posts/2013-07-golang-multipart-file-upload-example/</a></li>
+</ul>
+
+    </article>
+    <!-- license  -->
+    
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://zhangguanzhang.github.io">Zhangguanzhang</a>
+            <p>原文链接：<a href="http://zhangguanzhang.github.io/2019/07/07/golang-http/">http://zhangguanzhang.github.io/2019/07/07/golang-http/</a>
+            <p>发表日期：<a href="http://zhangguanzhang.github.io/2019/07/07/golang-http/">July 7th 2019, 3:53:47 pm</a>
+            <p>更新日期：<a href="http://zhangguanzhang.github.io/2019/07/07/golang-http/">May 4th 2020, 8:41:59 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
+        </div>
+    
+    <!-- paginator  -->
+    <ul class="post-paginator">
+        <li class="next">
+            
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/07/08/nodeport-err/" title= "为什么我不用nodePort之偶然中奖几率">
+                    <div class="nextTitle">为什么我不用nodePort之偶然中奖几率</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/06/26/uefi-pxe/" title= "uefi模式下docker+交换机部署pxe批量安装">
+                    <div class="prevTitle">uefi模式下docker+交换机部署pxe批量安装</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMzk1OC8xMDQ5Mw>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+
+<!-- City版安装代码已完成 -->
+    
+    
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
+    
+    
+
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
+            
+        </div>
+        <footer class="footer footer-unloaded">
+    <!-- social  -->
+    
+    <div class="social">
+        
+    
+        
+            
+                <a href="mailto:zhangguanzhang@qq.com" class="iconfont-archer email" title=email ></a>
+            
+        
+    
+        
+            
+                <a href="//github.com/zhangguanzhang" class="iconfont-archer github" target="_blank" title=github></a>
+            
+        
+    
+        
+            
+                <span class="iconfont-archer wechat" title=wechat>
+                  
+                  <img class="profile-qr" src="/assets/example_wc.png" />
+                </span>
+            
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+    
+        
+            
+                <a href="/assets/zhifubao.png" class="iconfont-archer others" target="_blank" title=others></a>
+            
+        
+    
+        
+            
+                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
+            
+        
+    
+
+    </div>
+    
+    <!-- powered by Hexo  -->
+    <div class="copyright">
+        <span id="hexo-power">Powered by <a href="https://hexo.io/" target="_blank">Hexo</a></span><span class="iconfont-archer power">&#xe635;</span><span id="theme-info">theme <a href="https://github.com/fi3ework/hexo-theme-archer" target="_blank">Archer</a></span>
+    </div>
+    <!-- 不蒜子  -->
+    
+    <div class="busuanzi-container">
+    
+     
+    <span id="busuanzi_container_site_pv">PV: <span id="busuanzi_value_site_pv"></span> :)</span>
+    
+    </div>
+    
+</footer>
+    </div>
+    <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简单的get和post"><span class="toc-number">1.</span> <span class="toc-text">简单的get和post</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置header"><span class="toc-number">2.</span> <span class="toc-text">设置header</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义客户端"><span class="toc-number">3.</span> <span class="toc-text">自定义客户端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cookies"><span class="toc-number">4.</span> <span class="toc-text">cookies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#multipart-form-data"><span class="toc-number">5.</span> <span class="toc-text">multipart&#x2F;form-data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#digest-auth"><span class="toc-number">6.</span> <span class="toc-text">digest auth</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一些坑"><span class="toc-number">7.</span> <span class="toc-text">一些坑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#header的host字段"><span class="toc-number">7.1.</span> <span class="toc-text">header的host字段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上传文件的type"><span class="toc-number">7.2.</span> <span class="toc-text">上传文件的type</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#json的坑"><span class="toc-number">7.3.</span> <span class="toc-text">json的坑</span></a></li></ol></li></ol>
+    </div>
+    
+    <div class="back-top iconfont-archer">&#xe639;</div>
+    <div class="sidebar sidebar-hide">
+    <ul class="sidebar-tabs sidebar-tabs-active-0">
+        <li class="sidebar-tab-archives"><span class="iconfont-archer">&#xe67d;</span><span class="tab-name">Archive</span></li>
+        <li class="sidebar-tab-tags"><span class="iconfont-archer">&#xe61b;</span><span class="tab-name">Tag</span></li>
+        <li class="sidebar-tab-categories"><span class="iconfont-archer">&#xe666;</span><span class="tab-name">Cate</span></li>
+    </ul>
+    <div class="sidebar-content sidebar-content-show-archive">
+          <div class="sidebar-panel-archives">
+    <!-- 在ejs中将archive按照时间排序 -->
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="total-and-search">
+        <div class="total-archive">
+        Total : 89
+        </div>
+        <!-- search  -->
+        
+    </div>
+    
+    <div class="post-archive">
+    
+    
+    
+    
+    <div class="archive-year"> 2020 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/20</span><a class="archive-post-title" href= "/2020/10/20/kylin-v10-k8s-overlay-error/" >银河麒麟arm64系统上k8s集群跨节点不通的一次排查</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2020/09/18/ocp-4.5-install/" >openshift 4.5.9 离线安装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/30</span><a class="archive-post-title" href= "/2020/07/30/prometheus-rate-and-irate/" >prometheus的rate与irate内部是如何计算的</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/23</span><a class="archive-post-title" href= "/2020/07/23/fs-error-fix-k8s-master/" >k8s master机器文件系统故障的一次恢复过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/2020/06/23/host-gw-in-aliyun/" >阿里云上使用flannel host-gw跨节点pod不通的解决</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/19</span><a class="archive-post-title" href= "/2020/06/19/go-prom-exporter/" >[未写完]使用go开发一个Prometheus的exporter</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/23</span><a class="archive-post-title" href= "/2020/05/23/k8s-vxlan-63-timeout/" >v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/13</span><a class="archive-post-title" href= "/2020/05/13/x86-router-flash/" >proxmox x86软路由笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2020/05/12/N1-flash/" >斐讯N1刷机和旁路由的设置</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/27</span><a class="archive-post-title" href= "/2020/04/27/go-version-ifno/" >git工作流下golang项目的version信息该如何处理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/26</span><a class="archive-post-title" href= "/2020/03/26/KubeXXXMismatch/" >一次deploy,rs,sts Mismatch 的处理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/10</span><a class="archive-post-title" href= "/2020/03/10/go-mod-base-use/" >go mod的基础使用-科普</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2020/03/02/centos6-hung-while-booting/" >centos6中毒重启后卡在启动页面</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/02</span><a class="archive-post-title" href= "/2020/03/02/binfmt-0000/" >记录一次request_module: runaway loop modeprobe binfmt-0000</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/27</span><a class="archive-post-title" href= "/2020/02/27/microsoft-graph-for-onedrive/" >使用microsoft-graph的api对接onedrive</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2020/01/08/docker-panic-invalid-page-type/" >docker-18.06.3-ce启动panic: invalid page type: 0: 0的解决处理</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2019 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/05</span><a class="archive-post-title" href= "/2019/12/05/suse-fix-data-but-device-busy/" >opensuse的一次救援</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/03</span><a class="archive-post-title" href= "/2019/12/03/dos-to-gpt/" >从PTTYPE="dos"到TYPE="LVM2_member"的救援</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2019/11/24/kubeadm-base-use/" >[长期更新]--应大多数人要求写下kubeadm的基础使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/24</span><a class="archive-post-title" href= "/2019/10/24/deployment-consul-in-k8s/" >consul仅当服务发现在k8s无状态部署使用</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/21</span><a class="archive-post-title" href= "/2019/10/21/k8s-v1.14-v1.15-fix-issue/" >手动修复v1.14-v1.15版本k8s的issue:76956</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2019/10/12/boot-grub-rescue/" >/boot目录被清空下物理机无法开机的一次救援</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/11</span><a class="archive-post-title" href= "/2019/10/11/ansible-count-Idempotency/" >ansible数量限制上的幂等性</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/27</span><a class="archive-post-title" href= "/2019/09/27/consul-tls/" >高可用的SSL consul cluster实践</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/05</span><a class="archive-post-title" href= "/2019/09/05/prometheus-change-timezone/" >修改源码更改prometheus的时区问题</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/24</span><a class="archive-post-title" href= "/2019/08/24/gobot-build/" >gobot控制esp8266</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/06</span><a class="archive-post-title" href= "/2019/08/06/preseed/" >ubuntu preseed无人应答安装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/14</span><a class="archive-post-title" href= "/2019/07/14/chromedp/" >golang headless browser包chromedp初探</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2019/07/08/nodeport-err/" >为什么我不用nodePort之偶然中奖几率</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/07</span><a class="archive-post-title" href= "/2019/07/07/golang-http/" >golang的net/http包的客户端简单科普</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2019/06/26/uefi-pxe/" >uefi模式下docker+交换机部署pxe批量安装</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/23</span><a class="archive-post-title" href= "/2019/06/23/autoInstallServer/" >拟定excel表格服务器自动按照表格配置信息和安装的实现过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/12</span><a class="archive-post-title" href= "/2019/06/12/CLP/" >SMASH CLP的一些笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/02</span><a class="archive-post-title" href= "/2019/06/02/cobra/" >golang cobra的一些笔记</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/28</span><a class="archive-post-title" href= "/2019/04/28/k8s-java-start-time-not-same/" >闲谈线上俩k8s环境同等limits下pod启动时间不一样解决过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/22</span><a class="archive-post-title" href= "/2019/03/22/k8s-controller-error/" >一次kube-controller-manager的bug导致的线上无法调度处理过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2019/03/15/flannel-bin/" >不走etcd v2 api下二进制跑flannel的总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/11</span><a class="archive-post-title" href= "/2019/03/11/k8s-ha/" >k8s高可用涉及到ip填写的相关配置和一些坑</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/03</span><a class="archive-post-title" href= "/2019/03/03/kubernetes-1-13-4/" >二进制部署Kubernetes v1.13.12 HA可选</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/19</span><a class="archive-post-title" href= "/2019/02/19/jira-confluence/" >docker部署jira(8.0.0)和confluence(6.14.1)</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span><a class="archive-post-title" href= "/2019/02/12/dashboard/" >通用的dashboard部署和tls，SSL相关部署</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/30</span><a class="archive-post-title" href= "/2019/01/30/fstab/" >fstab与systemd.mount自动挂载的一点研究和见解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/22</span><a class="archive-post-title" href= "/2019/01/22/proxmox-cloud-init/" >proxmox里使用cloud-init和一些笔记</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2018 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/04</span><a class="archive-post-title" href= "/2018/12/04/black-box-exporter/" >prometheus的黑盒监控</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/24</span><a class="archive-post-title" href= "/2018/11/24/how-to-use-kubeadm/" >对于初入k8s和kubeadm的一些建议</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/06</span><a class="archive-post-title" href= "/2018/11/06/onlyoffice/" >一次docker镜像的解耦--onlyoffice</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/05</span><a class="archive-post-title" href= "/2018/11/05/10chars/" >记录一次十字符病毒清理过程</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/27</span><a class="archive-post-title" href= "/2018/10/27/create-kubeconfig/" >生成kubeconfig常规的两种方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/12</span><a class="archive-post-title" href= "/2018/10/12/prometheus-operator/" >全手动部署prometheus-operator监控K8S集群以及一些坑</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/06</span><a class="archive-post-title" href= "/2018/10/06/IngressController/" >IngressController使用和它的高可用落地</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/24</span><a class="archive-post-title" href= "/2018/09/24/k8s-some-vpc-cluster/" >跨VPC或者跨云供应商搭建K8S集群正确姿势</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">09/18</span><a class="archive-post-title" href= "/2018/09/18/kubernetes-1-11-x-bin/" >二进制部署Kubernetes v1.11.x(1.12.x) HA可选</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">08/03</span><a class="archive-post-title" href= "/2018/08/03/Kubernetes_install_1.11.1/" >Kubernetes v1.11.x HA全手动苦工安装教学</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/18</span><a class="archive-post-title" href= "/2018/07/18/ecs-vip/" >基于openstack的ecs上使用VIP</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">07/08</span><a class="archive-post-title" href= "/2018/07/08/travis-sync-gcr-io/" >利用travis同步gcr.io镜像到dockerhub</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/25</span><a class="archive-post-title" href= "/2018/06/25/etcd-error/" >记录一次线上k8s节点故障</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2018/06/03/kubernetes-s-job/" >kubernetes's Job总结和实战以及坑</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/02</span><a class="archive-post-title" href= "/2018/06/02/kubernetes-nodeSelector/" >kubernetes的PodAffinity的不解</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/05</span><a class="archive-post-title" href= "/2018/05/05/Kubernetes_install/" >[转载+修正]Kubernetes v1.10.x HA全手动苦工安装教学</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2018/04/29/kubernetes-configMap-mount/" >kubernetes的configMap文件挂载不同的路径且不覆盖目录的解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/05</span><a class="archive-post-title" href= "/2018/02/05/docker-image-can-t-rm/" >docker无法删除掉镜像的解决方法</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/20</span><a class="archive-post-title" href= "/2018/01/20/docker-rm%E7%9A%84%E6%B3%A8%E6%84%8F%E7%82%B9/" >慎用docker的--rm选项!!!</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/10</span><a class="archive-post-title" href= "/2018/01/10/docker%E7%9A%84%E4%B8%80%E4%BA%9B%E6%A6%82%E5%BF%B5/" >docker的一些概念</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2017 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/24</span><a class="archive-post-title" href= "/2017/12/24/docker%E5%AE%B9%E5%99%A8%E8%AE%BF%E9%97%AE%E5%AE%BF%E4%B8%BB%E6%9C%BA/" >docker容器访问宿主机</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">12/23</span><a class="archive-post-title" href= "/2017/12/23/docker%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E4%BA%92%E8%81%94/" >docker容器网络互联</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/26</span><a class="archive-post-title" href= "/2017/06/26/lua-list-all-upsteam/" >lua列出所有upsteam</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">06/03</span><a class="archive-post-title" href= "/2017/06/03/bash-complete/" >bash自定义补全</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/25</span><a class="archive-post-title" href= "/2017/05/25/shell%E8%84%9A%E6%9C%AC%E7%9A%84%E9%80%89%E9%A1%B9%E5%A4%84%E7%90%86/" >shell脚本的选项和参数处理</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/12</span><a class="archive-post-title" href= "/2017/05/12/ssh%E4%BA%92%E4%BF%A1/" >ssh互信</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">05/06</span><a class="archive-post-title" href= "/2017/05/06/shell%E5%BF%AB%E6%8D%B7%E9%94%AE%E6%8F%90%E5%8D%87%E6%95%88%E7%8E%87/" >shell利用快捷键提升命令输入和编辑</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/29</span><a class="archive-post-title" href= "/2017/04/29/zabbixsetup/" >个人zabbix安装和坑的解决</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/26</span><a class="archive-post-title" href= "/2017/04/26/%E6%AD%A3%E5%88%99%E9%9B%B6%E5%AE%BD%E6%96%AD%E8%A8%80%E7%9A%84%E4%B8%80%E4%B8%AA%E6%B3%A8%E6%84%8F%E7%82%B9/" >正则零宽断言的一个注意点</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/25</span><a class="archive-post-title" href= "/2017/04/25/%E8%BD%AC%E8%BD%BD-awk%E4%B8%ADRS-OFS-RS-ORS%E5%8C%BA%E5%88%AB%E4%BA%8E%E8%81%94%E7%B3%BB/" >[转载]awk中RS,ORS,FS,OFS区别于联系</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/20</span><a class="archive-post-title" href= "/2017/04/20/%E8%AE%B0%E5%BD%95LVM%E7%9A%84%E7%BB%83%E4%B9%A0/" >记录LVM和raid的练习</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/17</span><a class="archive-post-title" href= "/2017/04/17/iot/" >分享下自己做的外网控制硬件</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2017/04/15/shell_process/" >shell多进程并发执行</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/15</span><a class="archive-post-title" href= "/2017/04/15/shellsubstring/" >shell的字符串截取</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/11</span><a class="archive-post-title" href= "/2017/04/11/8266hexdownload/" >8266模块的烧写和sdk的坑</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/09</span><a class="archive-post-title" href= "/2017/04/09/armlnmp/" >安卓安装linux并且源码编译安装搭建lnmp的坑和总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">04/03</span><a class="archive-post-title" href= "/2017/04/03/bond/" >centos配置bond</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/20</span><a class="archive-post-title" href= "/2017/03/20/ftp-install/" >vsftpd虚拟用户简单部署</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">03/15</span><a class="archive-post-title" href= "/2017/03/15/lnmp/" >源码编译安装lnmp</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/26</span><a class="archive-post-title" href= "/2017/02/26/ad/" >Altium Designer里走线开窗和挖除铺铜还有一些技巧</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/12</span><a class="archive-post-title" href= "/2017/02/12/wx00/" >微信公众号接入自己服务器</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">02/02</span><a class="archive-post-title" href= "/2017/02/02/lamp/" >lamp环境搭建总结</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">01/08</span><a class="archive-post-title" href= "/2017/01/08/tuling-wx/" >微信公众号接入图灵机器人api</a>
+        </li>
+    
+    
+    
+    
+    
+        </ul>
+    
+    <div class="archive-year"> 2016 </div>
+    <ul class="year-list">
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">11/13</span><a class="archive-post-title" href= "/2016/11/13/cad/" >cad</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/30</span><a class="archive-post-title" href= "/2016/10/30/20161030/" >记录下自己制作的led-vu</a>
+        </li>
+    
+    
+        <li class="archive-post-item">
+            <span class="archive-post-date">10/28</span><a class="archive-post-title" href= "/2016/10/28/hello/" >hello world</a>
+        </li>
+    
+    </div>
+  </div>
+        <div class="sidebar-panel-tags">
+    <div class="sidebar-tags-name">
+    
+        <span class="sidebar-tag-name" data-tags="diy"><span class="iconfont-archer">&#xe606;</span>diy</span>
+    
+        <span class="sidebar-tag-name" data-tags="8266"><span class="iconfont-archer">&#xe606;</span>8266</span>
+    
+        <span class="sidebar-tag-name" data-tags="总结"><span class="iconfont-archer">&#xe606;</span>总结</span>
+    
+        <span class="sidebar-tag-name" data-tags="ipmi"><span class="iconfont-archer">&#xe606;</span>ipmi</span>
+    
+        <span class="sidebar-tag-name" data-tags="CLP"><span class="iconfont-archer">&#xe606;</span>CLP</span>
+    
+        <span class="sidebar-tag-name" data-tags="k8s"><span class="iconfont-archer">&#xe606;</span>k8s</span>
+    
+        <span class="sidebar-tag-name" data-tags="ingress"><span class="iconfont-archer">&#xe606;</span>ingress</span>
+    
+        <span class="sidebar-tag-name" data-tags="Mismatch"><span class="iconfont-archer">&#xe606;</span>Mismatch</span>
+    
+        <span class="sidebar-tag-name" data-tags="Altium Designer"><span class="iconfont-archer">&#xe606;</span>Altium Designer</span>
+    
+        <span class="sidebar-tag-name" data-tags="ansible"><span class="iconfont-archer">&#xe606;</span>ansible</span>
+    
+        <span class="sidebar-tag-name" data-tags="consul"><span class="iconfont-archer">&#xe606;</span>consul</span>
+    
+        <span class="sidebar-tag-name" data-tags="lnmp"><span class="iconfont-archer">&#xe606;</span>lnmp</span>
+    
+        <span class="sidebar-tag-name" data-tags="安卓"><span class="iconfont-archer">&#xe606;</span>安卓</span>
+    
+        <span class="sidebar-tag-name" data-tags="initrd"><span class="iconfont-archer">&#xe606;</span>initrd</span>
+    
+        <span class="sidebar-tag-name" data-tags="grub"><span class="iconfont-archer">&#xe606;</span>grub</span>
+    
+        <span class="sidebar-tag-name" data-tags="raid"><span class="iconfont-archer">&#xe606;</span>raid</span>
+    
+        <span class="sidebar-tag-name" data-tags="Linux"><span class="iconfont-archer">&#xe606;</span>Linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="kernel"><span class="iconfont-archer">&#xe606;</span>kernel</span>
+    
+        <span class="sidebar-tag-name" data-tags="prometheus"><span class="iconfont-archer">&#xe606;</span>prometheus</span>
+    
+        <span class="sidebar-tag-name" data-tags="exporter"><span class="iconfont-archer">&#xe606;</span>exporter</span>
+    
+        <span class="sidebar-tag-name" data-tags="boot"><span class="iconfont-archer">&#xe606;</span>boot</span>
+    
+        <span class="sidebar-tag-name" data-tags="cad"><span class="iconfont-archer">&#xe606;</span>cad</span>
+    
+        <span class="sidebar-tag-name" data-tags="centos6"><span class="iconfont-archer">&#xe606;</span>centos6</span>
+    
+        <span class="sidebar-tag-name" data-tags="golang"><span class="iconfont-archer">&#xe606;</span>golang</span>
+    
+        <span class="sidebar-tag-name" data-tags="chromedp"><span class="iconfont-archer">&#xe606;</span>chromedp</span>
+    
+        <span class="sidebar-tag-name" data-tags="cobra"><span class="iconfont-archer">&#xe606;</span>cobra</span>
+    
+        <span class="sidebar-tag-name" data-tags="docker"><span class="iconfont-archer">&#xe606;</span>docker</span>
+    
+        <span class="sidebar-tag-name" data-tags="Dockerfile"><span class="iconfont-archer">&#xe606;</span>Dockerfile</span>
+    
+        <span class="sidebar-tag-name" data-tags="keepavlied"><span class="iconfont-archer">&#xe606;</span>keepavlied</span>
+    
+        <span class="sidebar-tag-name" data-tags="etcd"><span class="iconfont-archer">&#xe606;</span>etcd</span>
+    
+        <span class="sidebar-tag-name" data-tags="flannel"><span class="iconfont-archer">&#xe606;</span>flannel</span>
+    
+        <span class="sidebar-tag-name" data-tags="cifs"><span class="iconfont-archer">&#xe606;</span>cifs</span>
+    
+        <span class="sidebar-tag-name" data-tags="ftp"><span class="iconfont-archer">&#xe606;</span>ftp</span>
+    
+        <span class="sidebar-tag-name" data-tags="go mod"><span class="iconfont-archer">&#xe606;</span>go mod</span>
+    
+        <span class="sidebar-tag-name" data-tags="gobot"><span class="iconfont-archer">&#xe606;</span>gobot</span>
+    
+        <span class="sidebar-tag-name" data-tags="esp8266"><span class="iconfont-archer">&#xe606;</span>esp8266</span>
+    
+        <span class="sidebar-tag-name" data-tags="http"><span class="iconfont-archer">&#xe606;</span>http</span>
+    
+        <span class="sidebar-tag-name" data-tags="hello world"><span class="iconfont-archer">&#xe606;</span>hello world</span>
+    
+        <span class="sidebar-tag-name" data-tags="mqtt"><span class="iconfont-archer">&#xe606;</span>mqtt</span>
+    
+        <span class="sidebar-tag-name" data-tags="原创"><span class="iconfont-archer">&#xe606;</span>原创</span>
+    
+        <span class="sidebar-tag-name" data-tags="jira"><span class="iconfont-archer">&#xe606;</span>jira</span>
+    
+        <span class="sidebar-tag-name" data-tags="confluence"><span class="iconfont-archer">&#xe606;</span>confluence</span>
+    
+        <span class="sidebar-tag-name" data-tags="kube-controller-manager"><span class="iconfont-archer">&#xe606;</span>kube-controller-manager</span>
+    
+        <span class="sidebar-tag-name" data-tags="java"><span class="iconfont-archer">&#xe606;</span>java</span>
+    
+        <span class="sidebar-tag-name" data-tags="springboot"><span class="iconfont-archer">&#xe606;</span>springboot</span>
+    
+        <span class="sidebar-tag-name" data-tags="kubeadm"><span class="iconfont-archer">&#xe606;</span>kubeadm</span>
+    
+        <span class="sidebar-tag-name" data-tags="ConfigMap"><span class="iconfont-archer">&#xe606;</span>ConfigMap</span>
+    
+        <span class="sidebar-tag-name" data-tags="PodAffinity"><span class="iconfont-archer">&#xe606;</span>PodAffinity</span>
+    
+        <span class="sidebar-tag-name" data-tags="lamp"><span class="iconfont-archer">&#xe606;</span>lamp</span>
+    
+        <span class="sidebar-tag-name" data-tags="nginx"><span class="iconfont-archer">&#xe606;</span>nginx</span>
+    
+        <span class="sidebar-tag-name" data-tags="microsoft"><span class="iconfont-archer">&#xe606;</span>microsoft</span>
+    
+        <span class="sidebar-tag-name" data-tags="graph"><span class="iconfont-archer">&#xe606;</span>graph</span>
+    
+        <span class="sidebar-tag-name" data-tags="onedrive"><span class="iconfont-archer">&#xe606;</span>onedrive</span>
+    
+        <span class="sidebar-tag-name" data-tags="nodeport"><span class="iconfont-archer">&#xe606;</span>nodeport</span>
+    
+        <span class="sidebar-tag-name" data-tags="preseed"><span class="iconfont-archer">&#xe606;</span>preseed</span>
+    
+        <span class="sidebar-tag-name" data-tags="timezone"><span class="iconfont-archer">&#xe606;</span>timezone</span>
+    
+        <span class="sidebar-tag-name" data-tags="operator"><span class="iconfont-archer">&#xe606;</span>operator</span>
+    
+        <span class="sidebar-tag-name" data-tags="openstack"><span class="iconfont-archer">&#xe606;</span>openstack</span>
+    
+        <span class="sidebar-tag-name" data-tags="cloud-init"><span class="iconfont-archer">&#xe606;</span>cloud-init</span>
+    
+        <span class="sidebar-tag-name" data-tags="linux"><span class="iconfont-archer">&#xe606;</span>linux</span>
+    
+        <span class="sidebar-tag-name" data-tags="shell"><span class="iconfont-archer">&#xe606;</span>shell</span>
+    
+        <span class="sidebar-tag-name" data-tags="bash"><span class="iconfont-archer">&#xe606;</span>bash</span>
+    
+        <span class="sidebar-tag-name" data-tags="ssh"><span class="iconfont-archer">&#xe606;</span>ssh</span>
+    
+        <span class="sidebar-tag-name" data-tags="suse"><span class="iconfont-archer">&#xe606;</span>suse</span>
+    
+        <span class="sidebar-tag-name" data-tags="dockerhub"><span class="iconfont-archer">&#xe606;</span>dockerhub</span>
+    
+        <span class="sidebar-tag-name" data-tags="gcr.io"><span class="iconfont-archer">&#xe606;</span>gcr.io</span>
+    
+        <span class="sidebar-tag-name" data-tags="微信"><span class="iconfont-archer">&#xe606;</span>微信</span>
+    
+        <span class="sidebar-tag-name" data-tags="api"><span class="iconfont-archer">&#xe606;</span>api</span>
+    
+        <span class="sidebar-tag-name" data-tags="tftp"><span class="iconfont-archer">&#xe606;</span>tftp</span>
+    
+        <span class="sidebar-tag-name" data-tags="zabbix"><span class="iconfont-archer">&#xe606;</span>zabbix</span>
+    
+        <span class="sidebar-tag-name" data-tags="正则"><span class="iconfont-archer">&#xe606;</span>正则</span>
+    
+        <span class="sidebar-tag-name" data-tags="awk"><span class="iconfont-archer">&#xe606;</span>awk</span>
+    
+        <span class="sidebar-tag-name" data-tags="N1"><span class="iconfont-archer">&#xe606;</span>N1</span>
+    
+        <span class="sidebar-tag-name" data-tags="openwrt"><span class="iconfont-archer">&#xe606;</span>openwrt</span>
+    
+        <span class="sidebar-tag-name" data-tags="go"><span class="iconfont-archer">&#xe606;</span>go</span>
+    
+        <span class="sidebar-tag-name" data-tags="63s"><span class="iconfont-archer">&#xe606;</span>63s</span>
+    
+        <span class="sidebar-tag-name" data-tags="timeout"><span class="iconfont-archer">&#xe606;</span>timeout</span>
+    
+        <span class="sidebar-tag-name" data-tags="host-gw"><span class="iconfont-archer">&#xe606;</span>host-gw</span>
+    
+        <span class="sidebar-tag-name" data-tags="kubeconfig"><span class="iconfont-archer">&#xe606;</span>kubeconfig</span>
+    
+        <span class="sidebar-tag-name" data-tags="x86"><span class="iconfont-archer">&#xe606;</span>x86</span>
+    
+        <span class="sidebar-tag-name" data-tags="Prometheus"><span class="iconfont-archer">&#xe606;</span>Prometheus</span>
+    
+        <span class="sidebar-tag-name" data-tags="openshift"><span class="iconfont-archer">&#xe606;</span>openshift</span>
+    
+        <span class="sidebar-tag-name" data-tags="ocp"><span class="iconfont-archer">&#xe606;</span>ocp</span>
+    
+        <span class="sidebar-tag-name" data-tags="Kylin"><span class="iconfont-archer">&#xe606;</span>Kylin</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-tags-empty">&#xe678;</div>
+    <div class="tag-load-fail" style="display: none; color: #ccc; font-size: 0.6rem;">
+    缺失模块。<br/>
+    1、请确保node版本大于6.2<br/>
+    2、在博客根目录（注意不是archer根目录）执行以下命令：<br/>
+    <span style="color: #f75357; font-size: 1rem; line-height: 2rem;">npm i hexo-generator-json-content --save</span><br/>
+    3、在根目录_config.yml里添加配置：
+    <pre style="color: #787878; font-size: 0.6rem;">
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: true
+    tags: true</pre>
+    </div> 
+    <div class="sidebar-tags-list"></div>
+</div>
+        <div class="sidebar-panel-categories">
+    <div class="sidebar-categories-name">
+    
+        <span class="sidebar-category-name" data-categories="日志"><span class="iconfont-archer">&#xe60a;</span>日志</span>
+    
+        <span class="sidebar-category-name" data-categories="ipmi"><span class="iconfont-archer">&#xe60a;</span>ipmi</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes"><span class="iconfont-archer">&#xe60a;</span>kubernetes</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/闲搞"><span class="iconfont-archer">&#xe60a;</span>日志/闲搞</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/心得"><span class="iconfont-archer">&#xe60a;</span>日志/心得</span>
+    
+        <span class="sidebar-category-name" data-categories="ansible"><span class="iconfont-archer">&#xe60a;</span>ansible</span>
+    
+        <span class="sidebar-category-name" data-categories="pxe"><span class="iconfont-archer">&#xe60a;</span>pxe</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux"><span class="iconfont-archer">&#xe60a;</span>Linux</span>
+    
+        <span class="sidebar-category-name" data-categories="prometheus"><span class="iconfont-archer">&#xe60a;</span>prometheus</span>
+    
+        <span class="sidebar-category-name" data-categories="boot"><span class="iconfont-archer">&#xe60a;</span>boot</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes/kubelet"><span class="iconfont-archer">&#xe60a;</span>kubernetes/kubelet</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/Auto-cad"><span class="iconfont-archer">&#xe60a;</span>日志/Auto-cad</span>
+    
+        <span class="sidebar-category-name" data-categories="golang"><span class="iconfont-archer">&#xe60a;</span>golang</span>
+    
+        <span class="sidebar-category-name" data-categories="consul"><span class="iconfont-archer">&#xe60a;</span>consul</span>
+    
+        <span class="sidebar-category-name" data-categories="ansible/心得"><span class="iconfont-archer">&#xe60a;</span>ansible/心得</span>
+    
+        <span class="sidebar-category-name" data-categories="pxe/raid"><span class="iconfont-archer">&#xe60a;</span>pxe/raid</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux/boot"><span class="iconfont-archer">&#xe60a;</span>Linux/boot</span>
+    
+        <span class="sidebar-category-name" data-categories="boot/grub"><span class="iconfont-archer">&#xe60a;</span>boot/grub</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux/centos6"><span class="iconfont-archer">&#xe60a;</span>Linux/centos6</span>
+    
+        <span class="sidebar-category-name" data-categories="pxe/raid/kickstart"><span class="iconfont-archer">&#xe60a;</span>pxe/raid/kickstart</span>
+    
+        <span class="sidebar-category-name" data-categories="Linux/centos6/boot"><span class="iconfont-archer">&#xe60a;</span>Linux/centos6/boot</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/容器"><span class="iconfont-archer">&#xe60a;</span>日志/容器</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes/docker"><span class="iconfont-archer">&#xe60a;</span>kubernetes/docker</span>
+    
+        <span class="sidebar-category-name" data-categories="docker"><span class="iconfont-archer">&#xe60a;</span>docker</span>
+    
+        <span class="sidebar-category-name" data-categories="容器"><span class="iconfont-archer">&#xe60a;</span>容器</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes/docker/panic"><span class="iconfont-archer">&#xe60a;</span>kubernetes/docker/panic</span>
+    
+        <span class="sidebar-category-name" data-categories="openstack"><span class="iconfont-archer">&#xe60a;</span>openstack</span>
+    
+        <span class="sidebar-category-name" data-categories="fstab"><span class="iconfont-archer">&#xe60a;</span>fstab</span>
+    
+        <span class="sidebar-category-name" data-categories="vsftp"><span class="iconfont-archer">&#xe60a;</span>vsftp</span>
+    
+        <span class="sidebar-category-name" data-categories="gobot"><span class="iconfont-archer">&#xe60a;</span>gobot</span>
+    
+        <span class="sidebar-category-name" data-categories="golang/http"><span class="iconfont-archer">&#xe60a;</span>golang/http</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/闲聊"><span class="iconfont-archer">&#xe60a;</span>日志/闲聊</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes/kube-controller-manager"><span class="iconfont-archer">&#xe60a;</span>kubernetes/kube-controller-manager</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes/kubeadm"><span class="iconfont-archer">&#xe60a;</span>kubernetes/kubeadm</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes/k8s"><span class="iconfont-archer">&#xe60a;</span>kubernetes/k8s</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes/Job"><span class="iconfont-archer">&#xe60a;</span>kubernetes/Job</span>
+    
+        <span class="sidebar-category-name" data-categories="lua"><span class="iconfont-archer">&#xe60a;</span>lua</span>
+    
+        <span class="sidebar-category-name" data-categories="microsoft"><span class="iconfont-archer">&#xe60a;</span>microsoft</span>
+    
+        <span class="sidebar-category-name" data-categories="preseed"><span class="iconfont-archer">&#xe60a;</span>preseed</span>
+    
+        <span class="sidebar-category-name" data-categories="prometheus/golang"><span class="iconfont-archer">&#xe60a;</span>prometheus/golang</span>
+    
+        <span class="sidebar-category-name" data-categories="kubernetes/prometheus"><span class="iconfont-archer">&#xe60a;</span>kubernetes/prometheus</span>
+    
+        <span class="sidebar-category-name" data-categories="proxmox"><span class="iconfont-archer">&#xe60a;</span>proxmox</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/总结"><span class="iconfont-archer">&#xe60a;</span>日志/总结</span>
+    
+        <span class="sidebar-category-name" data-categories="microsoft/graph"><span class="iconfont-archer">&#xe60a;</span>microsoft/graph</span>
+    
+        <span class="sidebar-category-name" data-categories="microsoft/graph/onedrive"><span class="iconfont-archer">&#xe60a;</span>microsoft/graph/onedrive</span>
+    
+        <span class="sidebar-category-name" data-categories="boot/grub/suse"><span class="iconfont-archer">&#xe60a;</span>boot/grub/suse</span>
+    
+        <span class="sidebar-category-name" data-categories="CI"><span class="iconfont-archer">&#xe60a;</span>CI</span>
+    
+        <span class="sidebar-category-name" data-categories="pxe/docker"><span class="iconfont-archer">&#xe60a;</span>pxe/docker</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/运维"><span class="iconfont-archer">&#xe60a;</span>日志/运维</span>
+    
+        <span class="sidebar-category-name" data-categories="CI/travis"><span class="iconfont-archer">&#xe60a;</span>CI/travis</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/技巧"><span class="iconfont-archer">&#xe60a;</span>日志/技巧</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/LVM"><span class="iconfont-archer">&#xe60a;</span>日志/LVM</span>
+    
+        <span class="sidebar-category-name" data-categories="pxe/docker/kickstart"><span class="iconfont-archer">&#xe60a;</span>pxe/docker/kickstart</span>
+    
+        <span class="sidebar-category-name" data-categories="日志/LVM/raid"><span class="iconfont-archer">&#xe60a;</span>日志/LVM/raid</span>
+    
+        <span class="sidebar-category-name" data-categories="golang/version"><span class="iconfont-archer">&#xe60a;</span>golang/version</span>
+    
+        <span class="sidebar-category-name" data-categories="k8s"><span class="iconfont-archer">&#xe60a;</span>k8s</span>
+    
+        <span class="sidebar-category-name" data-categories="k8s/vxlan"><span class="iconfont-archer">&#xe60a;</span>k8s/vxlan</span>
+    
+        <span class="sidebar-category-name" data-categories="go"><span class="iconfont-archer">&#xe60a;</span>go</span>
+    
+        <span class="sidebar-category-name" data-categories="go/Prometheus"><span class="iconfont-archer">&#xe60a;</span>go/Prometheus</span>
+    
+        <span class="sidebar-category-name" data-categories="kubeconfig"><span class="iconfont-archer">&#xe60a;</span>kubeconfig</span>
+    
+        <span class="sidebar-category-name" data-categories="Prometheus"><span class="iconfont-archer">&#xe60a;</span>Prometheus</span>
+    
+        <span class="sidebar-category-name" data-categories="k8s/Kylin"><span class="iconfont-archer">&#xe60a;</span>k8s/Kylin</span>
+    
+    </div>
+    <div class="iconfont-archer sidebar-categories-empty">&#xe678;</div>
+    <div class="sidebar-categories-list"></div>
+</div>
+    </div>
+</div> 
+    <script>
+    var siteMeta = {
+        root: "/",
+        author: "Zhangguanzhang"
+    }
+</script>
+    <!-- CDN failover -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <script type="text/javascript">
+        if (typeof window.$ === 'undefined')
+        {
+            console.warn('jquery load from jsdelivr failed, will load local script')
+            document.write('<script src="/lib/jquery.min.js">\x3C/script>')
+        }
+    </script>
+    <script src="/scripts/main.js"></script>
+    <!-- algolia -->
+    
+    <!-- busuanzi  -->
+    
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    
+    <!-- CNZZ  -->
+    
+    </div>
+    <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
+     
+    </body>
+</html>
+
+

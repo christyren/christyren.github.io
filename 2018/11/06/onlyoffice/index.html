@@ -20,19 +20,29 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="记录生活点滴">
-    <meta name="description" content="记录生活点滴">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhangguanzhang">
-<meta property="og:url" content="http://zhangguanzhang.github.io/">
+    <meta name="description" content="年初的时候就考虑过搭建个在线编辑excel的,之前试过很多owncloud，seafile,nextcloud,kodexplorer基本都是纯网盘或者不免费 这几天又有需求多人同时在线编辑office文件,同事找了个onlyoffice的用docker跑起来了. dockerhub上看了下镜像挺大的而且没有跳转到github上Dockerfile的超链接 稍微用docker history看了下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一次docker镜像的解耦--onlyoffice">
+<meta property="og:url" content="http://zhangguanzhang.github.io/2018/11/06/onlyoffice/">
 <meta property="og:site_name" content="Zhangguanzhang">
-<meta property="og:description" content="记录生活点滴">
+<meta property="og:description" content="年初的时候就考虑过搭建个在线编辑excel的,之前试过很多owncloud，seafile,nextcloud,kodexplorer基本都是纯网盘或者不免费 这几天又有需求多人同时在线编辑office文件,同事找了个onlyoffice的用docker跑起来了. dockerhub上看了下镜像挺大的而且没有跳转到github上Dockerfile的超链接 稍微用docker history看了下">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/0.png?raw=true">
+<meta property="og:image" content="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/1.png?raw=true">
+<meta property="og:image" content="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/2.png?raw=true">
+<meta property="og:image" content="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/3.png?raw=true">
+<meta property="og:image" content="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/5.png?raw=true">
+<meta property="og:image" content="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/6.png?raw=true">
+<meta property="article:published_time" content="2018-11-06T19:05:29.000Z">
+<meta property="article:modified_time" content="2020-05-04T08:42:01.000Z">
 <meta property="article:author" content="Zhangguanzhang">
+<meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/0.png?raw=true">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>zhangguanzhang&#39;s Blog</title>
+    <title>一次docker镜像的解耦--onlyoffice · zhangguanzhang&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -87,6 +97,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -211,14 +223,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >zhangguanzhang&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">一次docker镜像的解耦--onlyoffice</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>zhangguanzhang's Blog</a>
 </header>
@@ -237,17 +258,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            zhangguanzhang's Blog
-            <!-- 文章页  -->
+            一次docker镜像的解耦--onlyoffice
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -255,12 +276,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                站在巨人的肩膀上
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "docker">docker</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">2.7k</span>阅读时长: <span class="post-count reading-time">12 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2018/11/06</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -361,663 +419,174 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/20/kylin-v10-k8s-overlay-error/" >
-            
-                <span>银河麒麟arm64系统上k8s集群跨节点不通的一次排查</span>
-        </a>
-        <div class="abstract-content">
-            由来同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。
-环境信息集群信息:
-12345678910111213141516171819202122232425$ kubectl version -o json&#123;  "clientVersion": &#123;    "major": "1",    "minor": "15",    "gitVersion": "v1.15...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Kylin">Kylin</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/18/ocp-4.5-install/" >
-            
-                <span>openshift 4.5.9 离线安装</span>
-        </a>
-        <div class="abstract-content">
-            本文是全部离线安装，也就是 UPI (User Provisioned Infrastructure) 模式安装，假设机器只能配置静态ip不能有网络配置权限和配置 dhcp 和 pxe。机器可以是物理机和虚拟机。
-前言介绍ocp介绍openshift 分为社区版本 okd 和企业版本 ocp(openshift container platform)，okd 的更新很慢，ocp 个人也是可以安装的，不购买 license 则不会享受 redhat 的官方支持。
-openshift 不像其他的 dashboard 诸如 rancher，k3s 之类的，它自己实现了 cs 的三个组件，也给 ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openshift">openshift</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ocp">ocp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/30/prometheus-rate-and-irate/" >
-            
-                <span>prometheus的rate与irate内部是如何计算的</span>
-        </a>
-        <div class="abstract-content">
-            由来市面上的翻译误导人，压根不是啥平均增长率，看了下源码和实际算下来让大家好理解
-rate主要代码是在 https://github.com/prometheus/prometheus/blob/master/promql/functions.go 的extrapolatedRate 和 funcRate，funcRate为
-123func funcRate(vals []parser.Value, args parser.Expressions, enh *EvalNodeHelper) Vector &#123;  return extrapolatedRate(vals, args...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Prometheus">Prometheus</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/23/fs-error-fix-k8s-master/" >
-            
-                <span>k8s master机器文件系统故障的一次恢复过程</span>
-        </a>
-        <div class="abstract-content">
-            由来研发反馈他们那边一套集群有台master文件系统损坏无法开机，他们是三台openstack上的虚机，是虚拟化宿主机故障导致的虚机文件系统损坏。三台机器是master+node，指导他修复后开机，修复过程和我之前文章opensuse的一次救援步骤一样
-起来后我上去看，因为做了 HA 的，所以只有这个node有问题，集群没影响
-12345[root@k8s-m1 ~]# kubectl get node -o wideNAME             STATUS     ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "etcd">etcd</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/23/host-gw-in-aliyun/" >
-            
-                <span>阿里云上使用flannel host-gw跨节点pod不通的解决</span>
-        </a>
-        <div class="abstract-content">
-            挺多人问的，写下解决办法
-前言首先主机得在同一个专有vpc下，跨vpc或者经典vpc就扯淡了。还有flannel别把网络信息存储在etcd里，目前flannel只支持v2的etcd api。但是现在k8s都是使用v3 etcd存储了。如果v2和v3共存会导致无法恢复etcd的备份
-所以网上那些etcdctl set flannel的cidr的文章别看了，都没做过备份恢复实验就到处发k8s搭建教程。flannel v3的话看我过往文章
-环境信息先来说下host-gw的包走向，假设两台机器
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>年初的时候就考虑过搭建个在线编辑excel的,之前试过很多<code>owncloud，seafile,nextcloud,kodexplorer</code><br>基本都是纯网盘或者不免费</p>
+<p>这几天又有需求多人同时在线编辑office文件,同事找了个onlyoffice的用docker跑起来了. dockerhub上看了下镜像挺大的而且没有跳转到github上Dockerfile的超链接</p>
+<p>稍微用docker history看了下发现里面一堆各种数据库都放同一个镜像里,根本没有解耦<br><img src="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/0.png?raw=true" alt=""></p>
+<p>于是便有了解耦这个镜像的冲动</p>
+<p>先找官方的例子跑跑看</p>
+<p>地址：<a href="https://api.onlyoffice.com/editors/demopreview" target="_blank" rel="noopener">https://api.onlyoffice.com/editors/demopreview</a></p>
+<p>看了下官方都是js写的,所以选了个Nodejs的demo来跑,另外之前用docker帮过同学搭建过一个nodejs的小程序后台环境,对nodejs项目部署有点经验</p>
+<p>选择 Node.js Example<br><img src="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/1.png?raw=true" alt=""></p>
+<p>解压后，修改配置<code>config/default.jsonm</code>，siteUrl 为 DocumentServer的地址<br>一个标准的nodejs项目根目录有package.json文件,里面有模块依赖<br><code>npm install</code>安装模块<br><code>node bin/www</code>即可运行起来<br>之前帮同学搭建小程序环境(同学是前端,所以用的nodejs写前后端)自己做了个nodejs的镜像,适合测试,每次主进程跑起来之前都会<code>npm install</code>,这里用我自己的镜像跑(后期npm的模块可以固化到镜像里,这里仅供快速搭建使用方便)</p>
+<p>先简单起来一个试试<code>documentserver</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 9980:80 onlyoffice/documentserver</span><br></pre></td></tr></table></figure>
+<p>然后把修改过后整个demo挂载到镜像的<code>WORKDIR</code>跑起来<br><img src="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/2.png?raw=true" alt=""></p>
+<img src="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/3.png?raw=true" alt="">
 
+<p>然后在官方的仓库找到了Dockerfile,好吧,不用去看<code>docker history --no-trunc</code>了<br><a href="https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/Dockerfile" target="_blank" rel="noopener">https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/Dockerfile</a></p>
+<p>看了下Dockerfile整体过程是下面:</p>
+<p>添加nodejs的源用于安装nodejs,安装<code>nodejs,postgres,redis-server,rabbitmq-server,supervisor</code></p>
+<p>然后entrypoint脚本逻辑<br><a href="https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/run-document-server.sh" target="_blank" rel="noopener">https://github.com/ONLYOFFICE/Docker-DocumentServer/blob/master/run-document-server.sh</a></p>
+<p>开始执行的是一堆目录的<code>mkdir,chown</code><br>然后根据变量值执行,假设此时符合条件进去</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ONLYOFFICE_DATA_CONTAINER_HOST=<span class="variable">$&#123;ONLYOFFICE_DATA_CONTAINER_HOST:-localhost&#125;</span></span><br><span class="line">...</span><br><span class="line"><span class="keyword">if</span> [ <span class="variable">$&#123;ONLYOFFICE_DATA_CONTAINER_HOST&#125;</span> = <span class="string">"localhost"</span> ]; <span class="keyword">then</span></span><br></pre></td></tr></table></figure>
+<p>然后执行函数<code>read_setting</code><br>里面是读取文件<code>/etc/onlyoffice/documentserver/local.json</code>的值</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"services"</span>: &#123;</span><br><span class="line">    <span class="attr">"CoAuthoring"</span>: &#123;</span><br><span class="line">      <span class="attr">"sql"</span>: &#123;</span><br><span class="line">        <span class="attr">"dbHost"</span>: <span class="string">"localhost"</span>,</span><br><span class="line">        <span class="attr">"dbName"</span>: <span class="string">"onlyoffice"</span>,</span><br><span class="line">        <span class="attr">"dbUser"</span>: <span class="string">"onlyoffice"</span>,</span><br><span class="line">        <span class="attr">"dbPass"</span>: <span class="string">"onlyoffice"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"redis"</span>: &#123;</span><br><span class="line">        <span class="attr">"host"</span>: <span class="string">"localhost"</span></span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"token"</span>: &#123;</span><br><span class="line">        <span class="attr">"enable"</span>: &#123;</span><br><span class="line">          <span class="attr">"request"</span>: &#123;</span><br><span class="line">            <span class="attr">"inbox"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"outbox"</span>: <span class="literal">false</span></span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">"browser"</span>: <span class="literal">false</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"inbox"</span>: &#123;</span><br><span class="line">          <span class="attr">"header"</span>: <span class="string">"Authorization"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"outbox"</span>: &#123;</span><br><span class="line">          <span class="attr">"header"</span>: <span class="string">"Authorization"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="attr">"secret"</span>: &#123;</span><br><span class="line">        <span class="attr">"inbox"</span>: &#123;</span><br><span class="line">          <span class="attr">"string"</span>: <span class="string">"secret"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"outbox"</span>: &#123;</span><br><span class="line">          <span class="attr">"string"</span>: <span class="string">"secret"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"session"</span>: &#123;</span><br><span class="line">          <span class="attr">"string"</span>: <span class="string">"secret"</span></span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"rabbitmq"</span>: &#123;</span><br><span class="line">    <span class="attr">"url"</span>: <span class="string">"amqp://guest:guest@localhost"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如下,变量为空就使用文件里的值</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POSTGRESQL_SERVER_HOST=<span class="variable">$&#123;POSTGRESQL_SERVER_HOST:-$($&#123;JSON&#125;</span> services.CoAuthoring.sql.dbHost)&#125;</span><br><span class="line">POSTGRESQL_SERVER_PORT=<span class="variable">$&#123;POSTGRESQL_SERVER_PORT:-5432&#125;</span></span><br><span class="line">POSTGRESQL_SERVER_DB_NAME=<span class="variable">$&#123;POSTGRESQL_SERVER_DB_NAME:-$($&#123;JSON&#125;</span> services.CoAuthoring.sql.dbName)&#125;</span><br><span class="line">POSTGRESQL_SERVER_USER=<span class="variable">$&#123;POSTGRESQL_SERVER_USER:-$($&#123;JSON&#125;</span> services.CoAuthoring.sql.dbUser)&#125;</span><br><span class="line">POSTGRESQL_SERVER_PASS=<span class="variable">$&#123;POSTGRESQL_SERVER_PASS:-$($&#123;JSON&#125;</span> services.CoAuthoring.sql.dbPass)&#125;</span><br><span class="line"></span><br><span class="line">RABBITMQ_SERVER_URL=<span class="variable">$&#123;RABBITMQ_SERVER_URL:-$($&#123;JSON&#125;</span> rabbitmq.url)&#125;</span><br><span class="line">parse_rabbitmq_url</span><br><span class="line"></span><br><span class="line">REDIS_SERVER_HOST=<span class="variable">$&#123;REDIS_SERVER_HOST:-$($&#123;JSON&#125;</span> services.CoAuthoring.redis.host)&#125;</span><br><span class="line">REDIS_SERVER_PORT=<span class="variable">$&#123;REDIS_SERVER_PORT:-6379&#125;</span></span><br><span class="line"></span><br><span class="line">DS_LOG_LEVEL=<span class="variable">$&#123;DS_LOG_LEVEL:-$($&#123;JSON_LOG&#125;</span> levels.nodeJS)&#125;</span><br></pre></td></tr></table></figure>
 
+<p>parse_rabbitmq_url函数从变量<code>local.json</code>里的<code>rabbitmq.url</code>值分离成下面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">RABBITMQ_SERVER_HOST&#x3D;$host</span><br><span class="line">RABBITMQ_SERVER_USER&#x3D;$user</span><br><span class="line">RABBITMQ_SERVER_PASS&#x3D;$pass</span><br><span class="line">RABBITMQ_SERVER_PORT&#x3D;$port</span><br></pre></td></tr></table></figure>
+<p>也就是把<code>amqp://guest:guest@localhost</code>分离成</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">amqp:&#x2F;&#x2F;$&#123;用户名&#125;:$&#123;密码&#125;@$&#123;host&#125;:$&#123;port:&#x3D;5672&#125;</span><br></pre></td></tr></table></figure>
+<p>函数<code>update_log_settings</code>修改<code>$DS_LOG_LEVEL</code>,缺省值为文件的<code>/etc/onlyoffice/documentserver/log4js/production.json</code>的<code>levels.nodeJS</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"appenders"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="string">"type"</span>: <span class="string">"console"</span>,</span><br><span class="line">      <span class="string">"layout"</span>: &#123;</span><br><span class="line">        <span class="string">"type"</span>: <span class="string">"pattern"</span>,</span><br><span class="line">        <span class="string">"pattern"</span>: <span class="string">"[%d] [%p] %c - %.10000m"</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="string">"replaceConsole"</span>: <span class="string">"true"</span>,</span><br><span class="line">  <span class="string">"levels"</span>: &#123;</span><br><span class="line">    <span class="string">"nodeJS"</span>: <span class="string">"WARN"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后执行函数<code>update_jwt_settings</code>满足条件就</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="string">"<span class="variable">$&#123;JWT_ENABLED&#125;</span>"</span> == <span class="string">"true"</span> ]</span><br></pre></td></tr></table></figure>
+<p><code>JWT_ENABLED</code>缺省为false<br>然后改local.json里的对应值,自行看脚本,这里不啰嗦,而且我没用jwt</p>
+<p>接下来pgsql部分,数据存放变量为下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PG_ROOT=/var/lib/postgresql</span><br><span class="line">PG_VERSION=9.5</span><br><span class="line">PG_NAME=main</span><br><span class="line">PGDATA=<span class="variable">$&#123;PG_ROOT&#125;</span>/<span class="variable">$&#123;PG_VERSION&#125;</span>/<span class="variable">$&#123;PG_NAME&#125;</span></span><br></pre></td></tr></table></figure>
 
-IP
-pod cidr
+<p><code>POSTGRESQL_SERVER_HOST</code>缺省用local.json文件里的<code>.services.CoAuthoring.sql.dbhost</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="variable">$&#123;POSTGRESQL_SERVER_HOST&#125;</span> != <span class="string">"localhost"</span> ]; <span class="keyword">then</span></span><br><span class="line">  update_postgresql_settings</span><br><span class="line">  waiting_for_postgresql</span><br><span class="line">  create_postgresql_tbl</span><br></pre></td></tr></table></figure>
+<p>如果<code>POSTGRESQL_SERVER_HOST</code>不是localhost就用local.json文件里的<code>.services.CoAuthoring.sql.dbhost</code><br>此时是使用外部的pgsql,有等待端口的函数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">waiting_for_connection</span></span>()&#123;</span><br><span class="line">  until nc -z -w 3 <span class="string">"<span class="variable">$1</span>"</span> <span class="string">"<span class="variable">$2</span>"</span>; <span class="keyword">do</span></span><br><span class="line">    &gt;&amp;2 <span class="built_in">echo</span> <span class="string">"Waiting for connection to the <span class="variable">$1</span> host on port <span class="variable">$2</span>"</span></span><br><span class="line">    sleep 1</span><br><span class="line">  <span class="keyword">done</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>外部pgsql数据库就绪后就执行db初始化的sql,sql文件位置<code>/var/www/onlyoffice/documentserver/server/schema/postgresql/createdb.sql</code></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--</span></span><br><span class="line"><span class="comment">-- Create schema onlyoffice</span></span><br><span class="line"><span class="comment">--</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- CREATE DATABASE onlyoffice ENCODING = 'UTF8' CONNECTION LIMIT = -1;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for doc_changes</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">"public"</span>.<span class="string">"doc_changes"</span> (</span><br><span class="line"><span class="string">"id"</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"change_id"</span> int4 <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"user_id"</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"user_id_original"</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"user_name"</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"change_data"</span> <span class="built_in">text</span> <span class="keyword">COLLATE</span> <span class="string">"default"</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"change_date"</span> <span class="built_in">timestamp</span> <span class="keyword">without</span> <span class="built_in">time</span> zone <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">"id"</span>, <span class="string">"change_id"</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">WITH</span> (OIDS=<span class="literal">FALSE</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="comment">-- Table structure for task_result</span></span><br><span class="line"><span class="comment">-- ----------------------------</span></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="keyword">IF</span> <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> <span class="string">"public"</span>.<span class="string">"task_result"</span> (</span><br><span class="line"><span class="string">"id"</span> <span class="built_in">varchar</span>(<span class="number">255</span>) <span class="keyword">COLLATE</span> <span class="string">"default"</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"status"</span> int2 <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"status_info"</span> int4 <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"last_open_date"</span> <span class="built_in">timestamp</span> <span class="keyword">without</span> <span class="built_in">time</span> zone <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"user_index"</span> int4 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">1</span>,</span><br><span class="line"><span class="string">"change_id"</span> int4 <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,</span><br><span class="line"><span class="string">"callback"</span> <span class="built_in">text</span> <span class="keyword">COLLATE</span> <span class="string">"default"</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line"><span class="string">"baseurl"</span> <span class="built_in">text</span> <span class="keyword">COLLATE</span> <span class="string">"default"</span> <span class="keyword">NOT</span> <span class="literal">NULL</span>,</span><br><span class="line">PRIMARY <span class="keyword">KEY</span> (<span class="string">"id"</span>)</span><br><span class="line">)</span><br><span class="line"><span class="keyword">WITH</span> (OIDS=<span class="literal">FALSE</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">CREATE</span> <span class="keyword">OR</span> <span class="keyword">REPLACE</span> <span class="keyword">FUNCTION</span> merge_db(_id <span class="built_in">varchar</span>(<span class="number">255</span>), _status int2, _status_info int4, _last_open_date <span class="built_in">timestamp</span> <span class="keyword">without</span> <span class="built_in">time</span> zone, _user_index int4, _change_id int4, _callback <span class="built_in">text</span>, _baseurl <span class="built_in">text</span>, <span class="keyword">OUT</span> isupdate <span class="built_in">char</span>(<span class="number">5</span>), <span class="keyword">OUT</span> userindex int4) <span class="keyword">AS</span></span><br><span class="line">$$</span><br><span class="line"><span class="keyword">DECLARE</span></span><br><span class="line">	t_var <span class="string">"public"</span>.<span class="string">"task_result"</span>.<span class="string">"user_index"</span>%<span class="keyword">TYPE</span>;</span><br><span class="line"><span class="keyword">BEGIN</span></span><br><span class="line">	<span class="keyword">LOOP</span></span><br><span class="line">		<span class="comment">-- first try to update the key</span></span><br><span class="line">		<span class="comment">-- note that "a" must be unique</span></span><br><span class="line">		<span class="keyword">UPDATE</span> <span class="string">"public"</span>.<span class="string">"task_result"</span> <span class="keyword">SET</span> last_open_date=_last_open_date, user_index=user_index+<span class="number">1</span> <span class="keyword">WHERE</span> <span class="keyword">id</span> = _id <span class="keyword">RETURNING</span> user_index <span class="keyword">into</span> userindex;</span><br><span class="line">		IF found THEN</span><br><span class="line">			isupdate := 'true';</span><br><span class="line">			RETURN;</span><br><span class="line">		<span class="keyword">END</span> <span class="keyword">IF</span>;</span><br><span class="line">		<span class="comment">-- not there, so try to insert the key</span></span><br><span class="line">		<span class="comment">-- if someone else inserts the same key concurrently,</span></span><br><span class="line">		<span class="comment">-- we could get a unique-key failure</span></span><br><span class="line">		<span class="keyword">BEGIN</span></span><br><span class="line">			<span class="keyword">INSERT</span> <span class="keyword">INTO</span> <span class="string">"public"</span>.<span class="string">"task_result"</span>(<span class="keyword">id</span>, <span class="keyword">status</span>, status_info, last_open_date, user_index, change_id, callback, baseurl) <span class="keyword">VALUES</span>(_id, _status, _status_info, _last_open_date, _user_index, _change_id, _callback, _baseurl) <span class="keyword">RETURNING</span> user_index <span class="keyword">into</span> userindex;</span><br><span class="line">			isupdate := 'false';</span><br><span class="line">			RETURN;</span><br><span class="line">		EXCEPTION WHEN unique_violation THEN</span><br><span class="line">			<span class="comment">-- do nothing, and loop to try the UPDATE again</span></span><br><span class="line">		<span class="keyword">END</span>;</span><br><span class="line">	<span class="keyword">END</span> <span class="keyword">LOOP</span>;</span><br><span class="line"><span class="keyword">END</span>;</span><br><span class="line">$$</span><br><span class="line">LANGUAGE plpgsql;</span><br></pre></td></tr></table></figure>
+<p>如果此时使用的是容器内的pgsql则</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R postgres:postgres <span class="variable">$&#123;PG_ROOT&#125;</span></span><br><span class="line">chmod -R 700 <span class="variable">$&#123;PG_ROOT&#125;</span></span><br></pre></td></tr></table></figure>
+<p>不存在目录<code>PGDATA</code>就</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">local</span> pg_conf_dir=/etc/postgresql/<span class="variable">$&#123;PG_VERSION&#125;</span>/<span class="variable">$&#123;PG_NAME&#125;</span></span><br><span class="line"><span class="built_in">local</span> postgresql_conf=<span class="variable">$pg_conf_dir</span>/postgresql.conf</span><br><span class="line"><span class="built_in">local</span> hba_conf=<span class="variable">$pg_conf_dir</span>/pg_hba.conf</span><br><span class="line"></span><br><span class="line">mv <span class="variable">$postgresql_conf</span> <span class="variable">$postgresql_conf</span>.backup</span><br><span class="line">mv <span class="variable">$hba_conf</span> <span class="variable">$hba_conf</span>.backup</span><br><span class="line"></span><br><span class="line">pg_createcluster <span class="variable">$&#123;PG_VERSION&#125;</span> <span class="variable">$&#123;PG_NAME&#125;</span></span><br><span class="line">PG_NEW_CLUSTER=<span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
+<p>rabbitmq一样,<code>RABBITMQ_SERVER_HOST</code>值不是localhost就使用外部的,是localhost此时就<code>rm -rf /var/run/rabbitmq</code>来保证startup after container kill</p>
+<p>redis的host不是localhost就使用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;JSON&#125;</span> -I -e <span class="string">"this.services.CoAuthoring.redis.host = '<span class="variable">$&#123;REDIS_SERVER_HOST&#125;</span>'"</span></span><br><span class="line"><span class="variable">$&#123;JSON&#125;</span> -I -e <span class="string">"this.services.CoAuthoring.redis.port = '<span class="variable">$&#123;REDIS_SERVER_PORT&#125;</span>'"</span></span><br></pre></td></tr></table></figure>
+<p>上面对比文件的json对不上,怀疑此处写错了.而且redis没设置密码,解耦的话应该改下onlyoffice的客户端连接参数加上密码</p>
+<p><code>ONLYOFFICE_DATA_CONTAINER_HOST</code>上面都是符合条件就是localhost, 此时进else的话就是执行到行316行函数<code>waiting_for_datacontainer</code> just wait for remote data<br>此时执行函数<code>read_setting</code><br>看了下默认的80端口是nginx占据的,此处应该是webserver</p>
+<p>上面如果是localhost就会在容器里启动<code>pgsql,rabbitmq,redis</code></p>
+<p>然后下面这段代码</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="variable">$&#123;PG_NEW_CLUSTER&#125;</span> = <span class="string">"true"</span> ]; <span class="keyword">then</span></span><br><span class="line">  create_postgresql_db</span><br><span class="line">  create_postgresql_tbl</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>如果PG是初始化的(也就是前面的一开始不存在目录<code>PGDATA</code>)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">create_postgresql_db</span></span>()&#123;</span><br><span class="line">  sudo -u postgres psql -c <span class="string">"CREATE DATABASE onlyoffice;"</span></span><br><span class="line">  sudo -u postgres psql -c <span class="string">"CREATE USER onlyoffice WITH password 'onlyoffice';"</span></span><br><span class="line">  sudo -u postgres psql -c <span class="string">"GRANT ALL privileges ON DATABASE onlyoffice TO onlyoffice;"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>create_postgresql_tbl</code>就是上面的sql<code>/var/www/onlyoffice/documentserver/server/schema/postgresql/createdb.sql</code>初始化pgsql<br>然后下面这段</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> [ <span class="variable">$&#123;ONLYOFFICE_DATA_CONTAINER&#125;</span> != <span class="string">"true"</span> ]; <span class="keyword">then</span></span><br><span class="line">  waiting_for_postgresql</span><br><span class="line">  waiting_for_rabbitmq</span><br><span class="line">  waiting_for_redis</span><br><span class="line"></span><br><span class="line">  update_nginx_settings</span><br><span class="line"></span><br><span class="line">  update_supervisor_settings</span><br><span class="line">  service supervisor start</span><br><span class="line">  </span><br><span class="line">  <span class="comment"># start cron to enable log rotating</span></span><br><span class="line">  service cron start</span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+<p>这里的<code>ONLYOFFICE_DATA_CONTAINER</code>值由于没有接触过onlyoffice不知道这个值干啥的</p>
+<p>waiting开头的都是等服务端口起来<br><code>update_nginx_settings</code>看了下是修改nginx的配置文件(/etc/nginx/nginx.conf),否则改为缺省,下面只说缺省修改 </p>
+<ul>
+<li><code>worker_processes</code>开头的值修改环境变量,缺省为1</li>
+<li><code>worker_connections</code>缺省改为<code>$(ulimit -n)</code></li>
+<li><code>access_log.*</code>改为<code>access_log off;</code>(此处关掉access.log)</li>
+<li>如果存在文件<code>SSL_CERTIFICATE_PATH</code>(缺省为<code>/var/www/onlyoffice/Data/certs/onlyoffice.crt</code>)和文件<code>SSL_KEY_PATH</code>(缺省为<code>/var/www/onlyoffice/Data/certs/onlyoffice.key</code>)</li>
+<li>接上: 就复制文件<code>/etc/onlyoffice/documentserver/nginx/onlyoffice-documentserver-ssl.conf.template</code>到<code>$NGINX_ONLYOFFICE_CONF</code>(缺省为<code>/etc/onlyoffice/documentserver/nginx/onlyoffice-documentserver.conf</code>)</li>
+<li>这里后面注意下,因为上一步是复制了文件的,后面可以直接对着template文件看</li>
+<li>接上面的ssl,修改文件<code>$NGINX_ONLYOFFICE_CONF</code>里<code></code>为<code>$SSL_CERTIFICATE_PATH</code></li>
+<li>同上修改<code></code></li>
+<li>开启http2,即替换<code>443 ssl</code>成<code>443 ssl http2</code></li>
+<li>如果<code>$SSL_DHPARAM_PATH</code>(缺省<code>/var/www/onlyoffice/Data/certs/dhparam.pem</code>)可读把行<code># ssl_dhparam /etc/ssl/certs/dhparam.pem;</code>取消注释,不可读就删除这行</li>
+<li>修改包含”ssl_verify_client”行后面的值为<code>${SSL_VERIFY_CLIENT}</code></li>
+<li><code>${CA_CERTIFICATES_PATH}</code>存在在行”ssl_verify_client”下一行插入<code>ssl_client_certificate ${CA_CERTIFICATES_PATH}</code></li>
+<li>如果<code>$ONLYOFFICE_HTTPS_HSTS_ENABLED</code>为true修改<code>max-age=31536000</code>的值改为<code>$ONLYOFFICE_HTTPS_HSTS_MAXAGE</code>,不为true则删除包含max-age的行</li>
+<li>以上逻辑都是第四条的存在俩文件,如果不存在俩文件则软连接<code>${NGINX_ONLYOFFICE_PATH}/onlyoffice-documentserver.conf.template</code>到<code>${NGINX_ONLYOFFICE_PATH}/onlyoffice-documentserver.conf</code>,也就是此时不适用ssl</li>
+<li>下面不包含在上面的存在文件代码块里</li>
+<li>存在文件<code>$NGINX_ONLYOFFICE_EXAMPLE_CONF</code>修改它里面的”linux”改成”docker”</li>
+<li><code>update_supervisor_settings</code>就是把supervisor的配置文件复制到它默认工作目录去</li>
+<li>然后启动supervisor和cron</li>
+<li>下面是349行后面全局执行的逻辑</li>
+<li>启动nginx,这里想不通为啥跑个nginx,后面看看能看懂原因不</li>
+<li>最后的<code>documentserver-generate-allfonts.sh</code>和<code>documentserver-static-gzip.sh</code>一个是字体一个是压缩备份</li>
+</ul>
+<p>整体思路有了,但是发现documentserver似乎好几个组件一起被supervisor跑的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">root@918cd6b41d37:/etc/supervisor/conf.d<span class="comment"># ll</span></span><br><span class="line">total 0</span><br><span class="line">drwxr-xr-x 1 root root 279 Oct 26 15:16 ./</span><br><span class="line">drwxr-xr-x 1 root root  30 Oct 26 08:31 ../</span><br><span class="line">lrwxrwxrwx 1 root root  73 Oct 26 15:09 onlyoffice-documentserver.conf -&gt; ../../onlyoffice/documentserver/supervisor/onlyoffice-documentserver.conf</span><br><span class="line">lrwxrwxrwx 1 root root  83 Oct 26 15:09 onlyoffice-documentserver-converter.conf -&gt; ../../onlyoffice/documentserver/supervisor/onlyoffice-documentserver-converter.conf</span><br><span class="line">lrwxrwxrwx 1 root root  84 Oct 26 15:09 onlyoffice-documentserver-docservice.conf -&gt; ../../onlyoffice/documentserver/supervisor/onlyoffice-documentserver-docservice.conf</span><br><span class="line">lrwxrwxrwx 1 root root  76 Oct 26 15:09 onlyoffice-documentserver-gc.conf -&gt; ../../onlyoffice/documentserver/supervisor/onlyoffice-documentserver-gc.conf</span><br><span class="line">lrwxrwxrwx 1 root root  81 Oct 26 15:09 onlyoffice-documentserver-metrics.conf -&gt; ../../onlyoffice/documentserver/supervisor/onlyoffice-documentserver-metrics.conf</span><br><span class="line">lrwxrwxrwx 1 root root  86 Oct 26 15:09 onlyoffice-documentserver-spellchecker.conf -&gt; ../../onlyoffice/documentserver/supervisor/onlyoffice-documentserver-spellchecker.conf</span><br></pre></td></tr></table></figure>
 
-
-10.0.6.166
-10.200.1.0/24
-
-
-10.0.6...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "host-gw">host-gw</a>
-    
-</div>
-            
-        </div>
+<p>所以entrypoint里启动supervisor的时候会启动onlyoffice</p>
+<p>镜像里依赖安装太多了,然后找到了非docker安装的文档稍微清晰了些</p>
+<p><a href="https://helpcenter.onlyoffice.com/server/linux/document/linux-installation-centos.aspx?_ga=2.211658390.2064741635.1541596271-1982326324.1541482842" target="_blank" rel="noopener">https://helpcenter.onlyoffice.com/server/linux/document/linux-installation-centos.aspx?_ga=2.211658390.2064741635.1541596271-1982326324.1541482842</a></p>
+<p><a href="https://helpcenter.onlyoffice.com/server/linux/document/index.aspx" target="_blank" rel="noopener">https://helpcenter.onlyoffice.com/server/linux/document/index.aspx</a><br>安装了<code>onlyoffice-documentserver</code>后发现大体文件一样,解包rpm后更直观</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install onlyoffice-documentserver</span><br></pre></td></tr></table></figure>
+<p>整体思路有了,documentserver的源码都放一起,里面几个组建都是supervisor跑<br>源码是js的,所以这几个组建分离解耦的话必须在nodejs作为基础镜像(so依赖啥的不知道解决起来麻烦不)<br>然后一些数据库啥的可以直接各自的官方镜像稍微挂载初始化sql啥的</p>
+<p>由于对于nodejs不熟悉,同学上班也忙,无法帮我拆分项目,项目结构也不熟悉</p>
+<img src="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/5.png?raw=true" alt="">
+目前是打算是把nginx,supervisor(来管理这些组件)放同一个镜像算了,感觉documentserver拆分得太散没必要
+看了官方文档的环境要求介绍
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Software requirements</span><br><span class="line">For Debian, Ubuntu and derivatives</span><br><span class="line">OS 64-bit Debian, Ubuntu or other compatible distribution with kernel version 3.13 or later</span><br><span class="line">Additional Requirements</span><br><span class="line">PostgreSQL: version 9.1 or later</span><br><span class="line">NGINX: version 1.3.13 or later</span><br><span class="line">Node.js: version 8.12.0 or later</span><br><span class="line">libstdc++6: version 4.8.4 or later</span><br><span class="line">Redis</span><br><span class="line">RabbitMQ</span><br><span class="line">For RHEL, CentOS and derivatives</span><br><span class="line">OS RHEL 7 or CentOS 7</span><br><span class="line">Additional Requirements</span><br><span class="line">PostgreSQL: version 9.1 or later</span><br><span class="line">NGINX: version 1.3.13 or later</span><br><span class="line">Node.js: version 8.12.0 or later</span><br><span class="line">Redis</span><br><span class="line">RabbitMQ</span><br></pre></td></tr></table></figure>
+发现官方源码clone下来居然1.7G,想了下还是ubuntu作为基础镜像,像官方那样去包管理去安装算了
+<img src="https://github.com/zhangguanzhang/Image-Hosting/blob/master/onlyoffice/6.png?raw=true" alt="">
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/19/go-prom-exporter/" >
-            
-                <span>[未写完]使用go开发一个Prometheus的exporter</span>
-        </a>
-        <div class="abstract-content">
-            <p>市面上的例子太多都太简单了，这里详细写下我知道的</p>
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://zhangguanzhang.github.io">Zhangguanzhang</a>
+            <p>原文链接：<a href="http://zhangguanzhang.github.io/2018/11/06/onlyoffice/">http://zhangguanzhang.github.io/2018/11/06/onlyoffice/</a>
+            <p>发表日期：<a href="http://zhangguanzhang.github.io/2018/11/06/onlyoffice/">November 6th 2018, 7:05:29 pm</a>
+            <p>更新日期：<a href="http://zhangguanzhang.github.io/2018/11/06/onlyoffice/">May 4th 2020, 8:42:01 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "exporter">exporter</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/23/k8s-vxlan-63-timeout/" >
-            
-                <span>v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位</span>
-        </a>
-        <div class="abstract-content">
-            这个问题 flannel 和 calico 的 VXLAN 模式下都会发生，部分人的现象是集群的A记录 UDP 下查询可能有问题，原因是v1.17+的k8s会引起内核的某个 UDP 相关 bug而不是cni的软件层面，weave没有，后面说。
-写这篇文章的日期是05/28，发现是上周五也就是05/23号，文章从时间线写起(因为很多时候想发文章但是没空，所以文章的发布日期是05/23)
-2020-07-19更新，版本v1.18.6, v1.16.13, v1.17.9+已经修复这个问题，可以同版本内升级，或者只切kube-proxy版本
-由来上周五我经过同事的工位看到同事的桌面是k8s的g...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "63s">63s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "timeout">timeout</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/13/x86-router-flash/" >
-            
-                <span>proxmox x86软路由笔记</span>
-        </a>
-        <div class="abstract-content">
-            由来办公室有台式机，不想整天带着N1上下班，整下x86的软路由，exsi性能会比pve好，但是pve毕竟Linux，兼容性和对接很多场景方便，这里我使用pve开机器安装openwrt。
-pve已经安装好系统(如果你还没安装且打算安装，安装完后可以看看我这个文章安装完proxmox的一些设置)，并且台式机的口子接主路由的lan口。主路由是我的路由器，它wan口接办公室的网口，台式机只有一个口子，所以软路由作为旁路由使用。
-前置工作虚机准备先去恩山论坛x86版块下一个固件，如果你有办公室—&gt; ecs &lt;— 个人家里组网的要求的话，推荐你去找个带wireguard的固件pve上开台...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "x86">x86</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/12/N1-flash/" >
-            
-                <span>斐讯N1刷机和旁路由的设置</span>
-        </a>
-        <div class="abstract-content">
-            由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前一直是使用k2p刷openwrt或者pandora跑v2用，前几天看到了个v2的订阅地址给写到openwrt上了。结果运行了几天发现web上任何配置都无法更改，ssh上去发现touch报错没有容量(而且重装后感觉还是有问题，github访问也不稳定了)，意识到k2p容量实在太小了，于是去恩山论坛逛了下准备买个N1盒子玩玩旁路由。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N1有8G的rom 2G的ram，cpu是armv8的。询问了...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "N1">N1</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/go-version-ifno/" >
-            
-                <span>git工作流下golang项目的version信息该如何处理</span>
-        </a>
-        <div class="abstract-content">
-            <p>来探讨下git工作流下golang项目的version信息该如何处理比较符合标准</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go">go</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/26/KubeXXXMismatch/" >
-            
-                <span>一次deploy,rs,sts Mismatch 的处理</span>
-        </a>
-        <div class="abstract-content">
-              这次文章是远程帮群友解决故障后的总结，以时间线描述  群友一开始是apiserver响应慢，使用角度上就是kubectl请求慢，如
-123E0326 07:49:37.586690       1 available_controller.go:416] v1beta1.metrics.k8s.io failed with: failing or missing response  from https:&#x2F;&#x2F;10.99.174.208:443&#x2F;apis&#x2F;metrics.k8s.io&#x2F;v1beta1: Get https:&#x2F;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Mismatch">Mismatch</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/10/go-mod-base-use/" >
-            
-                <span>go mod的基础使用-科普</span>
-        </a>
-        <div class="abstract-content">
-            go mod由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文章主要是针对新人来介绍go mod是啥以及新手如何使用，老手不用看。现阶段go mod已经完全GA了，你会用了的话会非常方便&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;像python的项目根目录有requirement.txt记录依赖包，nodejs是packages.json，同样go的包管理从早期的go dep(gopkg)到vendor到现在的go mod.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go mod">go mod</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/centos6-hung-while-booting/" >
-            
-                <span>centos6中毒重启后卡在启动页面</span>
-        </a>
-        <div class="abstract-content">
-            12345678910⣿⣿⣿⣿⣿⣿⢟⣡⣴⣶⣶⣦⣌⡛⠟⣋⣩⣬⣭⣭⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢰⣿⣿⠿⣛⣛⣙⣛⠻⢆⢻⣿⠿⠿⠿⣿⡄⠻⣿⣿⣿⣿⣿⣿⠃⢠⣿⣿⣶⣿⣿⡿⠿⢟⣛⣒⠐⠲⣶⡶⠿⠶⠶⠦⠄⠙⢿⣿⠋⣠⠄⣿⣿⣿⠟⡛⢅⣠⡵⡐⠲⣶⣶⣥⡠⣤⣵⠆⠄⠰⣦⣤⡀⠇⣰⣿⣼⣿⣿⣧⣤⡸⢿⣿⡀⠂⠁⣸⣿⣿⣿⣿⣇⠄⠈⢀⣿⣿⠿⣰⣿⣿⣿⣿⣿⣿⣿⣷⣤⣈⣙⠶⢾⠭⢉⣁⣴⢯⣭⣵⣶⠾⠓⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣉⣤⣴⣾⣿⣿⣦⣄⣤⣤⣄⠄⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠈⢿⣿⣿⣿⣿⣿⣿⡟⣰⣞⣛⡒⢒⠤⠦⢬⣉⣉⣉⣉⣉⣉⣉⡥⠴⠂⢸⠻⣿⣿⣿⣿⣏⠻⢌⣉⣉⣩⣉⡛⣛⠒⠶⠶⠶⠶⠶⠶⠶⠶⠂⣸⣿
-
-昨晚刚整好那个ubuntu，今天下午又一台cen...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "centos6">centos6</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/binfmt-0000/" >
-            
-                <span>记录一次request_module: runaway loop modeprobe binfmt-0000</span>
-        </a>
-        <div class="abstract-content">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昨天一台gpu的主机的阵列卡突然坏了，最终整起来后上面的几台虚机恢复后有一台虚机无法正常开机，开机进emergency mode，同事看上面的报错以为是挂载了啥iscsi，当然无法开机应该找到最开始的错误，进到emergency mode这个视角的时候已经是雪崩的最后的错误了，多半是没有意义的。输入root密码后执行journalctl -xb翻看最开始的错误
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按照关键字request_modul...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "kernel">kernel</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/27/microsoft-graph-for-onedrive/" >
-            
-                <span>使用microsoft-graph的api对接onedrive</span>
-        </a>
-        <div class="abstract-content">
-            前言这几天打算把文件备份下，最后看到有网友说onedrive不错，就是容量小了点只有5g，然后酷安去安装安卓客户端，下面看到一堆人送office e5子账户的。看了下大概是微软为了推广自己产品面向开发者送的优惠，账户有免费的5t存储，而且安装office啥的免费。试用30天，30天内调用api来保持活跃度的话就会延期。评论里一大堆都是搭建oneindex或者onelist的，主要作用就是把onedrive给抽象成一个公共的网盘使用，oneindex是php写的，我看issue居然385个，作者的github也在更新，而且作者学了golang，居然也不打算重构下，估计也是烂尾了。oneli...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "microsoft">microsoft</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "graph">graph</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "onedrive">onedrive</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
-    </nav>
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/dw.jpg >
-    <div class="profile-name">Zhangguanzhang</div>
-    
-    <div class="profile-signature">
-        on the way
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2018/11/24/how-to-use-kubeadm/" title= "对于初入k8s和kubeadm的一些建议">
+                    <div class="nextTitle">对于初入k8s和kubeadm的一些建议</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2018/11/05/10chars/" title= "记录一次十字符病毒清理过程">
+                    <div class="prevTitle">记录一次十字符病毒清理过程</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMzk1OC8xMDQ5Mw>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
     </div>
+
+<!-- City版安装代码已完成 -->
     
     
-    <div class="profile-social">
-        
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-            
-                <a href="mailto:zhangguanzhang@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/zhangguanzhang" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_wc.png" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/assets/zhifubao.png" class="iconfont-archer others" target="_blank" title=others></a>
-            
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //blog.cugxuan.cn target="_black">泫</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //linuxgeeks.github.io target="_black">传统老司机运维老村长</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //kuops.com target="_black">kuops</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //note.run-linux.com target="_black">Linus Lee</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //eryajf.net target="_black">二丫讲梵</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.k8stech.net target="_black">憨憨wolf7</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //sealyun.com/ target="_black">sealyun</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //blog.walkbc.com/ target="_black">golang后端dino</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= https://blog.k8s.fit target="_black">Happiness</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //yousali.me target="_black">yousa</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //i4t.com target="_black">abcdocker</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -1106,6 +675,24 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -3353,6 +2940,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>

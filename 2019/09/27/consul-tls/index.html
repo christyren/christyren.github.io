@@ -20,19 +20,22 @@
     <meta name="keywords" content="hexo,hexo-theme,hexo-blog">
     
     <meta name="description" content="记录生活点滴">
-    <meta name="description" content="记录生活点滴">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Zhangguanzhang">
-<meta property="og:url" content="http://zhangguanzhang.github.io/">
+    <meta name="description" content="同事dnsmasq + consul 整服务自动发现，但是不是tls且consul server是单点，而且进程启动用的nohub而不是systemd，这里查了下资料实践了下 部署过程已经写成了ansible，地址 https:&#x2F;&#x2F;github.com&#x2F;zhangguanzhang&#x2F;consul-tls-ansible 开了五台云主机，总体规划为下面，角色那有条件的可以分开，例如client单独一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高可用的SSL consul cluster实践">
+<meta property="og:url" content="http://zhangguanzhang.github.io/2019/09/27/consul-tls/">
 <meta property="og:site_name" content="Zhangguanzhang">
-<meta property="og:description" content="记录生活点滴">
+<meta property="og:description" content="同事dnsmasq + consul 整服务自动发现，但是不是tls且consul server是单点，而且进程启动用的nohub而不是systemd，这里查了下资料实践了下 部署过程已经写成了ansible，地址 https:&#x2F;&#x2F;github.com&#x2F;zhangguanzhang&#x2F;consul-tls-ansible 开了五台云主机，总体规划为下面，角色那有条件的可以分开，例如client单独一">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-09-27T19:36:53.000Z">
+<meta property="article:modified_time" content="2020-05-04T08:41:58.000Z">
 <meta property="article:author" content="Zhangguanzhang">
+<meta property="article:tag" content="consul">
 <meta name="twitter:card" content="summary">
     <meta http-equiv="Cache-control" content="no-cache">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     
-    <title>zhangguanzhang&#39;s Blog</title>
+    <title>高可用的SSL consul cluster实践 · zhangguanzhang&#39;s Blog</title>
     <style type="text/css">
     @font-face {
         font-family: 'Oswald-Regular';
@@ -87,6 +90,8 @@
 
     <link rel="preload" href= "/css/style.css?v=20180824" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     <link rel="stylesheet" href= "/css/mobile.css?v=20180824" media="(max-width: 980px)">
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
     
     <!-- /*! loadCSS. [c]2017 Filament Group, Inc. MIT License */
 /* This file is meant as a standalone workflow for
@@ -211,14 +216,23 @@
 <meta name="generator" content="Hexo 4.2.0"></head>
 
     
-        <body class="home-body">
+        <body class="post-body">
     
     
-<header class="header index-header">
+<header class="header">
 
     <div class="read-progress"></div>
     <div class="header-sidebar-menu">&#xe775;</div>
     <!-- post页的toggle banner  -->
+    
+    <div class="banner">
+            <div class="blog-title">
+                <a href="/" >zhangguanzhang&#39;s Blog</a>
+            </div>
+            <div class="post-title">
+                <a href="#" class="post-name">高可用的SSL consul cluster实践</a>
+            </div>
+    </div>
     
     <a class="home-link" href=/>zhangguanzhang's Blog</a>
 </header>
@@ -237,17 +251,17 @@ height:50vh;
     <!-- 主页  -->
     
     
-    <!-- 文章页  -->
+    <!-- 404页  -->
             
     <div class="site-intro-placeholder"></div>
-    <div class="site-intro-img" style="background-image: url(/intro/index-bg.jpg)"></div>
+    <div class="site-intro-img" style="background-image: url(/intro/post-bg.jpg)"></div>
     <div class="site-intro-meta">
         <!-- 标题  -->
         <h1 class="intro-title">
             <!-- 主页  -->
             
-            zhangguanzhang's Blog
-            <!-- 文章页  -->
+            高可用的SSL consul cluster实践
+            <!-- 404 -->
             
         </h1>
         <!-- 副标题 -->
@@ -255,12 +269,49 @@ height:50vh;
             <!-- 主页副标题  -->
             
             
-                站在巨人的肩膀上
-            
-            <!-- 文章页  -->
+            <!-- 404 -->
             
         </p>
         <!-- 文章页meta -->
+        
+            <div class="post-intros">
+                <!-- 文章页标签  -->
+                
+                    <div class= post-intro-tags >
+    
+        <a class="post-tag" href="javascript:void(0);" data-tags = "consul">consul</a>
+    
+</div>
+                
+                
+                    <div class="post-intro-read">
+                        <span>字数统计: <span class="post-count word-count">4k</span>阅读时长: <span class="post-count reading-time">20 min</span></span>
+                    </div>
+                
+                <div class="post-intro-meta">
+                    <span class="post-intro-calander iconfont-archer">&#xe676;</span>
+                    <span class="post-intro-time">2019/09/27</span>
+                    
+                    <span id="busuanzi_container_page_pv" class="busuanzi-pv">
+                        <span class="iconfont-archer">&#xe602;</span>
+                        <span id="busuanzi_value_page_pv"></span>
+                    </span>
+                    
+                    <span class="shareWrapper">
+                        <span class="iconfont-archer shareIcon">&#xe71d;</span>
+                        <span class="shareText">Share</span>
+                        <ul class="shareList">
+                            <li class="iconfont-archer share-qr" data-type="qr">&#xe75b;
+                                <div class="share-qrcode"></div>
+                            </li>
+                            <li class="iconfont-archer" data-type="weibo">&#xe619;</li>
+                            <li class="iconfont-archer" data-type="qzone">&#xe62e;</li>
+                            <li class="iconfont-archer" data-type="twitter">&#xe634;</li>
+                            <li class="iconfont-archer" data-type="facebook">&#xe67a;</li>
+                        </ul>
+                    </span>
+                </div>
+            </div>
         
     </div>
 </div>
@@ -361,663 +412,213 @@ height:50vh;
 </script>        
         <img class="loading" src="/assets/loading.svg" style="display: block; margin: 6rem auto 0 auto; width: 6rem; height: 6rem;" />
         <div class="container container-unloaded">
-            <main class="main index-page">
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/10/20/kylin-v10-k8s-overlay-error/" >
-            
-                <span>银河麒麟arm64系统上k8s集群跨节点不通的一次排查</span>
-        </a>
-        <div class="abstract-content">
-            由来同事在客户那边部署的集群问题频繁，先给他解决了个问题后又反映说业务 POD 由于 DNS 无法解析而启动失败，排查完发现这样的情况从没遇到过，挺有意思的，这里记录下。实际排查过程也有往错误的方向浪费了一些时间和尝试，就不写进来了，以正确的角度写下排查过程。
-环境信息集群信息:
-12345678910111213141516171819202122232425$ kubectl version -o json&#123;  "clientVersion": &#123;    "major": "1",    "minor": "15",    "gitVersion": "v1.15...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/10/20</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Kylin">Kylin</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/09/18/ocp-4.5-install/" >
-            
-                <span>openshift 4.5.9 离线安装</span>
-        </a>
-        <div class="abstract-content">
-            本文是全部离线安装，也就是 UPI (User Provisioned Infrastructure) 模式安装，假设机器只能配置静态ip不能有网络配置权限和配置 dhcp 和 pxe。机器可以是物理机和虚拟机。
-前言介绍ocp介绍openshift 分为社区版本 okd 和企业版本 ocp(openshift container platform)，okd 的更新很慢，ocp 个人也是可以安装的，不购买 license 则不会享受 redhat 的官方支持。
-openshift 不像其他的 dashboard 诸如 rancher，k3s 之类的，它自己实现了 cs 的三个组件，也给 ...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/09/18</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openshift">openshift</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "ocp">ocp</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/30/prometheus-rate-and-irate/" >
-            
-                <span>prometheus的rate与irate内部是如何计算的</span>
-        </a>
-        <div class="abstract-content">
-            由来市面上的翻译误导人，压根不是啥平均增长率，看了下源码和实际算下来让大家好理解
-rate主要代码是在 https://github.com/prometheus/prometheus/blob/master/promql/functions.go 的extrapolatedRate 和 funcRate，funcRate为
-123func funcRate(vals []parser.Value, args parser.Expressions, enh *EvalNodeHelper) Vector &#123;  return extrapolatedRate(vals, args...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/30</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Prometheus">Prometheus</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/07/23/fs-error-fix-k8s-master/" >
-            
-                <span>k8s master机器文件系统故障的一次恢复过程</span>
-        </a>
-        <div class="abstract-content">
-            由来研发反馈他们那边一套集群有台master文件系统损坏无法开机，他们是三台openstack上的虚机，是虚拟化宿主机故障导致的虚机文件系统损坏。三台机器是master+node，指导他修复后开机，修复过程和我之前文章opensuse的一次救援步骤一样
-起来后我上去看，因为做了 HA 的，所以只有这个node有问题，集群没影响
-12345[root@k8s-m1 ~]# kubectl get node -o wideNAME             STATUS     ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP   OS...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/07/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "etcd">etcd</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/23/host-gw-in-aliyun/" >
-            
-                <span>阿里云上使用flannel host-gw跨节点pod不通的解决</span>
-        </a>
-        <div class="abstract-content">
-            挺多人问的，写下解决办法
-前言首先主机得在同一个专有vpc下，跨vpc或者经典vpc就扯淡了。还有flannel别把网络信息存储在etcd里，目前flannel只支持v2的etcd api。但是现在k8s都是使用v3 etcd存储了。如果v2和v3共存会导致无法恢复etcd的备份
-所以网上那些etcdctl set flannel的cidr的文章别看了，都没做过备份恢复实验就到处发k8s搭建教程。flannel v3的话看我过往文章
-环境信息先来说下host-gw的包走向，假设两台机器
+            <main class="main post-page">
+    <article class="article-entry">
+        <p>同事dnsmasq + consul 整服务自动发现，但是不是tls且consul server是单点，而且进程启动用的nohub而不是systemd，这里查了下资料实践了下</p>
+<p>部署过程已经写成了ansible，地址 <a href="https://github.com/zhangguanzhang/consul-tls-ansible" target="_blank" rel="noopener">https://github.com/zhangguanzhang/consul-tls-ansible</a></p>
+<p>开了五台云主机，总体规划为下面，角色那有条件的可以分开，例如client单独一台。不分开的话得配置client的端口和server的分开，自己去探索</p>
+<table>
+<thead>
+<tr>
+<th align="left">IP</th>
+<th align="center">Hostname</th>
+<th align="center">CPU</th>
+<th align="center">Memory</th>
+<th align="center">role</th>
+<th align="center">nodeName</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">172.19.0.3</td>
+<td align="center">consul1</td>
+<td align="center">4</td>
+<td align="center">8G</td>
+<td align="center">server</td>
+<td align="center">172.19.0.3</td>
+</tr>
+<tr>
+<td align="left">172.19.0.4</td>
+<td align="center">consul2</td>
+<td align="center">4</td>
+<td align="center">8G</td>
+<td align="center">server</td>
+<td align="center">172.19.0.4</td>
+</tr>
+<tr>
+<td align="left">172.19.0.5</td>
+<td align="center">consul3</td>
+<td align="center">4</td>
+<td align="center">8G</td>
+<td align="center">server</td>
+<td align="center">172.19.0.5</td>
+</tr>
+<tr>
+<td align="left">172.19.0.8</td>
+<td align="center">consul4</td>
+<td align="center">2</td>
+<td align="center">4G</td>
+<td align="center">client</td>
+<td align="center">172.19.0.8</td>
+</tr>
+<tr>
+<td align="left">172.19.0.9</td>
+<td align="center">consul5</td>
+<td align="center">2</td>
+<td align="center">4G</td>
+<td align="center">client</td>
+<td align="center">172.19.0.9</td>
+</tr>
+</tbody></table>
+<p>利用Consul提供的服务实现服务的注册与发现，需要建立Consul Cluster。在Consul方案中，每个提供服务的节点上都要部署和运行Consul的agent，所有运行Consul agent节点的集合构成Consul Cluster。Consul agent有两种运行模式：Server和Client。这里的Server和Client只是Consul集群层面的区分，与搭建在Cluster之上 的应用服务无关。以Server模式运行的Consul agent节点用于维护Consul集群的状态，官方建议每个Consul Cluster至少有3个或以上的运行在Server mode的Agent，Client节点不限。</p>
+<p>相关端口<br>ports.<br>8300  – TCP agent server 使用的，用于处理其他agent发来的请求<br>8301  – TCP &amp; UDP agent使用此端口处理LAN中的gossip<br>8302  – TCP &amp; UDP agent server使用此端口处理WAN中的与其他server的gossip<br>8400  - 0.8后废弃，曾经是rpc客户端端口<br>8500  – TCP ui-port http API 因为https我们这里改为使用8501端口,也是cli使用的端口<br>8600  – TCP &amp; UDP dns解析</p>
+<p>文章很多步骤基本上都是在<code>172.19.0.3</code>上执行的，文件到其他机器的copy和配置文件自行分发和目标主机上修改</p>
+<h2 id="下载最新版本并解压"><a href="#下载最新版本并解压" class="headerlink" title="下载最新版本并解压"></a>下载最新版本并解压</h2><p>目前最新版是1.6.1，下载页面 <a href="https://www.consul.io/downloads.html" target="_blank" rel="noopener">https://www.consul.io/downloads.html</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">wget https://releases.hashicorp.com/consul/1.6.1/consul_1.6.1_linux_amd64.zip</span><br><span class="line">unzip -x consul_1.6.1_linux_amd64.zip</span><br><span class="line">mv consul /usr/<span class="built_in">local</span>/bin/</span><br><span class="line">yum install -y epel-release </span><br><span class="line">yum install -y bash-completion</span><br></pre></td></tr></table></figure>
+<h2 id="tls"><a href="#tls" class="headerlink" title="tls"></a>tls</h2><h3 id="step-1-创建ca"><a href="#step-1-创建ca" class="headerlink" title="step 1: 创建ca"></a>step 1: 创建ca</h3><p>为了简单起见，这里我使用Consul的内置TLS助手来创建基本的CA。您只需为数据中心创建一个CA。您应该在用于创建CA的同一服务器上生成所有证书。<br>ca默认五年，其他的证书默认1年，这里需要带参数<code>-days=</code>设置长点的日期</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">consul tls ca create -days=36500</span><br><span class="line">==&gt; Saved consul-agent-ca.pem</span><br><span class="line">==&gt; Saved consul-agent-ca-key.pem</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ul>
+<li>CA证书consul-agent-ca.pem包含验证Consul证书所需的公钥，因此必须分发给运行consul代理的每个节点。</li>
+<li>CA密钥，consul-agent-ca-key.pem将用于为Consul节点签署证书，并且必须保持私有。拥有此密钥，任何人都可以将Consul作为受信任的服务器运行，并访问所有Consul数据，包括ACL令牌。</li>
+</ul>
+</blockquote>
+<h3 id="step2-创建server角色的证书"><a href="#step2-创建server角色的证书" class="headerlink" title="step2: 创建server角色的证书"></a>step2: 创建server角色的证书</h3><p>这里数据中心默认名字为dc1，其他的自行选项赋值。在创建CA的同一台服务器上重复此过程，直到每台服务器都有一个单独的证书。该命令可以反复调用，它将自动增加证书和密钥号。您将需要将证书分发到服务器。<br>因为我有三个consul server，所以执行三次</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">$ consul tls cert create -server -dc=dc1 -days=36500</span><br><span class="line">==&gt; WARNING: Server Certificates grants authority to become a</span><br><span class="line">    server and access all state <span class="keyword">in</span> the cluster including root keys</span><br><span class="line">    and all ACL tokens. Do not distribute them to production hosts</span><br><span class="line">    that are not server nodes. Store them as securely as CA keys.</span><br><span class="line">==&gt; Using consul-agent-ca.pem and consul-agent-ca-key.pem</span><br><span class="line">==&gt; Saved dc1-server-consul-0.pem</span><br><span class="line">==&gt; Saved dc1-server-consul-0-key.pem</span><br><span class="line">$ consul tls cert create -server -dc=dc1 -days=36500</span><br><span class="line">==&gt; WARNING: Server Certificates grants authority to become a</span><br><span class="line">    server and access all state <span class="keyword">in</span> the cluster including root keys</span><br><span class="line">    and all ACL tokens. Do not distribute them to production hosts</span><br><span class="line">    that are not server nodes. Store them as securely as CA keys.</span><br><span class="line">==&gt; Using consul-agent-ca.pem and consul-agent-ca-key.pem</span><br><span class="line">==&gt; Saved dc1-server-consul-1.pem</span><br><span class="line">==&gt; Saved dc1-server-consul-1-key.pem</span><br><span class="line">$ consul tls cert create -server -dc=dc1 -days=36500</span><br><span class="line">==&gt; WARNING: Server Certificates grants authority to become a</span><br><span class="line">    server and access all state <span class="keyword">in</span> the cluster including root keys</span><br><span class="line">    and all ACL tokens. Do not distribute them to production hosts</span><br><span class="line">    that are not server nodes. Store them as securely as CA keys.</span><br><span class="line">==&gt; Using consul-agent-ca.pem and consul-agent-ca-key.pem</span><br><span class="line">==&gt; Saved dc1-server-consul-2.pem</span><br><span class="line">==&gt; Saved dc1-server-consul-2-key.pem</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ul>
+<li>为了对Consul服务器进行身份验证，服务器会提供一种特殊的证书-包含server.dc1.consul在中<code>Subject Alternative Name</code>。如果启用<code>verify_server_hostname</code>，则仅允许提供此类证书的代理作为服务器引导。没有<code>verify_server_hostname = true</code>攻击者，可能会破坏Consul客户端代理，并以服务器身份重新启动该代理，以便访问您数据中心中的所有数据！这就是服务器证书很特殊的原因，只有服务器才应配置它们。</li>
+</ul>
+</blockquote>
+<h3 id="step3-创建client角色的证书"><a href="#step3-创建client角色的证书" class="headerlink" title="step3: 创建client角色的证书"></a>step3: 创建client角色的证书</h3><p>在Consul 1.5.2中，您可以使用替代过程来自动将证书分发给客户端。要启用此新功能，请设置<code>auto_encrypt</code>。</p>
+<p>您可以继续使用生成证书<code>consul tls cert create -client</code>并手动分发证书。对于需要高度保护的数据中心，仍然需要现有的工作流程。</p>
+<p>如果您正在运行Consul 1.5.1或更早版本，则需要使用来为每个客户端创建单独的证书<code>consul tls cert create -client</code>。客户端证书也由您的CA签名，但是它们没有特殊性<code>Subject Alternative Name</code>，这意味着如果<code>verify_server_hostname</code>启用，则它们不能作为server角色启动。</p>
+<p>这里我是高于1.5.2的，不需要为每个客户端创建证书，客户端只需要拥有<code>consul-agent-ca.pem</code>这个ca下，会自动从server获取证书存在内存中，并且不会持久保存。但是我测试了并没有成功，还是生成了证书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ consul tls cert create -client -dc=dc1 -days=36500</span><br><span class="line">==&gt; Using consul-agent-ca.pem and consul-agent-ca-key.pem</span><br><span class="line">==&gt; Saved dc1-client-consul-0.pem</span><br><span class="line">==&gt; Saved dc1-client-consul-0-key.pem</span><br><span class="line">$ consul tls cert create -client -dc=dc1 -days=36500</span><br><span class="line">==&gt; Using consul-agent-ca.pem and consul-agent-ca-key.pem</span><br><span class="line">==&gt; Saved dc1-client-consul-1.pem</span><br><span class="line">==&gt; Saved dc1-client-consul-1-key.pem</span><br></pre></td></tr></table></figure>
 
 
+<h3 id="step4-创建cli的证书"><a href="#step4-创建cli的证书" class="headerlink" title="step4: 创建cli的证书"></a>step4: 创建cli的证书</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ consul tls cert create -cli -dc&#x3D;dc1 -days&#x3D;36500</span><br><span class="line">&#x3D;&#x3D;&gt; Using consul-agent-ca.pem and consul-agent-ca-key.pem</span><br><span class="line">&#x3D;&#x3D;&gt; Saved dc1-cli-consul-0.pem</span><br><span class="line">&#x3D;&#x3D;&gt; Saved dc1-cli-consul-0-key.pem</span><br></pre></td></tr></table></figure>
 
-IP
-pod cidr
+<p>文件列表</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">$ ll</span><br><span class="line">total 39088</span><br><span class="line">-rw-r--r-- 1 root root 39965581 Sep 13 04:30 consul_1.6.1_linux_amd64.zip</span><br><span class="line">-rw-r--r-- 1 root root      227 Oct 11 10:36 consul-agent-ca-key.pem</span><br><span class="line">-rw-r--r-- 1 root root     1249 Oct 11 10:36 consul-agent-ca.pem</span><br><span class="line">-rw-r--r-- 1 root root      227 Oct 11 11:47 dc1-cli-consul-0-key.pem</span><br><span class="line">-rw-r--r-- 1 root root     1082 Oct 11 11:47 dc1-cli-consul-0.pem</span><br><span class="line">-rw-r--r-- 1 root root      227 Oct 11 14:13 dc1-client-consul-0-key.pem</span><br><span class="line">-rw-r--r-- 1 root root     1139 Oct 11 14:13 dc1-client-consul-0.pem</span><br><span class="line">-rw-r--r-- 1 root root      227 Oct 11 17:35 dc1-client-consul-1-key.pem</span><br><span class="line">-rw-r--r-- 1 root root     1143 Oct 11 17:35 dc1-client-consul-1.pem</span><br><span class="line">-rw-r--r-- 1 root root      227 Oct 11 10:42 dc1-server-consul-0-key.pem</span><br><span class="line">-rw-r--r-- 1 root root     1139 Oct 11 10:42 dc1-server-consul-0.pem</span><br><span class="line">-rw-r--r-- 1 root root      227 Oct 11 10:43 dc1-server-consul-1-key.pem</span><br><span class="line">-rw-r--r-- 1 root root     1139 Oct 11 10:43 dc1-server-consul-1.pem</span><br><span class="line">-rw-r--r-- 1 root root      227 Oct 11 10:43 dc1-server-consul-2-key.pem</span><br><span class="line">-rw-r--r-- 1 root root     1139 Oct 11 10:43 dc1-server-consul-2.pem</span><br></pre></td></tr></table></figure>
+
+<h2 id="server和client以及cli的配置"><a href="#server和client以及cli的配置" class="headerlink" title="server和client以及cli的配置"></a>server和client以及cli的配置</h2><p>配置优先级按以下顺序评估：</p>
+<ul>
+<li>命令行参数</li>
+<li>环境变量</li>
+<li>配置文件<br>加载配置时，Consul会以词法顺序从文件和目录中加载配置。例如，配置文件<code>basic_config.json</code>将在之前处理<code>extra_config.json</code>。配置可以采用HCL或JSON格式。HCL支持在Consul 1.0和更高版本中可用，现在需要在所有配置文件上使用.hcl或 .json扩展名以指定其格式。<br>consul默认从路径<code>/consul/config</code>读取配置信息，为了规范，配置文件我路径定义为<code>/etc/consul.d/</code>，数据目录定义为<code>/var/lib/consul/</code><br>所有flag的解释可以参考 <a href="https://www.cnblogs.com/sunsky303/p/9209024.html" target="_blank" rel="noopener">https://www.cnblogs.com/sunsky303/p/9209024.html</a><br>consul的参数可以命令行指定，也可以写json文件里，为了规范，命令行参数尽量少写，大体的配置信息都写json文件里。总体目录结构为下面，这里<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ tree &#x2F;etc&#x2F;consul.d&#x2F;</span><br><span class="line">&#x2F;etc&#x2F;consul.d&#x2F;</span><br><span class="line">├── cli</span><br><span class="line">│   ├── path.sh &#x2F;&#x2F;cli需要的环境变量</span><br><span class="line">│   └── ssl</span><br><span class="line">│       ├── dc1-cli-consul-0-key.pem</span><br><span class="line">│       └── dc1-cli-consul-0.pem</span><br><span class="line">├── consul-agent-ca.pem</span><br><span class="line">└── server</span><br><span class="line">    ├── conf.json</span><br><span class="line">    └── ssl</span><br><span class="line">        ├── dc1-server-consul-0-key.pem &#x2F;&#x2F;第一台server对应0的证书,第二个就是1</span><br><span class="line">        └── dc1-server-consul-0.pem     &#x2F;&#x2F;同上，下面的配置文件里指定的文件名也要一致</span><br></pre></td></tr></table></figure>
+server和client我们不用nohub，使用systemd跑，所以需要创建一个不能登陆的用户<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">useradd --system --home &#x2F;etc&#x2F;consul.d --shell &#x2F;bin&#x2F;false consul</span><br><span class="line">mkdir -p &#x2F;var&#x2F;lib&#x2F;consul</span><br><span class="line">chown -R consul:consul &#x2F;var&#x2F;lib&#x2F;consul</span><br></pre></td></tr></table></figure>
+consul命令的子命令和参数能够自动补全。启用自动补全功能。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">consul -autocomplete-install</span><br><span class="line">complete -C &#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul consul</span><br></pre></td></tr></table></figure>
+<h3 id="server"><a href="#server" class="headerlink" title="server"></a>server</h3>node_name注意按照文章最开始的标题写，每个不一样</li>
+</ul>
+<p><code>/etc/consul.d/server/conf.json</code>配置内容为，缺省client_addr为127.0.0.1，如果是专门的机器跑consul这里需要修改为bind住<code>0.0.0.0</code>或者多网卡下专门指定的ip<br>关于bootstrap的解释见文档 <a href="https://www.consul.io/docs/install/bootstrapping.html" target="_blank" rel="noopener">https://www.consul.io/docs/install/bootstrapping.html</a></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"data_dir"</span>: <span class="string">"/var/lib/server"</span>,</span><br><span class="line">    <span class="attr">"node_name"</span>: <span class="string">"172.19.0.3"</span>,</span><br><span class="line">    <span class="attr">"bootstrap_expect"</span>: <span class="number">3</span>, <span class="comment">//数量等同于期望组件集群的最小数量</span></span><br><span class="line">    <span class="attr">"bind_addr"</span>: <span class="string">"172.19.0.3"</span>,</span><br><span class="line">    <span class="attr">"client_addr"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">    <span class="attr">"datacenter"</span>: <span class="string">"dc1"</span>,</span><br><span class="line">    <span class="attr">"domain"</span>: <span class="string">"consul"</span>,</span><br><span class="line">    <span class="attr">"leave_on_terminate"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"log_level"</span>: <span class="string">"INFO"</span>,</span><br><span class="line">    <span class="attr">"start_join"</span>: [</span><br><span class="line">        <span class="string">"172.19.0.3"</span>,</span><br><span class="line">        <span class="string">"172.19.0.4"</span>,</span><br><span class="line">        <span class="string">"172.19.0.5"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"retry_interval"</span>: <span class="string">"2s"</span>,</span><br><span class="line">    <span class="attr">"verify_incoming"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"verify_outgoing"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"verify_server_hostname"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"ca_file"</span>: <span class="string">"/etc/consul.d/consul-agent-ca.pem"</span>,</span><br><span class="line">    <span class="attr">"cert_file"</span>: <span class="string">"/etc/consul.d/server/ssl/dc1-server-consul-0.pem"</span>,</span><br><span class="line">    <span class="attr">"key_file"</span>: <span class="string">"/etc/consul.d/server/ssl/dc1-server-consul-0-key.pem"</span>,</span><br><span class="line">    <span class="attr">"ports"</span>: &#123;</span><br><span class="line">      <span class="attr">"http"</span>: <span class="number">-1</span>,</span><br><span class="line">      <span class="attr">"dns"</span>: <span class="number">8600</span>,</span><br><span class="line">      <span class="attr">"https"</span>: <span class="number">8501</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"server"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"ui"</span>: <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="client"><a href="#client" class="headerlink" title="client"></a>client</h3><p>node_name注意按照文章最开始的标题写，每个不一样</p>
+<p>client的配置<code>/etc/consul.d/client/conf.json</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"> <span class="attr">"data_dir"</span>: <span class="string">"/var/lib/consul/client"</span>,</span><br><span class="line"> <span class="attr">"node_name"</span>: <span class="string">"172.19.0.8"</span>,</span><br><span class="line"> <span class="attr">"datacenter"</span>: <span class="string">"dc1"</span>,</span><br><span class="line"> <span class="attr">"bind_addr"</span>: <span class="string">"172.19.0.8"</span>,</span><br><span class="line"> <span class="attr">"client_addr"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line"> <span class="attr">"retry_join"</span>: [</span><br><span class="line">        <span class="string">"172.19.0.3"</span>,</span><br><span class="line">        <span class="string">"172.19.0.4"</span>,</span><br><span class="line">        <span class="string">"172.19.0.5"</span></span><br><span class="line"> ],</span><br><span class="line"> <span class="attr">"retry_interval"</span>: <span class="string">"3s"</span>,</span><br><span class="line"> <span class="attr">"rejoin_after_leave"</span>: <span class="literal">true</span>,</span><br><span class="line"> <span class="attr">"enable_script_checks"</span>: <span class="literal">true</span>,</span><br><span class="line"> <span class="attr">"verify_incoming"</span>: <span class="literal">true</span>,</span><br><span class="line"> <span class="attr">"ca_file"</span>: <span class="string">"/etc/consul.d/consul-agent-ca.pem"</span>,</span><br><span class="line"> <span class="attr">"cert_file"</span>: <span class="string">"/etc/consul.d/client/ssl/dc1-client-consul-0.pem"</span>,</span><br><span class="line"> <span class="attr">"key_file"</span>: <span class="string">"/etc/consul.d/client/ssl/dc1-client-consul-0-key.pem"</span>,</span><br><span class="line"> <span class="attr">"auto_encrypt"</span>: &#123;</span><br><span class="line">    <span class="attr">"tls"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"ports"</span>: &#123;</span><br><span class="line">    <span class="attr">"http"</span>: <span class="number">-1</span>,</span><br><span class="line">    <span class="attr">"dns"</span>: <span class="number">8600</span>,</span><br><span class="line">    <span class="attr">"https"</span>: <span class="number">8501</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="cli"><a href="#cli" class="headerlink" title="cli"></a>cli</h3><p>consul当作cli使用的时候也得走tls,不然会下面报错</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ consul members</span><br><span class="line">Error retrieving members: Get http:&#x2F;&#x2F;127.0.0.1:8500&#x2F;v1&#x2F;agent&#x2F;members?segment&#x3D;_all: dial tcp 127.0.0.1:8500: connect: connection refused</span><br></pre></td></tr></table></figure>
+<p>路径根据实际来，证书最好是绝对路径，cli默认操作localhost上运行的consul，例如能够使用<code>consul leave</code>会让当前的consul退出集群，环境变量我们写子配置文件<code>/etc/profile.d/consul-cli.sh</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">export CONSUL_HTTP_ADDR&#x3D;https:&#x2F;&#x2F;localhost:8501</span><br><span class="line">export CONSUL_CACERT&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;consul-agent-ca.pem</span><br><span class="line">export CONSUL_CLIENT_CERT&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;cli&#x2F;ssl&#x2F;dc1-cli-consul-0.pem</span><br><span class="line">export CONSUL_CLIENT_KEY&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;cli&#x2F;ssl&#x2F;dc1-cli-consul-0-key.pem</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>CONSUL_HTTP_ADDR</code>是Consul代理的URL，并设置的默认值 -http-addr。</li>
+<li><code>CONSUL_CACERT</code>是CA证书的位置，并将设置为默认值-ca-file。</li>
+<li><code>CONSUL_CLIENT_CERT</code>是CLI证书的位置，并将设置为默认值-client-cert。</li>
+<li><code>CONSUL_CLIENT_KEY</code>是CLI键的位置，并将设置为默认值 -client-key。</li>
+</ul>
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>这里使用systemd而不是使用lowb的nohub啥的</p>
+<p>server的systemd <code>/usr/lib/systemd/system/consul.service</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;&quot;Consul Startup process for server&quot;</span><br><span class="line">Documentation&#x3D;https:&#x2F;&#x2F;www.consul.io&#x2F;</span><br><span class="line">Requires&#x3D;network-online.target</span><br><span class="line">After&#x3D;network-online.target</span><br><span class="line">ConditionDirectoryNotEmpty&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;server</span><br><span class="line">ConditionDirectoryNotEmpty&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;server&#x2F;ssl</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User&#x3D;consul</span><br><span class="line">Group&#x3D;consul</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;consul</span><br><span class="line">PIDFile&#x3D;&#x2F;var&#x2F;run&#x2F;consul&#x2F;consul.pid</span><br><span class="line">PermissionsStartOnly&#x3D;true</span><br><span class="line">ExecStartPre&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul validate &#x2F;etc&#x2F;consul.d&#x2F;server</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul agent -config-dir&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;server</span><br><span class="line">ExecReload&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul reload</span><br><span class="line">KillMode&#x3D;process</span><br><span class="line">KillSignal&#x3D;SIGTERM</span><br><span class="line">RestartSec&#x3D;15s</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">LimitNOFILE&#x3D;65536</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
+<p><code>RestartSec</code>一定要配置，不然会报错<code>start request repeated too quickly for consul.service</code></p>
+<p>设置的<code>bootstrap_expect</code>为3，所以server达到了3以上的时候才会选举</p>
+<p>client启动参数为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">[Unit]</span><br><span class="line">Description&#x3D;&quot;Consul Startup process for client&quot;</span><br><span class="line">Documentation&#x3D;https:&#x2F;&#x2F;www.consul.io&#x2F;</span><br><span class="line">Requires&#x3D;network-online.target</span><br><span class="line">After&#x3D;network-online.target</span><br><span class="line">ConditionDirectoryNotEmpty&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;server</span><br><span class="line">ConditionDirectoryNotEmpty&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;server&#x2F;ssl</span><br><span class="line"></span><br><span class="line">[Service]</span><br><span class="line">User&#x3D;consul</span><br><span class="line">Group&#x3D;consul</span><br><span class="line">EnvironmentFile&#x3D;-&#x2F;etc&#x2F;sysconfig&#x2F;consul</span><br><span class="line">PIDFile&#x3D;&#x2F;var&#x2F;run&#x2F;consul&#x2F;consul.pid</span><br><span class="line">PermissionsStartOnly&#x3D;true</span><br><span class="line">ExecStartPre&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul validate &#x2F;etc&#x2F;consul.d&#x2F;client</span><br><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul agent -config-dir&#x3D;&#x2F;etc&#x2F;consul.d&#x2F;client</span><br><span class="line">ExecReload&#x3D;&#x2F;usr&#x2F;local&#x2F;bin&#x2F;consul reload</span><br><span class="line">KillMode&#x3D;process</span><br><span class="line">KillSignal&#x3D;SIGTERM</span><br><span class="line">RestartSec&#x3D;15s</span><br><span class="line">Restart&#x3D;on-failure</span><br><span class="line">LimitNOFILE&#x3D;65536</span><br><span class="line"></span><br><span class="line">[Install]</span><br><span class="line">WantedBy&#x3D;multi-user.target</span><br></pre></td></tr></table></figure>
 
 
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ consul members</span><br><span class="line">Node         Address           Status  Type    Build  Protocol  DC   Segment</span><br><span class="line">172.19.0.3   172.19.0.3:8301   alive   server  1.6.1  2         dc1  &lt;all&gt;</span><br><span class="line">172.19.0.4   172.19.0.4:8301   alive   server  1.6.1  2         dc1  &lt;all&gt;</span><br><span class="line">172.19.0.5   172.19.0.5:8301   alive   server  1.6.1  2         dc1  &lt;all&gt;</span><br><span class="line">172.19.0.9   172.19.0.9:8301   alive   client  1.6.1  2         dc1  &lt;default&gt;</span><br><span class="line">172.19.0.8   172.19.0.8:8301   alive   client  1.6.1  2         dc1  &lt;default&gt;</span><br><span class="line">$ consul operator raft list-peers</span><br><span class="line">Node        ID                                    Address          State     Voter  RaftProtocol</span><br><span class="line">172.19.0.5  47f0ed67-7e66-6bd1-bbf3-4e9abeb09dc0  172.19.0.5:8300  leader    true   3</span><br><span class="line">172.19.0.3  664e8ada-f69b-2681-8b1c-d9fbf3d1ccb1  172.19.0.3:8300  follower  true   3</span><br><span class="line">172.19.0.4  d8ee2b50-9350-14e7-da5f-0b200acf80d0  172.19.0.4:8300  follower  true   3</span><br></pre></td></tr></table></figure>
 
-10.0.6.166
-10.200.1.0/24
+<h2 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h2><h3 id="集群外"><a href="#集群外" class="headerlink" title="集群外"></a>集群外</h3><p>client+服务发现的配置可以直接写<code>/etc/consul.d/client</code>下面json文件，例如mysql.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"services"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"r-3306-mysql"</span>,</span><br><span class="line">      <span class="attr">"tags"</span>: [</span><br><span class="line">        <span class="string">"slave-3306"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"address"</span>: <span class="string">"172.16.0.2"</span>,</span><br><span class="line">      <span class="attr">"port"</span>: <span class="number">3306</span>,</span><br><span class="line">      <span class="attr">"checks"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">"args"</span>: [<span class="string">"echo"</span>], <span class="comment">//实际应该写健康检查脚本</span></span><br><span class="line">          <span class="attr">"interval"</span>: <span class="string">"10s"</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>consul client相关日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2019&#x2F;10&#x2F;11 16:28:20 [INFO] agent: Synced service &quot;r-3306-mysql&quot;</span><br><span class="line">2019&#x2F;10&#x2F;11 16:28:21 [INFO] agent: Synced node info</span><br><span class="line">2019&#x2F;10&#x2F;11 16:28:25 [INFO] agent: Synced check &quot;service:r-3306-mysql&quot;</span><br></pre></td></tr></table></figure>
+<p>测试域名解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ dig @172.19.0.3 -p 8600 r-3306-mysql.service.consul +short</span><br><span class="line">172.16.0.2</span><br></pre></td></tr></table></figure>
+<p>可配置其他的dns server转发到consul上，参考文档 <a href="https://learn.hashicorp.com/consul/security-networking/forwarding" target="_blank" rel="noopener">https://learn.hashicorp.com/consul/security-networking/forwarding</a></p>
+<h3 id="k8s内部coredns转发到consul上"><a href="#k8s内部coredns转发到consul上" class="headerlink" title="k8s内部coredns转发到consul上"></a>k8s内部coredns转发到consul上</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ consul members</span><br><span class="line">Node         Address           Status  Type    Build  Protocol  DC   Segment</span><br><span class="line">172.19.0.3   172.19.0.3:8301   alive   server  1.6.1  2         dc1  &lt;all&gt;</span><br><span class="line">172.19.0.4   172.19.0.4:8301   alive   server  1.6.1  2         dc1  &lt;all&gt;</span><br><span class="line">172.19.0.5   172.19.0.5:8301   alive   server  1.6.1  2         dc1  &lt;all&gt;</span><br><span class="line">172.19.0.9   172.19.0.9:8301   alive   client  1.6.1  2         dc1  &lt;default&gt;</span><br><span class="line">172.19.0.8   172.19.0.8:8301   alive   client  1.6.1  2         dc1  &lt;default&gt;</span><br></pre></td></tr></table></figure>
+<p>每个member都能解析域名，coredns的配置段为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">[root@k8s-m1 CoreAddons]# kubectl -n kube-system get cm coredns -o yaml --export</span><br><span class="line">apiVersion: v1</span><br><span class="line">data:</span><br><span class="line">  Corefile: |</span><br><span class="line">    .:53 &#123;</span><br><span class="line">        errors</span><br><span class="line">        ready</span><br><span class="line">        health</span><br><span class="line">        kubernetes cluster.local in-addr.arpa ip6.arpa &#123;</span><br><span class="line">            pods insecure</span><br><span class="line">            fallthrough in-addr.arpa ip6.arpa</span><br><span class="line">        &#125;</span><br><span class="line">        prometheus :9153</span><br><span class="line">        forward . &#x2F;etc&#x2F;resolv.conf</span><br><span class="line">        cache 30</span><br><span class="line">        reload</span><br><span class="line">        loadbalance</span><br><span class="line">    &#125;</span><br><span class="line">    service.consul:53 &#123;</span><br><span class="line">        errors</span><br><span class="line">        cache 30</span><br><span class="line">        forward . 172.19.0.3:8600 172.19.0.4:8600 172.19.0.5:8600 172.19.0.8:8600 172.19.0.9:8600</span><br><span class="line">    &#125;</span><br><span class="line">kind: ConfigMap</span><br><span class="line">metadata:</span><br><span class="line">  annotations:</span><br><span class="line">    ...</span><br><span class="line">  labels:</span><br><span class="line">    addonmanager.kubernetes.io&#x2F;mode: EnsureExists</span><br><span class="line">  name: coredns</span><br><span class="line">  selfLink: &#x2F;api&#x2F;v1&#x2F;namespaces&#x2F;kube-system&#x2F;configmaps&#x2F;coredns</span><br></pre></td></tr></table></figure>
+<p>跑一个指定版本带解析的工具pod</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">$ cat&lt;&lt;EOF | kubectl apply -f -</span><br><span class="line">apiVersion: v1</span><br><span class="line">kind: Pod</span><br><span class="line">metadata:</span><br><span class="line">  name: busybox</span><br><span class="line">  namespace: default</span><br><span class="line">spec:</span><br><span class="line">  containers:</span><br><span class="line">  - name: busybox</span><br><span class="line">    image: busybox:1.28</span><br><span class="line">    command:</span><br><span class="line">      - sleep</span><br><span class="line">      - &quot;3600&quot;</span><br><span class="line">    imagePullPolicy: IfNotPresent</span><br><span class="line">  restartPolicy: Always</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<p>测试解析，不影响集群的内部解析</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ kubectl exec -ti busybox -- nslookup r-3306-mysql.service.consul</span><br><span class="line">Server:    10.96.0.10</span><br><span class="line">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span><br><span class="line"></span><br><span class="line">Name:      r-3306-mysql.service.consul</span><br><span class="line">Address 1: 172.16.0.2</span><br><span class="line">$ kubectl exec -ti busybox -- nslookup kubernetes</span><br><span class="line">Server:    10.96.0.10</span><br><span class="line">Address 1: 10.96.0.10 kube-dns.kube-system.svc.cluster.local</span><br><span class="line"></span><br><span class="line">Name:      kubernetes</span><br><span class="line">Address 1: 10.96.0.1 kubernetes.default.svc.cluster.local</span><br></pre></td></tr></table></figure>
 
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考:"></a>参考:</h2><p>tls步骤参考 <a href="https://learn.hashicorp.com/consul/security-networking/certificates" target="_blank" rel="noopener">https://learn.hashicorp.com/consul/security-networking/certificates</a><br>官方部署指导: <a href="https://learn.hashicorp.com/consul/datacenter-deploy/deployment-guide" target="_blank" rel="noopener">https://learn.hashicorp.com/consul/datacenter-deploy/deployment-guide</a><br>tls官方的文档(太过简陋可以不看) <a href="https://www.consul.io/docs/commands/tls/cert.html" target="_blank" rel="noopener">https://www.consul.io/docs/commands/tls/cert.html</a><br>集群搭建&amp;简单功能测试&amp;故障恢复: <a href="https://blog.csdn.net/chenchong08/article/details/77885989" target="_blank" rel="noopener">https://blog.csdn.net/chenchong08/article/details/77885989</a><br>token+openssl的tls: <a href="https://www.digitalocean.com/community/tutorials/how-to-secure-consul-with-tls-encryption-on-ubuntu-14-04" target="_blank" rel="noopener">https://www.digitalocean.com/community/tutorials/how-to-secure-consul-with-tls-encryption-on-ubuntu-14-04</a><br>ha consul(推荐阅读): <a href="https://learn.hashicorp.com/vault/operations/ops-vault-ha-consul" target="_blank" rel="noopener">https://learn.hashicorp.com/vault/operations/ops-vault-ha-consul</a><br>systemd字段: <a href="https://blog.csdn.net/biyubang6725/article/details/100961677" target="_blank" rel="noopener">https://blog.csdn.net/biyubang6725/article/details/100961677</a><br>consul k8s dns: <a href="https://www.consul.io/docs/platform/k8s/dns.html" target="_blank" rel="noopener">https://www.consul.io/docs/platform/k8s/dns.html</a></p>
 
-10.0.6...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "host-gw">host-gw</a>
-    
-</div>
-            
-        </div>
     </article>
+    <!-- license  -->
     
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/06/19/go-prom-exporter/" >
-            
-                <span>[未写完]使用go开发一个Prometheus的exporter</span>
-        </a>
-        <div class="abstract-content">
-            <p>市面上的例子太多都太简单了，这里详细写下我知道的</p>
+        <div class="license-wrapper">
+            <p>原文作者：<a href="http://zhangguanzhang.github.io">Zhangguanzhang</a>
+            <p>原文链接：<a href="http://zhangguanzhang.github.io/2019/09/27/consul-tls/">http://zhangguanzhang.github.io/2019/09/27/consul-tls/</a>
+            <p>发表日期：<a href="http://zhangguanzhang.github.io/2019/09/27/consul-tls/">September 27th 2019, 7:36:53 pm</a>
+            <p>更新日期：<a href="http://zhangguanzhang.github.io/2019/09/27/consul-tls/">May 4th 2020, 8:41:58 am</a>
+            <p>版权声明：本文采用<a rel="license noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>进行许可</p>
         </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/06/19</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "exporter">exporter</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/23/k8s-vxlan-63-timeout/" >
-            
-                <span>v1.17+ k8s集群下CNI使用VXLAN模式SVC有63秒延迟的触发原因定位</span>
-        </a>
-        <div class="abstract-content">
-            这个问题 flannel 和 calico 的 VXLAN 模式下都会发生，部分人的现象是集群的A记录 UDP 下查询可能有问题，原因是v1.17+的k8s会引起内核的某个 UDP 相关 bug而不是cni的软件层面，weave没有，后面说。
-写这篇文章的日期是05/28，发现是上周五也就是05/23号，文章从时间线写起(因为很多时候想发文章但是没空，所以文章的发布日期是05/23)
-2020-07-19更新，版本v1.18.6, v1.16.13, v1.17.9+已经修复这个问题，可以同版本内升级，或者只切kube-proxy版本
-由来上周五我经过同事的工位看到同事的桌面是k8s的g...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/23</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "63s">63s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "timeout">timeout</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/13/x86-router-flash/" >
-            
-                <span>proxmox x86软路由笔记</span>
-        </a>
-        <div class="abstract-content">
-            由来办公室有台式机，不想整天带着N1上下班，整下x86的软路由，exsi性能会比pve好，但是pve毕竟Linux，兼容性和对接很多场景方便，这里我使用pve开机器安装openwrt。
-pve已经安装好系统(如果你还没安装且打算安装，安装完后可以看看我这个文章安装完proxmox的一些设置)，并且台式机的口子接主路由的lan口。主路由是我的路由器，它wan口接办公室的网口，台式机只有一个口子，所以软路由作为旁路由使用。
-前置工作虚机准备先去恩山论坛x86版块下一个固件，如果你有办公室—&gt; ecs &lt;— 个人家里组网的要求的话，推荐你去找个带wireguard的固件pve上开台...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/13</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "x86">x86</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/05/12/N1-flash/" >
-            
-                <span>斐讯N1刷机和旁路由的设置</span>
-        </a>
-        <div class="abstract-content">
-            由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;之前一直是使用k2p刷openwrt或者pandora跑v2用，前几天看到了个v2的订阅地址给写到openwrt上了。结果运行了几天发现web上任何配置都无法更改，ssh上去发现touch报错没有容量(而且重装后感觉还是有问题，github访问也不稳定了)，意识到k2p容量实在太小了，于是去恩山论坛逛了下准备买个N1盒子玩玩旁路由。
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N1有8G的rom 2G的ram，cpu是armv8的。询问了...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/05/12</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "N1">N1</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "openwrt">openwrt</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/04/27/go-version-ifno/" >
-            
-                <span>git工作流下golang项目的version信息该如何处理</span>
-        </a>
-        <div class="abstract-content">
-            <p>来探讨下git工作流下golang项目的version信息该如何处理比较符合标准</p>
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/04/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go">go</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/26/KubeXXXMismatch/" >
-            
-                <span>一次deploy,rs,sts Mismatch 的处理</span>
-        </a>
-        <div class="abstract-content">
-              这次文章是远程帮群友解决故障后的总结，以时间线描述  群友一开始是apiserver响应慢，使用角度上就是kubectl请求慢，如
-123E0326 07:49:37.586690       1 available_controller.go:416] v1beta1.metrics.k8s.io failed with: failing or missing response  from https:&#x2F;&#x2F;10.99.174.208:443&#x2F;apis&#x2F;metrics.k8s.io&#x2F;v1beta1: Get https:&#x2F;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/26</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "k8s">k8s</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Mismatch">Mismatch</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/10/go-mod-base-use/" >
-            
-                <span>go mod的基础使用-科普</span>
-        </a>
-        <div class="abstract-content">
-            go mod由来&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;文章主要是针对新人来介绍go mod是啥以及新手如何使用，老手不用看。现阶段go mod已经完全GA了，你会用了的话会非常方便&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;像python的项目根目录有requirement.txt记录依赖包，nodejs是packages.json，同样go的包管理从早期的go dep(gopkg)到vendor到现在的go mod.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/10</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "go mod">go mod</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/centos6-hung-while-booting/" >
-            
-                <span>centos6中毒重启后卡在启动页面</span>
-        </a>
-        <div class="abstract-content">
-            12345678910⣿⣿⣿⣿⣿⣿⢟⣡⣴⣶⣶⣦⣌⡛⠟⣋⣩⣬⣭⣭⡛⢿⣿⣿⣿⣿⣿⣿⣿⣿⠋⢰⣿⣿⠿⣛⣛⣙⣛⠻⢆⢻⣿⠿⠿⠿⣿⡄⠻⣿⣿⣿⣿⣿⣿⠃⢠⣿⣿⣶⣿⣿⡿⠿⢟⣛⣒⠐⠲⣶⡶⠿⠶⠶⠦⠄⠙⢿⣿⠋⣠⠄⣿⣿⣿⠟⡛⢅⣠⡵⡐⠲⣶⣶⣥⡠⣤⣵⠆⠄⠰⣦⣤⡀⠇⣰⣿⣼⣿⣿⣧⣤⡸⢿⣿⡀⠂⠁⣸⣿⣿⣿⣿⣇⠄⠈⢀⣿⣿⠿⣰⣿⣿⣿⣿⣿⣿⣿⣷⣤⣈⣙⠶⢾⠭⢉⣁⣴⢯⣭⣵⣶⠾⠓⢀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣉⣤⣴⣾⣿⣿⣦⣄⣤⣤⣄⠄⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⠈⢿⣿⣿⣿⣿⣿⣿⡟⣰⣞⣛⡒⢒⠤⠦⢬⣉⣉⣉⣉⣉⣉⣉⡥⠴⠂⢸⠻⣿⣿⣿⣿⣏⠻⢌⣉⣉⣩⣉⡛⣛⠒⠶⠶⠶⠶⠶⠶⠶⠶⠂⣸⣿
-
-昨晚刚整好那个ubuntu，今天下午又一台cen...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "boot">boot</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "centos6">centos6</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/03/02/binfmt-0000/" >
-            
-                <span>记录一次request_module: runaway loop modeprobe binfmt-0000</span>
-        </a>
-        <div class="abstract-content">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昨天一台gpu的主机的阵列卡突然坏了，最终整起来后上面的几台虚机恢复后有一台虚机无法正常开机，开机进emergency mode，同事看上面的报错以为是挂载了啥iscsi，当然无法开机应该找到最开始的错误，进到emergency mode这个视角的时候已经是雪崩的最后的错误了，多半是没有意义的。输入root密码后执行journalctl -xb翻看最开始的错误
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;按照关键字request_modul...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/03/02</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "Linux">Linux</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "kernel">kernel</a>
-    
-</div>
-            
-        </div>
-    </article>
-    
-    
-    
-    
-    
-    
-    <article class="index-post">
-        <a class="abstract-title" href = "/2020/02/27/microsoft-graph-for-onedrive/" >
-            
-                <span>使用microsoft-graph的api对接onedrive</span>
-        </a>
-        <div class="abstract-content">
-            前言这几天打算把文件备份下，最后看到有网友说onedrive不错，就是容量小了点只有5g，然后酷安去安装安卓客户端，下面看到一堆人送office e5子账户的。看了下大概是微软为了推广自己产品面向开发者送的优惠，账户有免费的5t存储，而且安装office啥的免费。试用30天，30天内调用api来保持活跃度的话就会延期。评论里一大堆都是搭建oneindex或者onelist的，主要作用就是把onedrive给抽象成一个公共的网盘使用，oneindex是php写的，我看issue居然385个，作者的github也在更新，而且作者学了golang，居然也不打算重构下，估计也是烂尾了。oneli...
-        </div>
-        <div class="abstract-post-meta">
-            <!-- date  -->
-            <div class="abstract-date">
-                <span class="abstract-calander iconfont-archer">&#xe676;</span><span class="abstract-time">2020/02/27</span>
-            </div>
-            <!-- tags  -->
-            
-            <div class= abstract-tags >
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "microsoft">microsoft</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "graph">graph</a>
-    
-        <a class="post-tag" href="javascript:void(0);" data-tags = "onedrive">onedrive</a>
-    
-</div>
-            
-        </div>
-    </article>
     
     <!-- paginator  -->
-    
-    <nav class="page-nav">
-        <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">NEXT &gt;</a>
-    </nav>
-    
-</main>
-            <!-- profile -->
+    <ul class="post-paginator">
+        <li class="next">
             
-            <div class="profile">
-    <img class="profile-avatar" alt="avatar" src= /avatar/dw.jpg >
-    <div class="profile-name">Zhangguanzhang</div>
-    
-    <div class="profile-signature">
-        on the way
+                <div class="nextSlogan">Next Post</div>
+                <a href= "/2019/10/11/ansible-count-Idempotency/" title= "ansible数量限制上的幂等性">
+                    <div class="nextTitle">ansible数量限制上的幂等性</div>
+                </a>
+            
+        </li>
+        <li class="previous">
+            
+                <div class="prevSlogan">Previous Post</div>
+                <a href= "/2019/09/05/prometheus-change-timezone/" title= "修改源码更改prometheus的时区问题">
+                    <div class="prevTitle">修改源码更改prometheus的时区问题</div>
+                </a>
+            
+        </li>
+    </ul>
+    <!-- 评论插件 -->
+    <!-- 来必力City版安装代码 -->
+
+    <div id="lv-container" data-id="city" data-uid= MTAyMC8zMzk1OC8xMDQ5Mw>
+        <script type="text/javascript">
+            (function (d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+                if (typeof LivereTower === 'function') { return; }
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript>为正常使用来必力评论功能请激活JavaScript</noscript>
     </div>
+
+<!-- City版安装代码已完成 -->
     
     
-    <div class="profile-social">
-        
+    <!-- gitalk评论 -->
+
+    <!-- utteranc评论 -->
+
+    <!-- partial('_partial/comment/changyan') -->
+    <!--PC版-->
+
+
     
-        
-            
-                <a href="mailto:zhangguanzhang@qq.com" class="iconfont-archer email" title=email ></a>
-            
-        
-    
-        
-            
-                <a href="//github.com/zhangguanzhang" class="iconfont-archer github" target="_blank" title=github></a>
-            
-        
-    
-        
-            
-                <span class="iconfont-archer wechat" title=wechat>
-                  
-                  <img class="profile-qr" src="/assets/example_wc.png" />
-                </span>
-            
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-    
-        
-            
-                <a href="/assets/zhifubao.png" class="iconfont-archer others" target="_blank" title=others></a>
-            
-        
-    
-        
-            
-                <a href="/atom.xml" class="iconfont-archer rss" target="_blank" title=rss></a>
-            
-        
     
 
-    </div>
-    
-    
-        <div class="friends">
-            <div>FRIENDS</div>
-            
-                
-                    <span>
-                        <a href= //blog.cugxuan.cn target="_black">泫</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //linuxgeeks.github.io target="_black">传统老司机运维老村长</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //kuops.com target="_black">kuops</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //note.run-linux.com target="_black">Linus Lee</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //eryajf.net target="_black">二丫讲梵</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //www.k8stech.net target="_black">憨憨wolf7</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //sealyun.com/ target="_black">sealyun</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //blog.walkbc.com/ target="_black">golang后端dino</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= https://blog.k8s.fit target="_black">Happiness</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //yousali.me target="_black">yousa</a>
-                    </span>
-                
-            
-                
-                    <span>
-                        <a href= //i4t.com target="_black">abcdocker</a>
-                    </span>
-                
-            
-        </div>
-    
-    
-        <div class="about-me">
-            <a href = "/about" >ABOUT ME</a>
-        </div>
-    
-</div>
+    <!-- 评论 -->
+</main>
+            <!-- profile -->
             
         </div>
         <footer class="footer footer-unloaded">
@@ -1106,6 +707,24 @@ pve已经安装好系统(如果你还没安装且打算安装，安装完后可�
 </footer>
     </div>
     <!-- toc -->
+    
+    <div class="toc-wrapper" style=
+    
+
+
+
+
+
+
+
+top:50vh;
+
+    >
+        <div class="toc-catalog">
+            <span class="iconfont-archer catalog-icon">&#xe613;</span><span>CATALOG</span>
+        </div>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#下载最新版本并解压"><span class="toc-number">1.</span> <span class="toc-text">下载最新版本并解压</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tls"><span class="toc-number">2.</span> <span class="toc-text">tls</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#step-1-创建ca"><span class="toc-number">2.1.</span> <span class="toc-text">step 1: 创建ca</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#step2-创建server角色的证书"><span class="toc-number">2.2.</span> <span class="toc-text">step2: 创建server角色的证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#step3-创建client角色的证书"><span class="toc-number">2.3.</span> <span class="toc-text">step3: 创建client角色的证书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#step4-创建cli的证书"><span class="toc-number">2.4.</span> <span class="toc-text">step4: 创建cli的证书</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#server和client以及cli的配置"><span class="toc-number">3.</span> <span class="toc-text">server和client以及cli的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#server"><span class="toc-number">3.1.</span> <span class="toc-text">server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#client"><span class="toc-number">3.2.</span> <span class="toc-text">client</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#cli"><span class="toc-number">3.3.</span> <span class="toc-text">cli</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动"><span class="toc-number">4.</span> <span class="toc-text">启动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务发现"><span class="toc-number">5.</span> <span class="toc-text">服务发现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#集群外"><span class="toc-number">5.1.</span> <span class="toc-text">集群外</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#k8s内部coredns转发到consul上"><span class="toc-number">5.2.</span> <span class="toc-text">k8s内部coredns转发到consul上</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考"><span class="toc-number">6.</span> <span class="toc-text">参考:</span></a></li></ol>
+    </div>
     
     <div class="back-top iconfont-archer">&#xe639;</div>
     <div class="sidebar sidebar-hide">
@@ -3353,6 +2972,8 @@ jsonContent:
     
     </div>
     <!-- async load share.js -->
+    
+        <script src="/scripts/share.js" async></script>    
      
     </body>
 </html>
