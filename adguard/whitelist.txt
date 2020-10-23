@@ -1,3 +1,0 @@
-@@||bytedance.com^
-@@||gist.github.com^
-@@||usfca.edu^
