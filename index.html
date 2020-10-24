@@ -1,50 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Blog Landing Page</title>
-  <link rel = "stylesheet"
-  type = "text/css"
-  href = "./stylesheets/index.css"/>
-</head>
+---
+layout: default
+---
 
-<body>
-  <div class = "container">
-    <header>
-      <h1 class="header-name">A Very Pink Blog Template</h1>
-    </header>
 
-    <ul class="navbar">
-      <li><a href="#" id="active">Home</a></li>
-      <li><a href="#">About Me</a></li>
-      <li><a href="#">Contact</a></li>
-      <li><a href="#">FAQ</a></li>
-      <li><a href="#">All Articles</a></li>
-    </ul>
+<div class="main-post-list hidden">
 
-    <div class = "posts-grid">
-      <div class = "post">
-        <h1><a class = "article-title" href="blogPost.html">Abstract Data Types: Stacks and Queues</a></h1>
-        <hr>
-        <h2 class="post__author-name">by <u><em>Marco Angelo</em></u></h2>
-        <img src="./img/stq.png">
-        <p>
-            <span class="dropcap">S</span>tacks and queues are two types of abstract data types that you can use to store and retrieve data in different ways.
-        </p>
-        <button onclick="window.location = 'blogPost.html'";>
-            Read More
-        </button>
+  <ol class="post-list">
+    {% for post in paginator.posts %}
+    <li>
+      <h1 class="post-list__post-title post-title"><a href="{{ post.url }}" title="访问 {{ post.title }}">{{ post.title }}</a></h1>
+      <p class="excerpt">{{ post.content | strip_html | strip_newlines | truncate: 250 }}&hellip;</p>
+      <div class="post-list__meta">        
+        <time datetime="{{post.date | date: date_to_xmlschema}}" class="post-list__meta--date date">
+          <img src="/images/calendar.png" width="20px" style="vertical-align:text-top;" /> 
+          {{ post.date | date: "%F"}}</time> 
+        <div class = "tag-img-icon">
+          <img src="/images/tag-icon.svg" width="20px" /> 
+        </div>
+        <a href="/tags">
+          <div class = "post-list-icon-mate">
+            <span class="post-list__meta--tags-right">{{ post.tags }}</span>
+          </div>
+          <div class = "post-list-small-mate">
+          <a class="btn-border-small" href={{ post.url }}>阅读全文 » </a>
+          </div>
       </div>
+      <hr class="post-list__divider" />
+    </li>
+    {% endfor %}
+  </ol>
 
-      <div class = "post">
-          <h1><a class="article-title" href="#">An Intro to Priority Queues</a></h1>
-          <hr>
-          <h2 class = "post__author-name">by <u><em>Marco Angelo</em></u></h2>
-          <img src="./img/pq.png" alt = 'priority queue heap and array'>
-          <p> <span class="dropcap">D</span>isclaimer: this article assumes you already know the function of a max/min heap and the purpose of heapify(). </p>
-          <button>Read More</button>
-      </div>
-    </div>
-  </div>
-  <footer>Copyright Marco Angelo Acebedo</footer>
-</body>
-</html>
+  {% include pagination.html %}           
+
+
+</div>
+
+
+
+<!--baidu
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+<body style="height:1000px;">-->
+
+
+
+
+
+
