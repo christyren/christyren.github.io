@@ -17,11 +17,11 @@ comment:
 # Social
 social:
     weibo: 123456789
-    weixing: kang1390305137 
-    github: MengZheK
+#     weixing: kang1390305137 
+    github: christyren
     # twitter: 
-    mail: robotkang@foxmail.com
-    csdn: robotkang
+    mail: christyren@wustl.edu
+#     csdn: robotkang
 
 
 # 《----------------- 上面的信息修改成你自己的 ---------------------------》
@@ -56,15 +56,15 @@ cover_color:
 
 # The blog button should not be removed.
 blog_button:
-    title: 博客主页
+    title: Blog Home Page
 
 # Navigation buttons in the front page.s
 nav:
-    - {title: 所有文章, description: archive, url: '/archive'}   
-    - {title: 标签, description: tags, url: '/tags'}   
-    - {title: 留言, description: liuyan, url: '/liuyan'}
-    - {title: 资源, description: ziyuan, url: '/ziyuan'}
-    - {title: 关于我, description: about, url: '/about'}
+    - {title: All Articles, description: archive, url: '/archive'}   
+    - {title: Tags, description: tags, url: '/tags'}   
+    - {title: Comments, description: liuyan, url: '/liuyan'}
+    - {title: Resources, description: ziyuan, url: '/ziyuan'}
+    - {title: About Me, description: about, url: '/about'}
 
           
     
