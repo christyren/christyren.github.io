@@ -8,6 +8,13 @@ avatarTitle: RobotKang
 avatarDesc: 机器人赛事
 url: "https://christyren.github.io"
 
+theme: minima
+remote_theme: benbalter/retlab
+
+collections:
+  authors:
+    output: true
+
 # Comment
 comment:
     provider: duoshuo
