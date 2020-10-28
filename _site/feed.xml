@@ -5,564 +5,822 @@
     <description>科技、生活、音乐、人生</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 28 Oct 2020 00:37:01 -0500</pubDate>
-    <lastBuildDate>Wed, 28 Oct 2020 00:37:01 -0500</lastBuildDate>
+    <pubDate>Wed, 28 Oct 2020 00:41:10 -0500</pubDate>
+    <lastBuildDate>Wed, 28 Oct 2020 00:41:10 -0500</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
-        <title>复盘丨Monthly Review-9月</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/20930.html&quot;&gt;原文地址：https://robotkang.cc/20930.html &lt;/a&gt;
-&lt;/h6&gt;
+        <title>博客模板功能介绍</title>
+        <description>&lt;p&gt;在此之前我有写过一篇&lt;a href=&quot;http://leopardpan.cn/2016/10/jekyll_tutorials1/&quot;&gt;如何使用我博客模板的文章&lt;/a&gt; 请先看这篇基础集成，这篇文章主要讲的是如何使用和修改我的博客主题，文章内容含以下几点：&lt;/p&gt;
 
-&lt;p&gt;得，老话常谈，时间过得着实很快，2020年的九月份已经过完了，回顾一下✨&lt;/p&gt;
+&lt;h2 id=&quot;博客特性&quot;&gt;博客特性&lt;/h2&gt;
 
-&lt;h3 id=&quot;基金理财&quot;&gt;基金理财&lt;/h3&gt;
-
-&lt;p&gt;写这个呢是因为我在三年前买了一个基金理财，一直都没有管它，任其涨跌，前几天一看翻了一番😄，觉得可以就又买了几个其他的基金，也打算放养，等我过一段时间后再来看下收益。&lt;/p&gt;
-
-&lt;p&gt;为什么没有买股票呢？第一我是真不懂股票，风险比较大，第二股票得经常看涨跌大盘，没那精力，这样一来，还是基金比较适合我，有专业的基金经理去操盘，比较靠谱。&lt;/p&gt;
-
-&lt;h3 id=&quot;网剧--综艺&quot;&gt;网剧 &amp;amp; 综艺&lt;/h3&gt;
-
-&lt;p&gt;这个月上线了一步新的网剧《沉默的真相》，12集，用了一天的时间去看完了，很爽，多条时间线去讲故事，很特别。剧中的主人公们为了找回一个公道，还原一个真相，几个人抛弃了一切去和黑恶势力去作斗争，这种精神是真的厉害，换做我们周围的任何一个人都很难有这份勇气。当一个人、一群人有了信仰、有了执念，从而在追寻这些的时候，真的是酷且孤独着呀，佩服。👍&lt;/p&gt;
-
-&lt;p&gt;《乐队的夏天》，这个综艺我每周必看，边看边幻想着我有一天也可以组一只乐队，真是一件很酷的事情呀，所以我也有在努力的去练鼓。在这个综艺里也看到了中国很多乐队其实都过的很难，赚钱难，生存困难，能够坚持下来是真的喜欢音乐，不愿意放弃这个东西，幸运的是国内的一切大平台们也看到了乐队的这种窘境，在去年有了《乐队的夏天》类似这种的娱乐节目，这样就可以让更多的人去看到、去听到他们音乐，就有了对应的回报，音乐人的日子也就更好过了，挺好的一件事情。不过南方的摇滚文化确实不如北方那么强烈。我今年的摇滚🤘愿望就是可以去看一场乐队的 Livehouse ，去感受一下现场。&lt;/p&gt;
-
-&lt;h3 id=&quot;大陆之外&quot;&gt;大陆之外&lt;/h3&gt;
-
-&lt;p&gt;我现在觉得自由的互联网真的是太美好了，你可以看到更丰富、更多维度的东西，慢慢的去感受事物的多面性，所以常常会发出：哦，原来还有这样一种情况呀。所以说“墙”一方面在保护我们，另一方面也在限制我们，但是有机会有能力得话还是要出去看看，至少在上网这件事情上。&lt;/p&gt;
-
-&lt;p&gt;前几天我看到了蔡英文在竞选总统时候的讲话，真的是颇为感慨，在我们这边是禁词禁语，在那边却可以大大方方的讲出来，可以更加自由的表达自己的观点，听完之后我都想投票给她了，但是，我长这么大都没有见过“选票”长什么样😂。后面又看了一些关于她的视频，原来，领导人也可以被人当面调侃，领导人也可以这么平易近人。体制不同，就会产生不一样的思想和景象。&lt;/p&gt;
-
-&lt;p&gt;还有一位才子就是唐风，IT大佬，现在在任职台湾的“政务委员”，主管开放政府和科技事务，人特别聪明，了解了他的经历后才发现原来有些人的人生还可以这样过，太精彩了，参与国际事务，和不同国家的人交朋友，确实是有了“地球村”的感觉了，在这次的新冠疫情中他也发挥了特别重要的作用。&lt;/p&gt;
-
-&lt;p&gt;未来仍在继续，互联网的广阔天地还在等我去探索，期待发现更多的人和事，可以让我全面的认识这个世界…&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;10 月计划：&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;锻炼，体重下降到 60 kg以下&lt;/li&gt;
-  &lt;li&gt;练鼓，重新整理我的学鼓体系&lt;/li&gt;
-  &lt;li&gt;写文章，在知乎上写关于人文地理的文章&lt;/li&gt;
-  &lt;li&gt;传视频，在 Youtube 上面开创自己的频道，争取早日开通广告权限&lt;/li&gt;
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;适配电脑、手机、平板等各屏幕&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;响应式设计&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;个性化头像&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;每篇文章自动添加打赏功能&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;支持Disqus、livere评论系统&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;支持站点总数访问统计，每篇文章访问统计&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;支持文章自动生成目录&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;支持标签分类&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;支持代码高亮&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;支持文章H1、H2、H3、H4标题样式多样化&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;支持多种三方社交icon展示，能从博客直接跳转到自己的三方社交主页&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;支持三方社交分享(facebook、twitter)&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;写于 2020 年国庆节期间的深圳，17:32 PM&lt;/p&gt;
+&lt;h2 id=&quot;博客主要模块介绍&quot;&gt;博客主要模块介绍&lt;/h2&gt;
 
-</description>
-        <pubDate>Wed, 30 Sep 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/20930.html</link>
-        <guid isPermaLink="true">http://localhost:4000/20930.html</guid>
-        
-        <category>总结</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>复盘丨Monthly Review-8月</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/20831.html&quot;&gt;原文地址：https://robotkang.cc/20831.html &lt;/a&gt;
-&lt;/h6&gt;
+&lt;h3 id=&quot;_configyml&quot;&gt;_config.yml&lt;/h3&gt;
 
-&lt;p&gt;7 月份没有写月度总结，工作三年期，写了一篇长文总结，回顾了这一路走来的历程，&lt;a href=&quot;https://robotkang.cc/20719.html&quot; target=&quot;_blank&quot;&gt;点此跳转&lt;/a&gt; ，那本月继续写一下发生在 8 月份的一些事情。✨&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 是博客的配置文件，整个站点的信息都在这修改，想要把我的模板改成你自己的也需要修改&lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;回家&quot;&gt;回家&lt;/h3&gt;
-
-&lt;p&gt;在月初的时候去帝都出完差回了一趟家（其实为了回趟家，才去北京出差😆），只是去年夏天没有回去，但是感觉好几年都没有在夏天回家了，快忘记家乡夏天的样子了，所以这次回家也是相当的开心。去年开通了高铁，几个小时就可以回到旗里了，虽然中途要转几趟车，可是一点都不觉着累，可能这就是归心似箭的赶脚吧😀。&lt;/p&gt;
-
-&lt;p&gt;回到旗里🚕到我二姐家给外甥看了一下志愿填报的事情，挑了几个意向院校，令人感慨的是他们这帮 00 后也都开始上大学了，又一代人的时代，在这里突然想起了前几天看的杨德昌的《一一》，在电影最后洋洋在婆婆的葬礼上讲：他也老了，确实，在那一刻我也恍惚 94 年的我也不年轻了，正如刺猬乐队的歌里唱的“一代人终将老去，但总有人正年轻”，是吗？是的。&lt;/p&gt;
-
-&lt;p&gt;PS：外甥最后还是没有出省读大学，去了呼伦贝儿学院，旅游城市，可以看真正的大草原了，不过我还是觉得太偏远了😂，祝他四年的大学生活玩的开心，哈哈。&lt;/p&gt;
-
-&lt;p&gt;买好东西回到家里已是傍晚，哈，回到家的感觉真好，于是乎就又开始了早睡晚起的日子😋，玩玩手机，看看电视，日头不高的时候就出去走走，上山，下地，满眼望去一片绿意，天上的白云朵朵，身旁的凉风习习，安逸~&lt;/p&gt;
-
-&lt;p&gt;转眼间，四五天的休假就结束了，离家，返深。于我来讲，这次回家可以陪伴爸妈几天就是最大的意义了，还有就是这次回家终于把家里的路由器装好了，以后可以视频通话了，哦呼~🎈&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;附：&lt;/strong&gt;离家时候的火烧云，beautiful.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://p.comworld.club/?aff=Q&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/image/20200831.jpg&quot; width=&quot;804&quot; height=&quot;445&quot; alt=&quot;photos&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;独居生活&quot;&gt;独居生活&lt;/h3&gt;
-
-&lt;p&gt;这个月还有一件大事就是我开始独居生活🗽啦，有点小兴奋，回想一下从小到大，家庭生活 → 宿舍（小学、中学、大学）生活 → 合租生活，再过几年就会结婚，又会回归到家庭生活，所以说，这一段时间的独居生活是比较珍贵的，在我看来，也是一种独立的体现，独居，是自由的，无所顾忌的，是可以进行独立思考的，是安静的，关起门来就是一个人的世界，哈哈，多好。&lt;/p&gt;
-
-&lt;p&gt;也许此时正在看文章的你觉得这不会无聊吗？不会，至少现在的我还是把我的业余时间安排的比较充实的，练鼓、健身、打游戏、浏览科技新闻、想着如何赚钱等等，虽然一直迷茫，但是人生何处不迷茫啊，哈哈哈&lt;/p&gt;
-
-&lt;h3 id=&quot;work&quot;&gt;Work&lt;/h3&gt;
-
-&lt;p&gt;这段时间最大的迷惑就是我未来的职业方向，机器人赛事在国内比较小众，就业面比较小，国内有开展这种赛事的公司又寥寥可数，之前我还不是很在意，觉得还比较有意思，但是今年这一波疫情下来，我们这些相关的赛事活动从业者都处于半歇业状态，顿时有一种有力无处使的感觉，这让我不得不认真思考这个行业职业前景了，另外公司一年一次的工资普调也无下文，让我略有疲惫，现在也只能怪一下 HR 了，HR的嘴，骗人的鬼🙈，害~&lt;/p&gt;
-
-&lt;p&gt;还有就是我打算下个月要早起到公司了，晚上有时间就去练鼓，10号地铁开通了，比较方便，健身强度也得加强一下，把体重降到 60kg 以下，同时锻炼肌肉：俯卧撑+哑铃！&lt;/p&gt;
-
-&lt;p&gt;好了，写了一个多小时了，晚安🛸&lt;/p&gt;
-
-&lt;p&gt;写于 2020 年的深圳，雨已停&lt;/p&gt;
-
-</description>
-        <pubDate>Mon, 31 Aug 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/20831.html</link>
-        <guid isPermaLink="true">http://localhost:4000/20831.html</guid>
-        
-        <category>总结</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>人生就是一部电影《一一》</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/20820.html&quot;&gt;原文地址：https://robotkang.cc/20820.html &lt;/a&gt;
-&lt;/h6&gt;
-
-&lt;p&gt;《一一》这部电影在我的电影待看 List 里待了好长时间了，乍一看这个电影名字确实会让人提不起兴趣，如果不是众人推荐、评分较高，很多人看到这个不明所以的名字都会忽略掉这部电影。&lt;/p&gt;
-
-&lt;p&gt;前几天终于抽了一个周五的深夜开始欣赏了，本打算看一段就睡觉的，不料看完已接近凌晨三点，实在不忍中途暂停，如果分段去看就会感觉到这部电影所描写的一生就会被分裂，索性一口气看完了这部长达三小时的电影。&lt;/p&gt;
-
-&lt;p&gt;之前从未看过杨德昌导演的作品，当我看完这部电影后，确实是感受到了电影带给我的共鸣，我也相信每个看完这部电影的人都会在里面找到自己的一点影子。&lt;/p&gt;
-
-&lt;p&gt;影片里最让我印象深刻的是 NJ 的老婆敏敏在他一天下班后向他哭诉每天活得都一样的那个桥段，医生建议家人每天给婆婆讲话，以便“唤醒”婆婆。过了几天，敏敏哭着说出“怎么跟妈讲的东西都是一样的？我一连跟她讲了几天，我每天讲的一模一样，早上做什么，下午作什么，晚上做什么，几分钟就讲完了。我受不了了，我怎么只有这么少，我觉得我好像白活了。”真是一下戳中痛点，当我们每天回顾自我时，谁又不是一样呢？我们只是缺少“回顾”而已。&lt;/p&gt;
-
-&lt;p&gt;这种每天重复、单调、乏味的生活正是我极力去避免也是不想经历的生活。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://p.comworld.club/?aff=Q&quot;&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/image/2020-08-20_730_330.png&quot; width=&quot;730&quot; height=&quot;330&quot; alt=&quot;photos&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-</description>
-        <pubDate>Thu, 20 Aug 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/20820.html</link>
-        <guid isPermaLink="true">http://localhost:4000/20820.html</guid>
-        
-        <category>生活</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>工作三年期</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/20719.html&quot;&gt;原文地址：https://robotkang.cc/20719.html&lt;/a&gt;
-&lt;/h6&gt;
-
-&lt;p&gt;2017.07.19-2020.07.19， 正好工作三年整，借此记录一下自己的工作&amp;amp;生活历程。&lt;/p&gt;
-
-&lt;p&gt;在找工作这件事上，我向来是比较自信的，还记得我17年实习结束的时候通过强势自荐是可以进入到广州数控的，但是在最后签三方的时候，我拒绝了，因为我在等待面试的时候，在他们车间看到的各种仪器、机械臂，我当时就在想：这是我想要的工作吗？每天都在工厂里组装机械臂，或者操作数控机床了。那时我的心中就有答案了，工业机器人这一行可能不适合我。&lt;/p&gt;
-
-&lt;p&gt;拒绝掉广数的 offer 后，就意味着我可能面临着毕业即失业的问题，不过那时的我心里一点都不慌，在网上寻找着创客类的机器人公司，最后锁定了目标-Makeblock，深圳的一家公司，在之前的展会上有看到过这家公司的产品，很吸引我。&lt;/p&gt;
-
-&lt;p&gt;好，就是这家了，然后我就到处收集资料，找这家公司的人内推，各种渠道留言表示我要进这家公司的强烈愿望，可以说准备工作做得相当充分了，之后顺理成章的就和这家公司的 HR 联系上了，敲定了面试时间，我就订好重庆往返深圳的机票，这是我第一次坐飞机，也是对于当时的我成本很高的一件事情，现在想来，当时的自己真的是很果断呀，哈哈哈~😄&lt;/p&gt;
-
-&lt;p&gt;2017 年六月份的一个周五到达深圳，周六面试，周日返回重庆🛬，我投了两个岗位：嵌入式工程师、产品应用工程师，当时先面试的是赛事部的应用工程师岗，面试官就是后面我入职之后的导师：胡，很顺利，面试完他就表示要我了，让我不用去面嵌入式了，就这样我就成为了成立没多久的赛事部的一员了。&lt;/p&gt;
-
-&lt;p&gt;后面和胡聊起来我的这次面试，他说他从来没见过哪一位应聘者是带着实物作品来面试的，这无疑给他带来好感和提高了对我的认可度。（我当时是带了几个我在大学里做的小作品，避障小坦克什么的😂）。&lt;/p&gt;
-
-&lt;p&gt;2017.06.27，正式毕业，离开生活了四年的学校，回家。&lt;/p&gt;
-
-&lt;p&gt;2017.07.16，拖着一只行李箱的我从老家来到了2000多公里外的深圳。&lt;/p&gt;
-
-&lt;p&gt;2017.07.19，我正式入职 Makeblock，办理完入职后，来到了赛事部的办公区域，刚安置好，团队负责人就安排同事文博同学（我现在的室友，工作三年，已合租了两年）帮我走流程买高铁票准备第三天的出差，说是我要再晚报到两天就要独守空房（部门里的人全部要出差）半个月了。其他的同事都在做出差前的准备，异常忙碌，接下来就是武汉-北京的工作出差之旅了，这趟出差让我更加的了解了机器人赛事的整个流程以及我接下来的工作内容，虽然我大学时期参加了很多机器人比赛，但现在是站在另一个角度去看待这些事情了。&lt;/p&gt;
-
-&lt;p&gt;出差回来，我在青旅住了半个月后就和同事合租了，工作也进入了常态化，由于对机器人赛事比较了解，我主要的工作内容就是研发下一年度的赛项以及研究赛项的可行性，研发赛项的过程中也很忙碌，加班是常有的事情，可以说从入职到18年2月份春节前我基本都没有自己的生活，一心工作，赶赛项的进度，现在想来那是一段最美好、最充实的日子了。&lt;/p&gt;
-
-&lt;p&gt;18 年对整个赛事工作比较熟悉，得心应手了，在发布新赛项后也会到处去全国各地给一些创客老师做一些培训，搭一下机器人战车去支援各地的商务同事，不过搭车也是件麻烦事，耗时耗力，可让我郁闷了一段时间。&lt;/p&gt;
-
-&lt;p&gt;18 年团队里面的一些老员工开始陆陆续续离职、转岗，其中也包含我的导师，这一度让我陷入了迷茫、焦虑，思考着这个行业对于我个人以后的发展，不过 18 年对于赛事部来说是发展很快的一年，公司大力支持，赛事遍及世界各地，不断的有新人进来。&lt;/p&gt;
-
-&lt;p&gt;就这样迎来了 2019 年~&lt;/p&gt;
-
-&lt;p&gt;年后过来就有了离职的想法，当时的一个选择是可以去隔壁公司重新做一个赛事品牌，具有挑战性。决定离职前的那一段时间确实也很焦虑，晚上难以入睡，一个是我第一次离职，对于未来的不确定性，一个是要放弃当前比较熟悉且舒服的环境，也许这就是人性，当你真要从一个舒服的环境走向另一个未知的环境，总会不由自主的思考很多。&lt;/p&gt;
-
-&lt;p&gt;2019.03.28，从 Makeblock 离职，我对它的评价是：这是一家很酷的公司。浓厚的创客文化，时常令我想念。&lt;/p&gt;
-
-&lt;p&gt;2019.04.01-2019.04.06，进行了一场说走就走的旅行：昆明-大理，旅游日记可以看我的博客：&lt;a href=&quot;https://robotkang.cc/tags&quot; target=&quot;_blank&quot; style=&quot;text-decoration:none&quot;&gt; 旅行系列 &lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;2019.04.08，入职优必选。体量更大的一家公司，公司架构与 MK 不一样，我适应了好一段时间，进入这家公司后我的工作内容又多了一项：赛事运营，并不轻松，也很有挑战性，举办了几场大的赛事，经历了很多事情，也见识到了不同的人。19 年，忙碌又充实~&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/image/2020-07-19_133038.png&quot; width=&quot;719&quot; height=&quot;408&quot; alt=&quot;photos&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;2020.01.21，武汉疫情爆发。对 2020 年本是满怀期待，现实却让人如此意外，紧张的气氛一时间笼罩在华夏大地。2003 年非典时期的我还小，对于传染病并不了解，17 年后的今天传染病再次出现，我体会到了它的可怕。&lt;/p&gt;
-
-&lt;p&gt;几个月后，疫情有所好转，在家度过了漫长的“寒假”后，我来到公司开始年后的工作了，让人难受的是，年前做的 2020 年工作计划由于疫情被无限期推后了，我们的机器人赛事活动是和学生密切相关的，学校上半年都没有开学，那么我们的工作也无法开展，所以说到现在我们只能做一些赛事前期的准备工作了。&lt;/p&gt;
-
-&lt;p&gt;期望疫情早日结束，能够进行正常的赛事活动，可是到今天也没有看到要结束的迹象，仍然在全球肆虐着，国内的一些地方偶尔还会发现新的感染病人，人心惶惶，不敢掉以轻心。&lt;/p&gt;
-
-&lt;p&gt;工作没有了之前的忙碌，反倒让我陷入了迷茫…，我意识到我再次的陷入了工作的舒适区，在我工作了三年的时候，我开始思考一些未来的事情，我是不喜欢做什么职业规划的，比较自信，比较佛系，着重于把短期的、眼前的事情做好，现在看来，虽然务实，但不长远。后面，我会尝试着做一下中长期的职业规划，给自己定一个方向，不至于日后再陷入迷茫的境地中。&lt;/p&gt;
-
-&lt;p&gt;行文到此，迷茫的我心中有了一丝丝答案，趁着还年轻的时候（虽然前三天已经过完了自己 26 周岁的生日，哈哈哈~），去做自己喜欢的事情，至少不让自己痛苦的事情，也是一种幸福呀。🎈&lt;/p&gt;
-
-&lt;p&gt;我知道，我不止于此。&lt;/p&gt;
-
-&lt;p&gt;我本一无所有，何惧一无所有。&lt;/p&gt;
-
-&lt;p&gt;写于2020年7月19日，深圳，炎热的夏天&lt;/p&gt;
-
-</description>
-        <pubDate>Sun, 19 Jul 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/20719.html</link>
-        <guid isPermaLink="true">http://localhost:4000/20719.html</guid>
-        
-        <category>总结</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>喝酒前后，你需要注意的几个事情</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/20714.html&quot;&gt;原文地址：https://robotkang.cc/20714.html &lt;/a&gt;
-&lt;/h6&gt;
-
-&lt;p&gt;写给自己，也写给酒桌上的你们，备着~&lt;/p&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt;工作应酬、同事聚会，总是难免不喝酒，饭桌上的各位盛情难却，推杯换盏，觥筹交错中，不知不觉就几瓶下肚（我是指啤酒哈~）🍺，无酒不成席，似乎只有酒精才能打开大家的话匣子，海阔天空的畅聊~&lt;/p&gt;
-
-&lt;p&gt;“&lt;a href=&quot;http://t.cn/AiOeQ4zO&quot; target=&quot;_blank&quot; style=&quot;color:#a510eb;text-decoration:none&quot;&gt;白酒两瓶半，啤酒随便灌&lt;/a&gt;🍻”，这是我去年刚入职目前这家公司时在微信群里向大家介绍我自己的时候写的，发出来后就有种不祥的预感🙃，果然有些部门里的“前辈”就截屏存为的证据，后面的饭局里喝的我不行不行的，也见识了我之前从未见识过的酒桌文化，只怪我当时太年轻，哈哈哈~😂&lt;/p&gt;
-
-&lt;p&gt;为了控制自己的身材🏃‍♂️，开始合理控制自己的饮食，目前也很少喝酒了，不过我还是根据 丁香医生 等公众号的文章梳理出一份关于饮酒的注意事项，写给自己，也写给酒桌上的你们，备着~&lt;/p&gt;
-
-&lt;h3 id=&quot;饭前&quot;&gt;饭前&lt;/h3&gt;
-
-&lt;p&gt;喝酒之前半小时，喝瓶&lt;strong&gt;纯牛奶&lt;/strong&gt;或者含糖的牛奶。牛奶会在胃里形成一层薄膜，大概可以存在半小时左右，可以起到保护胃的作用。食物同时会延缓酒精吸收，减轻其对肝脏危害。&lt;/p&gt;
-
-&lt;h3 id=&quot;饭中&quot;&gt;饭中&lt;/h3&gt;
-
-&lt;p&gt;不同的酒对肝脏损伤从小到大依次为：红葡萄酒、黄酒、啤酒、白酒。当然，通常在同等量下，高度酒对肝脏等器官的损伤要大于低度酒，在有选择的情况下当然要选择对自己杀伤力弱的来。还有，同一种酒类，根据生产工艺，可以分成纯粮酒和勾兑酒，一般选择前者比较好，更安全。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;喝白酒，不可一饮而尽，须的分成几口喝。&lt;/strong&gt;喝啤酒，须待得啤酒漠落下以后再喝，否则，轻则腹涨难受，重则现场直播。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;多吃菜少喝酒。&lt;/strong&gt;饮酒时的最佳佐菜当推高蛋白及富含维生素的食品，如新鲜蔬菜、鲜鱼、瘦肉、豆类、蛋类等。临床研究还证实富含饱和脂肪酸的肥肉，可以提高肝脏对酒精的耐受力，建议饮酒之初吃一块。切忌用咸鱼、香肠、腊肉下酒，因为此类熏腊食品含有大量色素与亚硝胺，与酒精发生反应，对肝脏伤害更大。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;多喝水。&lt;/strong&gt;酒精会使细胞内缺水，自然需要补水，饮水后还能促进酒精从尿液中排除。&lt;/p&gt;
-
-&lt;h3 id=&quot;饭后-科学解酒&quot;&gt;饭后-科学解酒&lt;/h3&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://p.comworld.club/?aff=Q&quot;&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/image/jiu.png&quot; width=&quot;948&quot; height=&quot;350&quot; alt=&quot;photos&quot; /&gt;&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;网上流传了很多解酒的土方子，比如喝浓茶喝咖啡喝醋,doushi不管用的。&lt;/p&gt;
-
-&lt;p&gt;浓茶和咖啡里都含有咖啡因，能暂时赶走睡意并恢复精力，但遗憾的是，咖啡因本身并不能促进酒精的排泄和转化。&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;多喝水&lt;/strong&gt;对于解酒有一定效果。因为大量喝水可以增加小便量，从而加快酒精排泄。&lt;/p&gt;
-
-&lt;p&gt;不过，说到底，现在并没有任何一种方法真的有解酒效果，如果有，那一定就是不喝酒或尽量少喝，而不是市面上卖的各种「解酒药」。&lt;/p&gt;
-
-&lt;p&gt;如果一个人醉了，最麻烦的事情不是他抱着电线杆不走，也不是他哭着喊着要找妈，而是酒后影响性命的不确定情况。&lt;/p&gt;
-
-&lt;p&gt;这个时候，如果你是旁边那个清醒的人，可以帮他宽衣解带～&lt;/p&gt;
-
-&lt;p&gt;如果能找到地方休息最好，帮助他侧着睡，保证呼吸顺畅。&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;http://t.cn/AiOeQ4zO&quot; target=&quot;_blank&quot; style=&quot;color:#a510eb;text-decoration:none&quot;&gt;最后，愿美酒为我们的生活添彩，但不伤体。&lt;/a&gt; 🎉&lt;/p&gt;
-
-</description>
-        <pubDate>Tue, 14 Jul 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/20714.html</link>
-        <guid isPermaLink="true">http://localhost:4000/20714.html</guid>
-        
-        <category>生活</category>
-        
-        
-      </item>
-    
-      <item>
-        <title>复盘丨Monthly Review-6月</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/2072.html&quot;&gt;原文地址：https://robotkang.cc/2072.html &lt;/a&gt;
-&lt;/h6&gt;
-
-&lt;h3 id=&quot;值得一读此生未完成&quot;&gt;值得一读《此生未完成》&lt;/h3&gt;
-
-&lt;p&gt;人生的任何一个阶段都不应该被辜负。🍭&lt;/p&gt;
-
-&lt;p&gt;记录黑暗是残酷的，尤其在感到属于自己的那盏生命油灯一点点黯淡之时，作者于娟👩‍🎓记录下了她这段生命中最黑暗最苦痛的日子，也写下了 对生命最单纯的感悟。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;重要字段说明&lt;/strong&gt;&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;透过生死，你会觉得名利权情都很虚无，尤其是首当其冲的名，说穿了，无非是别人茶余饭后的谈资。即便你名声四海皆知响彻云天，也无非是一时猎奇，各种各样的人揣着各种各样的心态唾沫四溅过后，你仍然是你，其实，你一直是你，只是别人在谈论你的时候，你忘记了你自己是谁而已。&lt;/li&gt;
-  &lt;li&gt;人越是长大，越是不知道自己要的是什么，越是不知道想要什么，就越是会去拼命想自己到底要什么。&lt;/li&gt;
+  &lt;li&gt;enableToc: 是否开启文章自动生成目录，设置为false文章不会自动生成目录&lt;/li&gt;
+  &lt;li&gt;comment/livere: livere评论系统，支持微信、qq、微博、豆瓣、twitter等登录后可以直接评论&lt;/li&gt;
+  &lt;li&gt;comment/disqus: disqus评论系统，支持facebook、twitter等登录后可以直接评论&lt;/li&gt;
+  &lt;li&gt;social/weibo、github、zhihu、jianshu等: 个人站底部展示的微博等三方社交按钮，点击后直接跳转到个人微博或其他社交主页&lt;/li&gt;
+  &lt;li&gt;baidu/id: 百度统计，用来统计你个人站点的用户访问情况&lt;/li&gt;
+  &lt;li&gt;ga/id: google统计，用来统计你个人站点的用户访问情况&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;没有什么比健康的活着🚵‍♀️更美好的事情了&lt;/p&gt;
+&lt;p&gt;_config.yml 文件除以上字段还有一些可以自行修改，例如title之类的字段&lt;/p&gt;
 
-&lt;p&gt;附：复旦抗癌教师于娟_新浪博客
-&lt;a href=&quot;http://blog.sina.com.cn/yujuanfudan&quot; target=&quot;_blank&quot;&gt;http://blog.sina.com.cn/yujuanfudan&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;_posts&quot;&gt;_posts&lt;/h3&gt;
 
-&lt;p&gt;看完书后，再一次访问她的博客，看到光头和已是中学生的土豆每年还在更新博客以及他们写给于娟的文字，心中别有一番滋味😶。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; 目录是用来存放文章的目录，写新文章，直接放在这个目录即可&lt;/p&gt;
 
-&lt;h3 id=&quot;生活&quot;&gt;生活&lt;/h3&gt;
+&lt;p&gt;使用博客模板时，请把博客自带的文章给去掉，如果想使用博客自带的文章请 &lt;code class=&quot;highlighter-rouge&quot;&gt;注明出处&lt;/code&gt;。&lt;/p&gt;
 
-&lt;p&gt;从去年10月份报名的架子鼓🥁课程终于在这个月学完了，架子鼓这个乐器我也算是入门了吧，不过较为遗憾的是，我学鼓的机构由于疫情的原因，经营状态不太好，有几位老师已经离开了，我的老师也要回东莞发展了，聊了一下才知道，他的工资是真的很低，唉~  果然是玩音乐的人真的很难赚钱呀。&lt;/p&gt;
+&lt;h3 id=&quot;自定义页面&quot;&gt;自定义页面&lt;/h3&gt;
 
-&lt;p&gt;在 6 月份的健身锻炼🏸有所懈怠，每次练完鼓回来就没有去锻炼了，所以这个月的体重几乎没有下降，不过小肚子几乎也没有了，完成了当初的一个目标，也许这是我可以偷懒的一个理由吧，哈哈哈。&lt;/p&gt;
+&lt;p&gt;about.md、support.md 等为自定义页面，如果你想添加自动以页面可以直接复制about.md 文件修改文件名和里面的内容即可。&lt;/p&gt;
 
-&lt;p&gt;逐渐觉得跳绳🤹‍♀️对于我来说是一种比较友好的运动方式，在锻炼的同时还可以进行一下深度思考：未来、爱情、生活、工作等等，相对于跑步来说也比较安全。&lt;/p&gt;
+&lt;p&gt;如果需要在导航显示你新增的页面，直接在&lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 文件的nav字段中添加你新页面配置即可&lt;/p&gt;
 
-&lt;p&gt;6 月还参加了一次部门团建，喝了不少酒，酒这玩意呀，难说😥。&lt;/p&gt;
+&lt;h3 id=&quot;修改说明&quot;&gt;修改说明&lt;/h3&gt;
 
-&lt;hr /&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;珍惜今天，珍惜现在，谁知道明天和意外，哪一个先来。   —— 野坂昭《萤火虫之墓》&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;如果要修改博客模板信息建议只修改&lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 文件内容和 &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; 里面的文章信息。因为博客模板一直在更新迭代，改动多了以免你后期更新博客模板的时候不方便。&lt;/p&gt;
+
+&lt;p&gt;如果你想改动模板的样式又想继续更新迭代博客模板，你可以提交在github上提交&lt;code class=&quot;highlighter-rouge&quot;&gt;pull request&lt;/code&gt; 或者直接给我发邮件建议改成什么样，如果你的提议确实可以，我会采纳的，并且非常感谢你的建议。&lt;/p&gt;
+
+&lt;p&gt;博客迭代信息请看&lt;a href=&quot;https://leopardpan.cn/2020/07/ReleaseNode/&quot;&gt;ReleaseNode&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;遇到解决不了的问题可以找 &lt;a href=&quot;https://leopardpan.cn/support/&quot;&gt;技术支持&lt;/a&gt;&lt;/p&gt;
 
 </description>
-        <pubDate>Thu, 02 Jul 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/2072.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2072.html</guid>
+        <pubDate>Sat, 11 Jul 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/20711.html</link>
+        <guid isPermaLink="true">http://localhost:4000/20711.html</guid>
         
-        <category>总结</category>
+        <category>jekyll</category>
         
         
       </item>
     
       <item>
-        <title>复盘丨Monthly summary-5月</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/2066.html&quot;&gt;原文地址：https://robotkang.cc/2066.html &lt;/a&gt;
-&lt;/h6&gt;
+        <title>博客迭代记录</title>
+        <description>&lt;h2 id=&quot;介绍&quot;&gt;介绍&lt;/h2&gt;
 
-&lt;p&gt;5 月份，记录时间，记录过往，Beginning ✌&lt;/p&gt;
+&lt;p&gt;本博客首发时间为2015年，至今已经5个年头了。&lt;/p&gt;
 
-&lt;h3 id=&quot;值得一看天道&quot;&gt;值得一看《天道》&lt;/h3&gt;
+&lt;p&gt;感觉之前更新迭代的有点乱，很多用户在使用的时候也没法确定是否要更新新版的博客，再次我专门用一篇文章来记录博客更新迭代的记录，如果你已经在使用我的博客模板的，你可以看看更新记录后确认下是否要更新。&lt;/p&gt;
 
-&lt;p&gt;这部剧是同事推荐给我看的，   天道整个故事通过一个投机商人的自我救赎体现了作者对社会、文化、信仰、情感的另一种解读，其中有很多经典语录与生活道理值得反复咀嚼。&lt;/p&gt;
+&lt;p&gt;博客的全功能介绍请看&lt;a href=&quot;https://leopardpan.cn/2020/07/blog_info/&quot;&gt;博客功能介绍&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;连着几晚熬夜看完，看过之后对我的触动很大，让我对以前自己所认识的一些事物有了新的看法，可以说这部剧是我这段时间看到的不可多得的好剧。开智~👨‍🎓&lt;/p&gt;
+&lt;h2 id=&quot;100&quot;&gt;1.0.0&lt;/h2&gt;
+
+&lt;p&gt;2016-11-25 第一版发布，红色主题&lt;/p&gt;
+
+&lt;h2 id=&quot;200-开发中&quot;&gt;2.0.0 开发中&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;天下之道论到极至，百姓的柴米油盐；人生冷暖论到极至，男人和女人的一个情字。&lt;/li&gt;
-  &lt;li&gt;人从根本上是面对两个问题：一、生存，得活下来；二、要回答生命价值的问题，让心有个安往。&lt;/li&gt;
-  &lt;li&gt;如果我的能力只能让我穷困潦倒，那穷困潦倒就是我的价值。&lt;/li&gt;
-  &lt;li&gt;你能给予我什么那是次要的，但是，你至少别剥夺我什么。&lt;/li&gt;
+  &lt;li&gt;2016-11-25 修改博客风格为淡蓝色主题&lt;/li&gt;
+  &lt;li&gt;2016-12-16 增长404、about等页面&lt;/li&gt;
+  &lt;li&gt;2017-1-12 增加代码高亮&lt;/li&gt;
+  &lt;li&gt;2017-3-19 增加打赏公共&lt;/li&gt;
+  &lt;li&gt;2017-9-8 多说评论系统停服，切换到disqus评论（多说上的评论全没了😭）&lt;/li&gt;
+  &lt;li&gt;2019-1-25 增加博客底部社交链接&lt;/li&gt;
+  &lt;li&gt;2020-7-8 博客域名从 &lt;a href=&quot;http://baixin.io&quot;&gt;http://baixin.io&lt;/a&gt; 迁移到 &lt;a href=&quot;https://leopardpan.cn&quot;&gt;https://leopardpan.cn&lt;/a&gt; （baixin.io没法备案之前的统计也全没了😭）.&lt;/li&gt;
+  &lt;li&gt;2020-7-13 增加文章自动生成目录功能, 增加livere评论系统&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;北京出差&quot;&gt;北京出差&lt;/h3&gt;
+&lt;h2 id=&quot;博客更新手册&quot;&gt;博客更新手册&lt;/h2&gt;
 
-&lt;p&gt;疫情期间的出差，颇有几分胆怯的色彩🙃，虽然说国内的疫情控制住了，但是还时不时的出现几个无症状的患者，告诉众人这事儿还没完。&lt;/p&gt;
+&lt;p&gt;如果你已经在使我的博客模板了，现在又想继续更新新版的博客，你下载博客后只需要修改两个各方&lt;/p&gt;
 
-&lt;p&gt;这次得出差要去一周，很早就开始准备了，所以说正式出差那几天还是很轻松的，比之前的出差轻松不少，甚至还可以睡个懒觉，哈哈哈😁。在忙完正事以后，也去转了很多地方，可以说是不需此行了，这一节主要是记录一下借着这趟出差的名义去游览了哪些地方🤳。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;_config.yml 文件&lt;/li&gt;
+  &lt;li&gt;_posts 目录&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;第一站是去了 &lt;a style=&quot;color:#a510eb;text-decoration:none&quot;&gt;鸟巢&lt;/a&gt; 和&lt;a style=&quot;color:#a510eb;text-decoration:none&quot;&gt;水立方&lt;/a&gt; ，之前很多次经过，但是都没有走近去看看，颇感遗憾，所以这次吃完晚饭后，散着步来到了鸟巢和水立方这边，来感受了一下这些曾经无比辉煌的建筑，当晚上的灯光亮起的时候，又是另外一幅景象，很漂亮，可算是完成了打卡。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_config.yml&lt;/code&gt; 文件里面的内容设置成你自己的，也可以用你原来的，最好是更新版的字段做一下对比。&lt;/p&gt;
 
-&lt;p&gt;第二站是和同事去了&lt;a style=&quot;color:#a510eb;text-decoration:none&quot;&gt;天安门&lt;/a&gt; 🏫和&lt;a style=&quot;color:#a510eb;text-decoration:none&quot;&gt;南锣鼓巷&lt;/a&gt;，这是我第二次到天安门了，上一次过来还是两年之前了，不禁感叹，时间如流水。这次过来正好赶上了国旗的降旗仪式，体验了一下在国家层面上的仪式感，所以说不管是国家还是个人都需要一些仪式感😋来给我们的生活添加一些闪光的点，以至于看上去平淡无奇的生活里不再那么平常。&lt;/p&gt;
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; 目录里面的文章全部删掉，把你自己的文章放进来&lt;/p&gt;
 
-&lt;p&gt;去南锣古巷的时候大多数商铺已经关门了，，这是我们没有料到的事情，疫情期间，帝都还是管理的比较严的，我们好不容易混进了商业区，只能在零星的几家还未打烊的店铺里觅食，出了古巷，一个字：还是饿🍕，于是打车回到了酒店旁边整了一顿羊蝎子吃，呜呼快哉~&lt;/p&gt;
-
-&lt;p&gt;第三站是去了&lt;a style=&quot;color:#a510eb;text-decoration:none&quot;&gt;潘家园&lt;/a&gt;🚕，古物爱好者的聚集地，我们也是过来寻找一下当年胡八一他们在潘家园的那种感觉。查验身份，入院，满眼望去，各种陶瓷佛珠，琳琅满目，像极了批发市场，也相当的商业化了，心中难免有些落差。园子不是很大，从东看到西，按照种类划分区域，各个摊位前，草草数眼，离去，走马观花的看了一圈，便告便了潘家园。&lt;/p&gt;
-
-&lt;p&gt;北京游记🚩：&lt;a href=&quot;https://travelkang.fun/ &quot; target=&quot;_blank&quot;&gt; https://travelkang.fun/ &lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;others&quot;&gt;Others&lt;/h3&gt;
-
-&lt;p&gt;至于其他，健身打鼓🎶，我认为与我个人来讲，已成常态，不出意外，一直会持续下去的。对了，国庆节争取带爸妈回趟四川老家，他们多年也没有回去了，是该回去看看了，有些事有些人一旦错过，便永久就错过了。&lt;/p&gt;
-
-&lt;p&gt;完结。&lt;/p&gt;
-
-&lt;p&gt;写于2020年6月6日，深圳&lt;/p&gt;
-
-&lt;hr /&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;佛即道，道法自然，如来。&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;修改以上两个地方新版的博客便更新完成，快看看效果吧！&lt;/p&gt;
 
 </description>
-        <pubDate>Sat, 06 Jun 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/2066.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2066.html</guid>
+        <pubDate>Fri, 10 Jul 2020 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/20710.html</link>
+        <guid isPermaLink="true">http://localhost:4000/20710.html</guid>
         
-        <category>总结</category>
+        <category>jekyll</category>
         
         
       </item>
     
       <item>
-        <title>复盘丨Monthly summary-4月</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/2051.html&quot;&gt;原文地址：https://robotkang.cc/2051.html &lt;/a&gt;
-&lt;/h6&gt;
+        <title>文档支持的Markdown语法</title>
+        <description>&lt;h2 id=&quot;什么是-markdown&quot;&gt;什么是 Markdown&lt;/h2&gt;
 
-&lt;p&gt;2020 年的 4 月份已经离我们远去，在期盼五一假期的心态里迎来了五天乐，照例，回顾一下我在过去这一个月里所思所悟，所感所想 🤳&lt;/p&gt;
+&lt;p&gt;Markdown 是一种方便记忆、书写的纯文本标记语言，用户可以使用这些标记符号以最小的输入代价生成极富表现力的文档：如您正在阅读的这篇文章。它使用简单的符号标记不同的标题，分割不同的段落，&lt;strong&gt;粗体&lt;/strong&gt; 或者 &lt;em&gt;斜体&lt;/em&gt; 某些文字.&lt;/p&gt;
 
-&lt;h3 id=&quot;打鼓&quot;&gt;打鼓&lt;/h3&gt;
+&lt;p&gt;很多产品的文档也是用markdown编写的，并且以“README.MD”的文件名保存在软件的目录下面。
+　　&lt;/p&gt;
+&lt;h2 id=&quot;一些基本语法&quot;&gt;一些基本语法&lt;/h2&gt;
 
-&lt;p&gt;我觉得这个月我很有必要把打鼓得情况记录一下了，感觉这个月我的打鼓水平在稳步提升，虽然从去年10月份开始学习，我就一直练习单跳，一直在练习基于单跳的各种节奏，一直在跟着节拍器练习。&lt;/p&gt;
+&lt;p&gt;标题          &lt;br /&gt;
+H1 :# Header 1          &lt;br /&gt;
+H2 :## Header 2         &lt;br /&gt;
+H3 :### Header 3         &lt;br /&gt;
+H4 :#### Header 4         &lt;br /&gt;
+H5 :##### Header 5          &lt;br /&gt;
+H6 :###### Header 6    &lt;br /&gt;
+链接 :&lt;a href=&quot;URL&quot;&gt;Title&lt;/a&gt;      &lt;br /&gt;
+加粗 :&lt;strong&gt;Bold&lt;/strong&gt;      &lt;br /&gt;
+斜体字 :&lt;em&gt;Italics&lt;/em&gt;       &lt;br /&gt;
+*删除线 :&lt;del&gt;text&lt;/del&gt;        &lt;br /&gt;
+内嵌代码 : &lt;code class=&quot;highlighter-rouge&quot;&gt;alert('Hello World');&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;练习的时候真的是相当无聊、相当枯燥😥，自己在密闭的鼓房里，一练就是几个小时，一度还在想老师为什么还不教我双跳、复合跳等等，后面通过调节自己的心态和老师的交流，慢慢的理解了，架子鼓就得一步一步来，急不得，在稳定、准确的前提下才去追求速度，后面组乐队的话，鼓🥁是一个乐队的节奏核心，必须要稳。&lt;/p&gt;
+&lt;h3 id=&quot;列表&quot;&gt;列表&lt;/h3&gt;
 
-&lt;p&gt;所以说，学鼓之路道阻且长，直到把一个人磨得差不多了，也就可以出师了~，一个字：练！&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;列表1&lt;/li&gt;
+  &lt;li&gt;列表2&lt;/li&gt;
+  &lt;li&gt;列表3&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;台上一分钟，台下十年功，把动次打次打的好听也是一种能力😋&lt;/p&gt;
+&lt;h3 id=&quot;列表引用&quot;&gt;列表引用&lt;/h3&gt;
 
-&lt;p&gt;我的打鼓每日记录：&lt;a href=&quot;https://www.yuque.com/docs/share/dc5785f6-bf2c-4187-86be-d83618fd77b7?#&quot; target=&quot;_blank&quot;&gt;练鼓一时爽，一直练鼓一直爽&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;学习做饭&quot;&gt;学习做饭🍝&lt;/h3&gt;
-
-&lt;p&gt;我之前一直不急着去学习做饭，对做饭也不太感兴趣，觉得到了一定的时候自然就会去学习做饭了。不过，这个月由于室友的同学每天都会做饭，耳濡目染，觉得自己做饭也挺好的，便宜又健康，加上我这段时间也在减肥，下班后做点饭也挺有生活气息的，吃完自己做的饭后成就感满满~&lt;/p&gt;
-
-&lt;p&gt;所以说有句话说的很棒：美食😋是不可辜负的，尤其还是自己做的&lt;/p&gt;
-
-&lt;p&gt;目前已完成：排骨莲藕汤、紫菜鸡蛋汤、炒空心菜、面食类🍜、蛋炒饭、生菜鸡蛋火腿三明治、还有就是煎鸡蛋的水准越来越高了，哈哈哈😄
-最近半个多月晚上都没有在外面吃了，&lt;/p&gt;
-
-&lt;h3 id=&quot;健身锻炼&quot;&gt;健身锻炼&lt;/h3&gt;
-
-&lt;p&gt;对于锻炼这件事我之前一直是有这个心的，但是比较佛系，三天打鱼两天晒网，没有坚持下来，所以效果也就不太明显。&lt;/p&gt;
-
-&lt;p&gt;出现转折的地方是我们在一次聚餐中和 &lt;a style=&quot;color:#a510eb;text-decoration:none&quot;&gt;@雅琦🐯&lt;/a&gt; 的一次约定🉑，约定我们每天或隔天跳绳锻炼，为了守护这个约定，我就开始每天的锻炼之路，也有了一个坚持下去的动力，现在主要是跳绳，加一些跑步拉伸，防止第二天肌肉痛。&lt;/p&gt;
-
-&lt;p&gt;到现在差不多是一个月时间了，效果也比较明显🔅，之前的小肚子几乎没有了，体重体脂也在正常下降，整个人看上去也比较精神了，皮肤也有所改善，痘痘也不怎么出现了，总之每天锻炼一下，出出汗很棒&lt;/p&gt;
-
-&lt;p&gt;在此，再次感谢 &lt;a style=&quot;color:#a510eb;text-decoration:none&quot;&gt;@雅琦🐯&lt;/a&gt; ，虽然她有可能看不到这篇文章，哈哈哈~，在后面的日子里，我相信我会继续坚持下去的，奥力给💪&lt;/p&gt;
-
-&lt;p&gt;我的每日锻炼记录：&lt;a href=&quot;https://www.yuque.com/docs/share/62c23bdd-bfd1-4839-9b13-e58beabe9d86?#&quot; target=&quot;_blank&quot;&gt;健康工作 50 年+&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;好了，以上就是我这个月主要记录的一些事情，病毒疫情还没有过去，虽然国内好点了，但是国外越来越严重了，崎岖艰难的 2020，每个人都在艰难的活着~&lt;/p&gt;
-
-&lt;p&gt;望疫情早点过去🙏，一切如故，如之前般美好🎉&lt;/p&gt;
-
-&lt;hr /&gt;
 &lt;blockquote&gt;
-  &lt;p&gt;即使以后不再同路，但能够与你并肩走一段实属有幸，一定要好好生活着，在我看不到的地方也是。&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;列表1&lt;/li&gt;
+    &lt;li&gt;列表2&lt;/li&gt;
+    &lt;li&gt;列表3&lt;/li&gt;
+  &lt;/ul&gt;
 &lt;/blockquote&gt;
 
+&lt;h3 id=&quot;插入一张图片&quot;&gt;插入一张图片&lt;/h3&gt;
+
+&lt;p&gt;打赏一个吧&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/payimg/weipayimg.jpg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;css 的大部分语法同样可以在 markdown 上使用，但不同的渲染器渲染出来的 markdown 内容样式也不一样，下面这些链接里面有 markdown 基本语法，你也可以在下面几个平台上尝试着写一些。&lt;/p&gt;
+
+&lt;h2 id=&quot;博客支持的高级语法&quot;&gt;博客支持的高级语法&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-制作一份待办事宜&quot;&gt;1. 制作一份待办事宜&lt;/h3&gt;
+
+&lt;ul class=&quot;task-list&quot;&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;支持以 PDF 格式导出文稿&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; /&gt;改进 Cmd 渲染算法，使用局部渲染技术提高渲染效率&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;新增 Todo 列表功能&lt;/li&gt;
+  &lt;li class=&quot;task-list-item&quot;&gt;&lt;input type=&quot;checkbox&quot; class=&quot;task-list-item-checkbox&quot; disabled=&quot;disabled&quot; checked=&quot;checked&quot; /&gt;修复 图标功能&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;2-高亮一段代码&quot;&gt;2. 高亮一段代码&lt;/h3&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requires_authorization&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SomeClass&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;# A comment
+&lt;/span&gt;    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'hello world'&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;3-绘制表格&quot;&gt;3. 绘制表格&lt;/h4&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;项目&lt;/th&gt;
+      &lt;th style=&quot;text-align: right&quot;&gt;价格&lt;/th&gt;
+      &lt;th style=&quot;text-align: center&quot;&gt;数量&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;计算机&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;$1600&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;5&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;手机&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;$12&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;12&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;管线&lt;/td&gt;
+      &lt;td style=&quot;text-align: right&quot;&gt;$1&lt;/td&gt;
+      &lt;td style=&quot;text-align: center&quot;&gt;234&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
 </description>
-        <pubDate>Fri, 01 May 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/2051.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2051.html</guid>
+        <pubDate>Sun, 20 Nov 2016 00:00:00 -0600</pubDate>
+        <link>http://localhost:4000/161120.html</link>
+        <guid isPermaLink="true">http://localhost:4000/161120.html</guid>
         
-        <category>总结</category>
+        <category>markdown</category>
         
         
       </item>
     
       <item>
-        <title>产品的四个要素</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文来源于：我也忘记了，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/20424.html&quot;&gt;原文地址：https://robotkang.cc/20424.html &lt;/a&gt;
-&lt;/h6&gt;
+        <title>Jekyll搭建个人博客</title>
+        <description>&lt;p&gt;　之前写了一篇&lt;a href=&quot;http://leopardpan.cn/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/&quot;&gt;HEXO搭建个人博客&lt;/a&gt;的教程获得了很好评，尤其是在&lt;a href=&quot;http://www.jianshu.com/p/465830080ea9&quot;&gt;简书&lt;/a&gt;上目前已经累积了10W+的阅读量了，也有好心的读者主动给我打赏，在此感谢。&lt;/p&gt;
 
-&lt;p&gt;PS：觉得讲的很好，故放在网站上分享之。🎊&lt;/p&gt;
+&lt;p&gt;　如果你看过我的文章会发现我现在的博客样式跟之前是有很大的区别的，之前我也是使用 HEXO 搭建的博客，后来发现使用 HEXO 在多台电脑上发布博客，操作起来并不是那么方便，果断就转到了 Jekyll 上，接下来我会讲如何使用 Jekyll 搭建博客，&lt;a href=&quot;http://leopardpan.cn/#blog&quot;&gt;博客模板效果&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;之前说的，我在公司内部分享了一个产品经理的培训，兑现诺言，今天给大家分享下。&lt;/p&gt;
+&lt;h3 id=&quot;介绍&quot;&gt;介绍&lt;/h3&gt;
 
-&lt;p&gt;我看星球里很多人都对产品感兴趣，或者我之前说过产品的重要性后，很多人表示认同，哪怕以后你不做产品经理，但是具备点产品能力，也会让你的思维方式产生很大变化，今天就算是一个简单的产品科普吧。&lt;/p&gt;
+&lt;p&gt;　Jekyll 是一个简单的博客形态的静态站点生产机器。它有一个模版目录，其中包含原始文本格式的文档，通过 Markdown （或者 Textile） 以及 Liquid 转化成一个完整的可发布的静态网站，你可以发布在任何你喜爱的服务器上。Jekyll 也可以运行在 GitHub Page 上，也就是说，你可以使用 GitHub 的服务来搭建你的项目页面、博客或者网站，而且是完全免费的&lt;/p&gt;
 
-&lt;p&gt;我们都说产品，那如何做好一个产品呢？产品有四个要素，大家要牢记，就是，&lt;strong&gt;&lt;a href=&quot;http://t.cn/AiOeQ4zO&quot; target=&quot;_blank&quot; style=&quot;color:#a510eb;text-decoration:none&quot;&gt;用户&lt;/a&gt;&lt;/strong&gt; 、&lt;strong&gt;&lt;a href=&quot;http://t.cn/AiOeQ4zO&quot; target=&quot;_blank&quot; style=&quot;color:#a510eb;text-decoration:none&quot;&gt;需求&lt;/a&gt;&lt;/strong&gt; 、&lt;strong&gt;&lt;a href=&quot;http://t.cn/AiOeQ4zO&quot; target=&quot;_blank&quot; style=&quot;color:#a510eb;text-decoration:none&quot;&gt;场景&lt;/a&gt;&lt;/strong&gt; 、&lt;strong&gt;&lt;a href=&quot;http://t.cn/AiOeQ4zO&quot; target=&quot;_blank&quot; style=&quot;color:#a510eb;text-decoration:none&quot;&gt;解决方案&lt;/a&gt;&lt;/strong&gt; 。&lt;/p&gt;
+&lt;p&gt;　使用 Jekyll 搭建博客之前要确认下本机环境，Git 环境（用于部署到远端）、&lt;a href=&quot;http://www.ruby-lang.org/en/downloads/&quot;&gt;Ruby&lt;/a&gt; 环境（Jekyll 是基于 Ruby 开发的）、包管理器 &lt;a href=&quot;http://rubygems.org/pages/download&quot;&gt;RubyGems&lt;/a&gt;              &lt;br /&gt;
+　　如果你是 Mac 用户，你就需要安装 Xcode 和 Command-Line Tools了。下载方式 Preferences → Downloads → Components。&lt;/p&gt;
 
-&lt;h3 id=&quot;用户&quot;&gt;用户&lt;/h3&gt;
+&lt;p&gt;　　Jekyll 是一个免费的简单静态网页生成工具，可以配合第三方服务例如： Disqus（评论）、多说(评论) 以及分享 等等扩展功能，Jekyll 可以直接部署在 Github（国外） 或 Coding（国内） 上，可以绑定自己的域名。&lt;a href=&quot;http://jekyll.bootcss.com/&quot;&gt;Jekyll中文文档&lt;/a&gt;、&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll英文文档&lt;/a&gt;、&lt;a href=&quot;http://jekyllthemes.org/&quot;&gt;Jekyll主题列表&lt;/a&gt;。&lt;/p&gt;
 
-&lt;p&gt;我之前给大家说过，产品跟技术最大的区别就是，产品是用户驱动，在要做一个产品之前，你要先想好你产品面向的用户是什么，是年轻人，还是老人，是男性还是女性，是大学生还是上班族，是商家还是消费者。&lt;/p&gt;
+&lt;h3 id=&quot;jekyll-环境配置&quot;&gt;Jekyll 环境配置&lt;/h3&gt;
 
-&lt;p&gt;可以看到，用户的划分有多种多样的维度，如果要把用户划分的维度罗列下来，怕是几百种都有，但是有一条，产品策划在选择用户的时候，往往会有两个方向。 一是解决大部分用户的小问题，二是解决小部分人的大问题。&lt;/p&gt;
+&lt;p&gt;安装 jekyll&lt;/p&gt;
 
-&lt;p&gt;这种用户的选择非常有学问，往往，在一个时代的早期红利时期，务必要选择第一种，就是针对大部分人群的小问题，这样你的想象空间与发展方向才够大。而在红利期没有的时候，在市场一片红海的时候，这个时候新的产品要选择第二种，针对单一领域的小众用户，解决这一小部分人的大问题，会是一个不错的思路。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gem install jekyll     
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;需求&quot;&gt;需求&lt;/h3&gt;
+&lt;p&gt;创建博客&lt;/p&gt;
 
-&lt;p&gt;做产品的，都知道要发掘需求，只要需求确定了，你的产品才有价值。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ jekyll new myBlog    
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;但是有人纳闷了，需求怎么来？往深了讲，其实需求是跟人性相关，多少年来，衣食住行是人类最原始、最恒定的需求，不管社会如何发展，不管时代如何进步，衣食住行永远是刚需。可以看到，衣食住行往往都是巨头必争之地，比如，微信、支付宝、淘宝、美团、京东、滴滴等等，基本都涉及衣食住行，只不过，随着人们的生活水平提高了，衣食无忧之后，开始注重精神上的愉悦，比如各种视频网站、游戏啊之类的。&lt;/p&gt;
+&lt;p&gt;进入博客目录&lt;/p&gt;
 
-&lt;p&gt;所谓刚需，就是不管你什么人，你什么层次，离了它你生活不了，衣食住行就是这类，不过同样也是竞争最激烈的地方。 说到人性，什么是人性呢？贪、嗔、痴、爱美、攀比、贪小便宜、虚荣、炫耀等等都属于人性。这些人性最深处的东西，如果你能把握住，你的产品就很难被离开。比如各种美颜、自拍，比如各种诈骗，其实都是利用人性的种种弱点，从需求的角度来讲，他们都对人性把握的很精准。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ cd myBlog  
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;但需求又分痛点和爽点，痛点往往就是所谓的刚需，比如天气类 app，人们都要看天气，那么天气类 app 算是解决了一个痛点吧，都是没有说我用一个天气 app 用的爽的，但是刷抖音、看视频就是满足了你的爽点，我们经常看到一大堆人刷抖音刷的停不下来，我们暂且不说抖音的价值观，我们只是从产品层面来分析，抖音很厉害，它就满足了需求的一个爽点。&lt;/p&gt;
+&lt;p&gt;启动本地服务&lt;/p&gt;
 
-&lt;p&gt;所以，如果你的产品只是满足了需求的一个痛点，它就已经很有价值了，但是也就只是让人们离不开你，但是在用的时候会打开，不用的时候不会想起你，一些工具类 app 就是代表，但是如果你的产品满足了需求的爽点，那价值就大的多了，人们会一直用你，一直黏着你，而这类产品往往商业价值巨大，代表的比如 Youtube、Netflix、抖音等，理论上来说 Facebook、微信这里社交 app 也是满足了社交的爽点。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ jekyll serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;场景&quot;&gt;场景&lt;/h3&gt;
+&lt;p&gt;在浏览器里输入： &lt;a href=&quot;http://localhost:4000&quot;&gt;http://localhost:4000&lt;/a&gt;，就可以看到你的博客效果了。&lt;/p&gt;
 
-&lt;p&gt;其实互联网发展到现在这个时代，场景异常重要，现在的创新的产品几乎都是在场景上作了文章，而且场景，会伴随着每个时代，都有其独特的创新之处，啥是场景呢？&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/posts/jekyll/image1.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;举个例子：以前打车你是在线下路边等，碰到出租车开过，然后招手的，但是滴滴把线下这种场景映射到了线上，在移动互联网时代用 App 来解决，这就是场景的创新。&lt;/p&gt;
+&lt;p&gt;so easy !&lt;/p&gt;
 
-&lt;p&gt;而场景的创新，其实不计其数，比如以前的现金支付，支付宝和微信就是把这种支付场景改变了，在手机时代，直接就火了，甚至改变了人民的生活。移动时代，可以说吃喝玩乐、衣食住行，几乎每个领域都从以往的 PC 时代与线下时代，映射到了手机上，而每个领域基本都有巨头。&lt;/p&gt;
+&lt;h3 id=&quot;目录结构&quot;&gt;目录结构&lt;/h3&gt;
+&lt;p&gt;　
+　Jekyll 的核心其实是一个文本转换引擎。它的概念其实就是： 你用你最喜欢的标记语言来写文章，可以是 Markdown，也可以是 Textile,或者就是简单的 HTML, 然后 Jekyll 就会帮你套入一个或一系列的布局中。在整个过程中你可以设置URL路径, 你的文本在布局中的显示样式等等。这些都可以通过纯文本编辑来实现，最终生成的静态页面就是你的成品了。&lt;/p&gt;
 
-&lt;p&gt;在一个全新的时代的初期，把之前的场景，带入新时代的场景，就是一种巨大的创新。不过在移动互联网后期，很多领域基本都被占有了，但不代表没有新的机会，发掘新的使用场景，其实往往是产品创新的地方。&lt;/p&gt;
+&lt;p&gt;一个基本的 Jekyll 网站的目录结构一般是像这样的：&lt;/p&gt;
 
-&lt;p&gt;比如这两年火爆的拼多多，不说就是以往使用淘宝购买便宜货的场景，带到了微信上，因为微信的普及，一大批人是刚接触互联网，这批人同样有购买便宜货的需求，拼多多在需求上并没有什么创新，不过是场景发生了变化而已，而单单是这种使用的场景变化，让拼多多短期内发展这么迅速，足见场景创新上的威力。&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;.
+├── _config.yml
+├── _includes
+|   ├── footer.html
+|   └── header.html
+├── _layouts
+|   ├── default.html
+|   ├── post.html
+|   └── page.html
+├── _posts
+|   └── 2016-10-08-welcome-to-jekyll.markdown
+├── _sass
+|   ├── _base.scss
+|   ├── _layout.scss
+|   └── _syntax-highlighting.scss
+├── about.md
+├── css
+|   └── main.scss
+├── feed.xml
+└── index.html
 
-&lt;h3 id=&quot;解决方案&quot;&gt;解决方案&lt;/h3&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;解决方案也就是你的产品了，当你发现了一个新的未被满足的需求，或者发觉了一个新的场景，接下来就是解决方案了，而解决方案上其实没啥好说的，但是有一点，就是要心态开放，拥抱新事物，跟上趋势。在移动互联网初期，其实有很多需求以及场景未被满足，但是有一大批人，有好的解决方案的时候，没有跟上时代，还是用原来 PC 的那套，最后错失机会，这样的案例数不胜数。&lt;/p&gt;
+&lt;p&gt;这些目录结构以及具体的作用可以参考 &lt;a href=&quot;http://jekyll.com.cn/docs/structure/&quot;&gt;官网文档&lt;/a&gt;&lt;/p&gt;
 
-&lt;p&gt;所以，解决方案，也就是你的产品，一定要紧跟趋势，就像移动互联网时代，你创业还只做网站，而小程序时代你创业还优先做 App，那你解决方案再好，也容易错失很大的机会。&lt;/p&gt;
+&lt;p&gt;进入 _config.yml 里面，修改成你想看到的信息，重新 jekyll server ，刷新浏览器就可以看到你刚刚修改的信息了。&lt;/p&gt;
 
-&lt;p&gt;综上，用户、需求、场景、解决方案是做产品必备的四要素，也是最核心、最重要的四要素，当然，做产品没有那么简单，掌握了四要素，不代表你就能做出好的产品，因为发掘一个未被满足的需求，发现一个新的使用场景都异常困难，即便这四要素都具备了，也依然不代表你的产品会成功，因为还会涉及到运营、商业模式、竞争策略、营销推广等等，往大了说，这就是一家公司要面对的了，后面有机会给大家慢慢普及。&lt;/p&gt;
+&lt;p&gt;到此，博客初步搭建算是完成了，&lt;/p&gt;
 
-&lt;p&gt;但是这四要素是最基础的东西，每个做产品的，或者想要做产品的人都要了解并且熟记于心，这算是做产品最基本的方法论吧，这次给大家科普下，不妨用这四要素，来观察、来思考你平时遇到的任何事情，没准会带来一些思维上的进步。&lt;/p&gt;
+&lt;h3 id=&quot;博客部署到远端&quot;&gt;博客部署到远端&lt;/h3&gt;
 
-&lt;hr /&gt;
+&lt;p&gt;　我这里讲的是部署到 Github Page 创建一个 github 账号，然后创建一个跟你账户名一样的仓库，如我的 github 账户名叫 &lt;a href=&quot;https://github.com/leopardpan&quot;&gt;leopardpan&lt;/a&gt;，我的 github 仓库名就叫 &lt;a href=&quot;https://github.com/leopardpan/leopardpan.github.io&quot;&gt;leopardpan.github.io&lt;/a&gt;，创建好了之后，把刚才建立的 myBlog 项目 push 到 username.github.io仓库里去（username指的是你的github用户名），检查你远端仓库已经跟你本地 myBlog 同步了，然后你在浏览器里输入 username.github.io ，就可以访问你的博客了。&lt;/p&gt;
+
+&lt;h3 id=&quot;编写文章&quot;&gt;编写文章&lt;/h3&gt;
+
+&lt;p&gt;　　所有的文章都是 _posts 目录下面，文章格式为 mardown 格式，文章文件名可以是 .mardown 或者 .md。&lt;/p&gt;
+
+&lt;p&gt;　　编写一篇新文章很简单，你可以直接从 _posts/ 目录下复制一份出来 &lt;code class=&quot;highlighter-rouge&quot;&gt;2016-10-16-welcome-to-jekyll副本.markdown&lt;/code&gt; ，修改名字为 2016-10-16-article1.markdown ，注意：文章名的格式前面必须为 2016-10-16- ，日期可以修改，但必须为 年-月-日- 格式，后面的 article1 是整个文章的连接 URL，如果文章名为中文，那么文章的连接URL就会变成这样的：http://leopardpan.cn/2015/08/%E6%90%AD%E5/ ， 所以建议文章名最好是英文的或者阿拉伯数字。 双击 2016-10-16-article1.markdown 打开&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+---
+layout: post
+title:  &quot;Welcome to Jekyll!&quot;
+date:   2016-10-16 11:29:08 +0800
+categories: jekyll update
+---
+
+正文...
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;title: 显示的文章名， 如：title: 我的第一篇文章                  &lt;br /&gt;
+date:  显示的文章发布日期，如：date: 2016-10-16                        &lt;br /&gt;
+categories: tag标签的分类，如：categories: 随笔&lt;/p&gt;
+
+&lt;p&gt;注意：文章头部格式必须为上面的，…. 就是文章的正文内容。&lt;/p&gt;
+
+&lt;p&gt;我写文章使用的是 Sublime Text2 编辑器，如果你对 markdown 语法不熟悉的话，可以看看&lt;a href=&quot;https://www.zybuluo.com/&quot;&gt;作业部落的教程&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;使用我的博客模板&quot;&gt;使用我的博客模板&lt;/h3&gt;
+
+&lt;p&gt;虽然博客部署完成了，你会发现博客太简单不是你想要的，如果你喜欢我的模板的话，可以使用我的模板。&lt;/p&gt;
+
+&lt;p&gt;首先你要获取的我博客，&lt;a href=&quot;https://github.com/leopardpan/leopardpan.github.io.git&quot;&gt;Github项目地址&lt;/a&gt;，你可以直接&lt;a href=&quot;https://github.com/leopardpan/leopardpan.github.io/archive/master.zip&quot;&gt;点击下载博客&lt;/a&gt;，进去leopardpan.github.io/ 目录下， 使用命令部署本地服务&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ jekyll server   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;如果你本机没配置过任何jekyll的环境可能会报错&quot;&gt;如果你本机没配置过任何jekyll的环境，可能会报错&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;/Users/xxxxxxxx/.rvm/rubies/ruby-2.2.2/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- bundler (LoadError)
+	from /Users/xxxxxxxx/.rvm/rubies/ruby-2.2.2/lib/ruby/site_ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/gems/jekyll-3.3.0/lib/jekyll/plugin_manager.rb:34:in `require_from_bundler'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/gems/jekyll-3.3.0/exe/jekyll:9:in `&amp;lt;top (required)&amp;gt;'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/bin/jekyll:23:in `load'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/bin/jekyll:23:in `&amp;lt;main&amp;gt;'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/bin/ruby_executable_hooks:15:in `eval'
+	from /Users/xxxxxxxx/.rvm/gems/ruby-2.2.2/bin/ruby_executable_hooks:15:in `&amp;lt;main&amp;gt;'
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;原因： 没有安装 bundler ，执行安装 bundler 命令&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+$ gem install bundler
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;提示：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Fetching: bundler-1.13.5.gem (100%)
+Successfully installed bundler-1.13.5
+Parsing documentation for bundler-1.13.5
+Installing ri documentation for bundler-1.13.5
+Done installing documentation for bundler after 5 seconds
+1 gem installed
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;再次执行 $ jekyll server  ，提示&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+Could not find proper version of jekyll (3.1.1) in any of the sources
+Run `bundle install` to install missing gems.
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;跟着提示运行命令&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ bundle install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这个时候你可能会发现 bundle install 运行卡主不动了。&lt;/p&gt;
+
+&lt;p&gt;如果很长时间都没任何提示的话，你可以尝试修改 gem 的 source&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ gem sources --remove https://rubygems.org/
+$ gem sources -a http://ruby.taobao.org/
+$ gem sources -l
+*** CURRENT SOURCES ***
+
+http://ruby.taobao.org
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;再次执行命令 $ bundle install，发现开始有动静了&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Fetching gem metadata from https://rubygems.org/...........
+Fetching version metadata from https://rubygems.org/..
+Fetching dependency metadata from https://rubygems.org/.
+。。。
+Installing jekyll-watch 1.3.1
+Installing jekyll 3.1.1
+Bundle complete! 3 Gemfile dependencies, 17 gems now installed.
+Use `bundle show [gemname]` to see where a bundled gem is installed.
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;bundler安装完成，后再次启动本地服务&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ jekyll server
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;继续报错&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Configuration file: /Users/tendcloud-Caroline/Desktop/leopardpan.github.io/_config.yml
+  Dependency Error: Yikes! It looks like you don't have jekyll-sitemap or one of its dependencies installed. In order to use Jekyll as currently configured, you'll need to install this gem. The full error message from Ruby is: 'cannot load such file -- jekyll-sitemap' If you run into trouble, you can find helpful resources at http://jekyllrb.com/help/! 
+jekyll 3.1.1 | Error:  jekyll-sitemap
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;表示 当前的 jekyll 版本是 3.1.1 ，无法使用 jekyll-sitemap&lt;/p&gt;
+
+&lt;p&gt;解决方法有两个&lt;/p&gt;
+
 &lt;blockquote&gt;
-  &lt;p&gt;大道至简，简单点。&lt;/p&gt;
+  &lt;p&gt;1、打开当前目录下的 _config.yml 文件，把 gems: [jekyll-paginate,jekyll-sitemap] 换成 gems: [jekyll-paginate] ，也就是去掉jekyll-sitemap。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;2、升级 jekyll 版本，我当前的是 jekyll 3.1.2 。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;修改完成后保存配置，再次执行&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ jekyll server
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;提示&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Configuration file: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github/_config.yml
+            Source: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github
+       Destination: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github/_site
+ Incremental build: disabled. Enable with --incremental
+      Generating... 
+                    done in 0.901 seconds.
+ Auto-regeneration: enabled for '/Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github'
+Configuration file: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpan.github.io-github/_config.yml
+    Server address: http://127.0.0.1:4000/
+  Server running... press ctrl-c to stop.
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;表示本地服务部署成功。&lt;/p&gt;
+
+&lt;p&gt;在浏览器输入 &lt;a href=&quot;127.0.0.1:4000&quot;&gt;127.0.0.1:4000&lt;/a&gt; ， 就可以看到&lt;a href=&quot;http://leopardpan.cn&quot;&gt;leopardpan.cn&lt;/a&gt;博客效果了。&lt;/p&gt;
+
+&lt;h3 id=&quot;修改成你自己的博客&quot;&gt;修改成你自己的博客&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;ul&gt;
+    &lt;li&gt;如果你想使用我的模板请把 _posts/ 目录下的文章都去掉。&lt;/li&gt;
+    &lt;li&gt;修改 _config.yml 文件里面的内容为你自己的。&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;然后使用 git push 到你自己的仓库里面去，检查你远端仓库，在浏览器输入 username.github.io 就会发现，你有一个漂亮的主题模板了。&lt;/p&gt;
+
+&lt;h3 id=&quot;为什么要是用-jekyll&quot;&gt;为什么要是用 Jekyll&lt;/h3&gt;
+
+&lt;p&gt;使用了 Jekyll 你会发现如果你想使用多台电脑发博客都很方便，只要把远端 github 仓库里的博客 clone 下来，写文章后再提交就可以了，Hexo 由于远端提交的是静态网页，所有无法直接写 Markdown 的文章。如果你想看 Hexo 搭建博客，可以看看我的另一篇&lt;a href=&quot;http://leopardpan.cn/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/&quot;&gt;HEXO搭建个人博客&lt;/a&gt;的教程。&lt;/p&gt;
+
+&lt;p&gt;如果你在搭建博客遇到问题，可以在&lt;a href=&quot;http://leopardpan.cn/2016/10/jekyll_tutorials1/&quot;&gt;原文博客&lt;/a&gt;的评论里给我提问。&lt;/p&gt;
+
+&lt;p&gt;后面会继续介绍，在我的博客基础上，如何修改成你自己喜欢的 Style，欢迎继续关注我博客的更新。&lt;/p&gt;
+
+&lt;h3 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;问题：最近很多朋友使用我的模板报警告：The CNAME &lt;code class=&quot;highlighter-rouge&quot;&gt;leopardpan.cn&lt;/code&gt; is already taken 
+解决：把CNAME里面的baixin.io修改成你自己的域名，如果你暂时没有域名，CNAME里面就什么都不用谢。（之前没人反馈过这个问题，应该是github page最近才最的限制。）&lt;/p&gt;
 &lt;/blockquote&gt;
 
 </description>
-        <pubDate>Fri, 24 Apr 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/20424.html</link>
-        <guid isPermaLink="true">http://localhost:4000/20424.html</guid>
+        <pubDate>Fri, 14 Oct 2016 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/161014.html</link>
+        <guid isPermaLink="true">http://localhost:4000/161014.html</guid>
         
-        <category>工作</category>
+        <category>jekyll</category>
         
         
       </item>
     
       <item>
-        <title>复盘丨Monthly summary-1季度</title>
-        <description>&lt;h6&gt;&lt;img src=&quot;https://robotkang-1257995526.cos.ap-chengdu.myqcloud.com/icon/copyright.png&quot; alt=&quot;copyright&quot; style=&quot;display:inline;margin-bottom: -5px;&quot; width=&quot;20&quot; height=&quot;20&quot; /&gt; 版权声明：本文为博主原创文章，未经博主允许不得转载。
-&lt;a target=&quot;_blank&quot; href=&quot;https://robotkang.cc/2046.html&quot;&gt;原文地址：https://robotkang.cc/2046.html &lt;/a&gt;
-&lt;/h6&gt;
+        <title>HEXO进阶</title>
+        <description>&lt;p&gt;HEXO接近是最近有一些朋友提出的问题，然后我做了总结，如果你也在使用HEXO，不妨看看，应该会有些帮助。&lt;/p&gt;
 
-&lt;p&gt;由于2020年开年的这三个月对于个人、国家乃至世界都是一段黑暗的时光😔，再加上我本人的拖延症，原本的月度总结妥妥的变成了季度总结🤭，那么现在就用这些文字来记录一下这过去的三个月吧。&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;1、博客部署样式出问题了怎么办？&lt;/li&gt;
+  &lt;li&gt;2、电脑重装或者误删了本地博客怎么办？&lt;/li&gt;
+  &lt;li&gt;3、想使用两台电脑写博客怎么办？&lt;/li&gt;
+  &lt;li&gt;4、为何使用百度搜不到我的博客？&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;在我的印象中，2020 年✨还是停留在书本中的一个年份，是我们全面奔小康的年份，对个人来讲，感觉还很遥远。但是现在，摆在我眼前的是真真切切的 2020年了，午夜钟声敲响的那一刻⏲，我们迎来了21世纪的第二个十年，憧憬着，未来会更好🎊，即使再坏，也坏不了那里去，可是……&lt;/p&gt;
+&lt;h3 id=&quot;使用jekyll解决前三个问题&quot;&gt;使用Jekyll解决前三个问题。&lt;/h3&gt;
+&lt;p&gt;不得不说 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 确实可以解决我上面三个问题, 因为 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 是直接把Markdown格式的文章直接放在github仓库里的, 相当于直接用git来管理博客了, &lt;code class=&quot;highlighter-rouge&quot;&gt;Github&lt;/code&gt; 官方也很推荐 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 。 你可以先看下 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 搭建博客的&lt;a href=&quot;voyagelab.github.io&quot;&gt;voyagelab&lt;/a&gt;, &lt;a href=&quot;https://github.com/voyagelab/voyagelab.github.io&quot;&gt;github地址&lt;/a&gt;, 当然了这只是很普通的, Jekyll 也有很多主题可以选择的, 更详细的请看&lt;a href=&quot;http://jekyll.bootcss.com/&quot;&gt;Jekyll中文文档&lt;/a&gt;、&lt;a href=&quot;https://jekyllrb.com/&quot;&gt;Jekyll英文文档&lt;/a&gt;、&lt;a href=&quot;http://jekyllthemes.org/&quot;&gt;Jekyll主题列表&lt;/a&gt;。
+在 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 上逛了一个星期的我又回到了 &lt;code class=&quot;highlighter-rouge&quot;&gt;Hexo&lt;/code&gt; , 发现 目前 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 对主题和一些插件的支持相对 &lt;code class=&quot;highlighter-rouge&quot;&gt;Hexo&lt;/code&gt; 来说, 没那么友好, 可能有一些其它的方法只是我没找到而已,关于 &lt;code class=&quot;highlighter-rouge&quot;&gt;Jekyll&lt;/code&gt; 搭建博客就介绍到这, 如果有问题的话可以评论, 或者联系我。&lt;/p&gt;
 
-&lt;h3 id=&quot;我所感受到的世界&quot;&gt;我所感受到的世界&lt;/h3&gt;
+&lt;h3 id=&quot;使用hexo解决上面前三个问题&quot;&gt;使用Hexo解决上面前三个问题&lt;/h3&gt;
+&lt;p&gt;是的, 我大&lt;code class=&quot;highlighter-rouge&quot;&gt;Hexo&lt;/code&gt;同样可以解决上面三个问题, 那就是使用git。关于如何使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Hexo&lt;/code&gt; 搭建博客请看我另一篇文章&lt;a href=&quot;http://www.leopardpan.cn/2015/08/25/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/&quot;&gt;HEXO搭建个人博客&lt;/a&gt;, 如果搭建的过程中出现了问题, 我们可以交流交流。现在我假设你已经能基本使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Hexo&lt;/code&gt; 了, 接下来就看看如何来管理博客。&lt;/p&gt;
 
-&lt;p&gt;1 月初的元旦假期回了趟四川老家，脱离了城市，度过了几天岁月静好的日子🍕，回来后又像往常一样，投入了日常的工作当中，在闲暇时间，在&lt;strong&gt;&lt;a href=&quot;http://t.cn/AiOeQ4zO&quot; target=&quot;_blank&quot; style=&quot;color:#a510eb;text-decoration:none&quot;&gt;Twitter&lt;/a&gt;&lt;/strong&gt; 上断断续续的刷到了关于武汉发现感染性病毒的小道消息，记得当时还和湖北的同事开玩笑的说武汉又发现非典了，也没太当真，说说就过去了。&lt;/p&gt;
+&lt;h2 id=&quot;使用git管理博客&quot;&gt;使用git管理博客&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/leopardpan/Blog-Growing&quot;&gt;Blog-Growing&lt;/a&gt;是我管理博客的仓库地址。结构大致是:&lt;/p&gt;
 
-&lt;p&gt;再隔几天就要放春节假期了，那段时间大家都没有很高的热情去工作了，都在盼望着春节假期，回去和家人团聚，到处都洋溢着过年的氛围，一切看起来再平常不过了，人们也在按往年一样，准备着、忙碌着~&lt;/p&gt;
-
-&lt;p&gt;可是就在千里之外的湖北武汉，一场从未有过的病毒灾害正在慢慢的走近人们的视野，当地的官员以为是再平常不过的传染病了，没有重视，没有公之于众，武汉大地上照旧喜气洋洋，歌舞升平。&lt;/p&gt;
-
-&lt;p&gt;大年前夕，生病的人越来越多，疫情集中爆发，才引起当局重视，可是为时已晚，疫情冲垮了当地的医疗机构，也冲乱了人们的生活，突然间感觉到病毒无处不在，人人自危，空气中弥漫着恐怖的气氛😫，一座千万人口的城市由于封城变成了一座空城。&lt;/p&gt;
-
-&lt;p&gt;🎢霎那间，全国各地封城断路，交通停运，商贸暂停，神州大地上仿佛按下了暂停键一样。&lt;/p&gt;
-
-&lt;p&gt;以上是我所看到的、经历的真真切切的事情，2003年非典疫情的场景还时常漂浮在我们眼前，谁曾想到，17年之后，我们会经历一场更为严重的、影响到世界的传染病。&lt;/p&gt;
-
-&lt;p&gt;直到今日，疫情还没有结束，也不知道何时才能结束，只能希望生者做好防护💪，对自己也对他人负责；逝者安息，不过转念一想，这样被病毒感染而亡的那些人们真的是死不瞑目吧，太无辜也太不值得了，😭哎~，可悲、可叹、可恨！&lt;/p&gt;
-
-&lt;p&gt;在此，我也很感谢那些保护我们的人，感谢医务工作者👨‍⚕️，感谢相关的默默无闻的人，正因为有你们这些逆行者，我们才能安好，我才能在这里敲下这段文字，感恩、感激、感谢！&lt;/p&gt;
-
-&lt;h3 id=&quot;年假--寒假&quot;&gt;年假 → 寒假&lt;/h3&gt;
-
-&lt;p&gt;突如其来的疫情打破了世界上所有人的生活节奏，本来我十几天的春节假期由于疫情延长到了两个月，这是我高考后第二长的假期了吧，对于我来说，这无疑是一件好事，在相对安全的环境里，可以在家和爸妈待这么长的时间，可以说很棒了~😊&lt;/p&gt;
-
-&lt;p&gt;家里没有网络，信号也不好🚞，玩不了游戏，看不了视频，虽然很不方便，但是在我心里还是很享受这种与世隔绝的日子的，看看书，爬爬山，虽感无聊，但也充实。&lt;/p&gt;
-
-&lt;h3 id=&quot;others&quot;&gt;Others&lt;/h3&gt;
-
-&lt;p&gt;前段时间，国内的疫情控制住了🙅‍♀️，在人们以为疫情要结束了的时候，国外却爆发了，时至今日，全球感染人数已经突破了 120 万人，哎，阔怕~&lt;/p&gt;
-
-&lt;p&gt;关于生活和工作上的一些其他事情就不写了，也懒得写了，             &lt;br /&gt;
-现在我的目标就是：         &lt;br /&gt;
-&lt;strong&gt;&lt;a style=&quot;color:#59b950;text-decoration:none&quot;&gt;活着~&lt;/a&gt;&lt;/strong&gt;       &lt;br /&gt;
-健康的活着，为我爱的人及爱我的人🎈&lt;/p&gt;
-
-&lt;p&gt;对了，最近在看 &lt;strong&gt;石国鹏&lt;/strong&gt; 老师👨‍🏫的历史网课，现在被禁了，有条件的童鞋可以去 &lt;strong&gt;&lt;a href=&quot;http://t.cn/AiOeQ4zO&quot; target=&quot;_blank&quot; style=&quot;color:#a510eb;text-decoration:none&quot;&gt;Youtube&lt;/a&gt;&lt;/strong&gt; 上面看看，可以开智。&lt;/p&gt;
-
-&lt;p&gt;写于2020年4月6日 18:55 ，深圳，雨&lt;/p&gt;
-
-&lt;hr /&gt;
 &lt;blockquote&gt;
-  &lt;p&gt;葛优和巩俐演的《活着》值得一看。&lt;/p&gt;
+  &lt;p&gt;– Blog-Growing   &lt;br /&gt;
+　　|– .git   &lt;br /&gt;
+　　|– .gitignore  &lt;br /&gt;
+　　|– Hexo   &lt;br /&gt;
+　　　　|   ..  &lt;br /&gt;
+　　　　|   ..  &lt;br /&gt;
+　　　　|   整个博客的配置信息&lt;/p&gt;
 &lt;/blockquote&gt;
 
+&lt;p&gt;你可以把我的的&lt;a href=&quot;https://github.com/leopardpan/Blog-Growing&quot;&gt;Blog-Growing&lt;/a&gt; clone下来, 看看一些基本配置是怎么配置的。需要提醒的是, &lt;code class=&quot;highlighter-rouge&quot;&gt;要把主题下的.git给删除掉&lt;/code&gt; , 当然了你也可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;git submodule&lt;/code&gt; 来管理, 具体的管理方法我这里就不做多的介绍了, 想了解的话可以私信我。
+上面的过程基本做完后, 怎么来解决我开篇提的前三个问题了。&lt;/p&gt;
+
+&lt;h3 id=&quot;具体实现&quot;&gt;具体实现:&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;一：家里电脑使用博客&lt;/strong&gt;      &lt;br /&gt;
+　　建立git远端仓库管理博客,并使用家里的电脑把本地博客的配置推送到远端仓库。 &lt;br /&gt;
+&lt;strong&gt;二：公司电脑使用博客&lt;/strong&gt;       &lt;br /&gt;
+　　到了公司只需要执行&lt;code class=&quot;highlighter-rouge&quot;&gt;sudo npm install -g hexo&lt;/code&gt;,然后cd到你的博客目录下,如我cd 到Hexo目录下, 然后执行 &lt;code class=&quot;highlighter-rouge&quot;&gt;hexo server&lt;/code&gt; 就可以在本地预览博客了。  &lt;br /&gt;
+&lt;strong&gt;三：使用Git保存&lt;/strong&gt;        &lt;br /&gt;
+　　修改好博客后记得先使用git来提交下, 即使下次把博客的样式修改坏了, 也可以使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;git reset --hard&lt;/code&gt; 来回退。如: 我cd 到 &lt;code class=&quot;highlighter-rouge&quot;&gt;Blog-Growing&lt;/code&gt; 目录下使用git提交。 &lt;br /&gt;
+&lt;strong&gt;四：博客提交&lt;/strong&gt;         &lt;br /&gt;
+　　1、修改好的博客使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;hexo d&lt;/code&gt; 展示到博客页上。 &lt;br /&gt;
+　　2、git push 整个本地博客。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;提示:&lt;/strong&gt; 在这里 &lt;code class=&quot;highlighter-rouge&quot;&gt;git&lt;/code&gt; 仅仅只是用户做博客的版本管理的, 博客的样式修改、基本部署还是使用 &lt;code class=&quot;highlighter-rouge&quot;&gt;hexo&lt;/code&gt; 来操作的。&lt;/p&gt;
+
+&lt;h2 id=&quot;让百度能搜索到你的博客&quot;&gt;让百度能搜索到你的博客&lt;/h2&gt;
+
+&lt;h3 id=&quot;为什么要使用百度搜索&quot;&gt;为什么要使用百度搜索？&lt;/h3&gt;
+
+&lt;p&gt;　　有人可能会说作为一个开发人员, 你不会用 &lt;code class=&quot;highlighter-rouge&quot;&gt;Google&lt;/code&gt; 啊。 是的, Google是能搜到我们搭建在 &lt;code class=&quot;highlighter-rouge&quot;&gt;Github Page&lt;/code&gt; 的博客, 会用&lt;code class=&quot;highlighter-rouge&quot;&gt;Google&lt;/code&gt; 也是一个开发人员必备技能之一。但是, 我们生活在天朝, 所以百度还是总有会用到的时候, 或者是你想让更多的天朝人能搜到你。&lt;/p&gt;
+
+&lt;h3 id=&quot;为什么使用百度搜索不到-github-page-上的博客&quot;&gt;为什么使用百度搜索不到 Github Page 上的博客？&lt;/h3&gt;
+
+&lt;p&gt;有人联系过 Github Support 部门 , 给出大致的意思就是: 百度爬虫爬得太猛烈，已经对很多 Github 用户造成了问题。所以 Github 将禁止百度爬虫的爬取。&lt;/p&gt;
+
+&lt;h3 id=&quot;如何让百度能搜索你的博客&quot;&gt;如何让百度能搜索你的博客?&lt;/h3&gt;
+
+&lt;p&gt;　　根据上面说的, 目前发现只是Github Page禁止了百度搜索, 所以让百度能搜索到你的博客还是有一些方法的。例如:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;自己搞个VPS,博客部署在VPS上。&lt;/li&gt;
+  &lt;li&gt;博客部署 &lt;code class=&quot;highlighter-rouge&quot;&gt;Coding.net&lt;/code&gt; 上, &lt;code class=&quot;highlighter-rouge&quot;&gt;GitCafe&lt;/code&gt;已经合并到 &lt;code class=&quot;highlighter-rouge&quot;&gt;Coding&lt;/code&gt; 。
+我使用的是第二种方法, 博客部署在 &lt;code class=&quot;highlighter-rouge&quot;&gt;Coding.net&lt;/code&gt; 上也相对简单些。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;在coding上部署你的博客&quot;&gt;在Coding上部署你的博客。&lt;/h4&gt;
+
+&lt;p&gt;　　Coding同样支持Hexo、Jekyll等博客的部署, Coding 跟Github还是挺像的,而且是中文。 同样的在Coding里面建一个项目,项目名字跟你的用户名一样,这里我就不啰嗦了, 说几个需要注意的地方:   &lt;br /&gt;
+&lt;strong&gt;注意一:&lt;/strong&gt;     &lt;br /&gt;
+　　在&lt;code class=&quot;highlighter-rouge&quot;&gt;Coding Page&lt;/code&gt; 上部署博客,需要把博客推送到&lt;code class=&quot;highlighter-rouge&quot;&gt;coding-pages &lt;/code&gt; 分支上, 分支名字是固定的。  &lt;br /&gt;
+&lt;strong&gt;注意二:&lt;/strong&gt;   &lt;br /&gt;
+　　&lt;code class=&quot;highlighter-rouge&quot;&gt;Coding Page&lt;/code&gt; 不支持自定义CNAME, 你需要点击到Page模块,然后添加一个域名来绑定。&lt;/p&gt;
+
+&lt;p&gt;更详细的请看&lt;a href=&quot;https://coding.net/help/doc/pages/index.html&quot;&gt;Coding Pages 官网介绍&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;参考文章:
+&lt;a href=&quot;http://jerryzou.com/posts/feasibility-of-allowing-baiduSpider-for-Github-Pages/&quot;&gt;解决 Github Pages 禁止百度爬虫的方法与可行性分析&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br /&gt;&lt;/p&gt;
+
+&lt;p&gt;转载请注明：&lt;a href=&quot;https://leopardpan.cn&quot;&gt;潘柏信的博客&lt;/a&gt; » &lt;a href=&quot;http://leopardpan.cn/2016/06/HEXO_Advanced/&quot;&gt;点击阅读原文&lt;/a&gt;&lt;/p&gt;
 </description>
-        <pubDate>Mon, 06 Apr 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/2046.html</link>
-        <guid isPermaLink="true">http://localhost:4000/2046.html</guid>
+        <pubDate>Sun, 12 Jun 2016 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/16612.html</link>
+        <guid isPermaLink="true">http://localhost:4000/16612.html</guid>
         
-        <category>总结</category>
+        <category>hexo</category>
+        
+        
+      </item>
+    
+      <item>
+        <title>HEXO搭建个人博客</title>
+        <description>&lt;p&gt;　　经过各种找资料，踩过各种坑，终于使用 hexo 搭建个人博客初步完成了，域名目前用得时 github 的，我的 hexo 是 3.1.1 版本，hexo 不同的版本，很多配置都不一样。好吧，废话不多说了，开始吧。&lt;/p&gt;
+
+&lt;p&gt;　　本篇文章累计了大量评论，和我的一些解答，读者有什么问题可以先看看评论，或者搜下关键字，如果还是有问题可以给我在评论里给我留言，问题很着急的可以加我 ＱＱ：1499065178　，或者给我发邮件：&lt;a href=&quot;mailto:leopardpan@icloud.com&quot;&gt;leopardpan@icloud.com&lt;/a&gt;  ，都可以，如果你已经搭建完成了，可以看看我的另一篇博客&lt;a href=&quot;https://leopardpan.cn/2016/06/HEXO_Advanced/&quot;&gt;HEXO进阶&lt;/a&gt;，有讲如何能百度搜索你的博客、多台电脑使用HEXO发布博客等。我现在的博客是使用 Jekyll 搭建的，如果你想使用我现在的模板请看&lt;a href=&quot;https://leopardpan.cn/2016/10/jekyll_tutorials1/&quot;&gt;Jekyll搭建个人博客&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;背景&quot;&gt;背景&lt;/h2&gt;
+
+&lt;p&gt;　这篇教程是针对与Mac的，&lt;a href=&quot;http://ibruce.info/2013/11/22/hexo-your-blog/?utm_source=tuicool&quot;&gt;参考链接&lt;/a&gt;，由于原文讲到的hexo是以前的老版本，所以现在的版本配置的时候会有些改动。&lt;/p&gt;
+
+&lt;p&gt;　之前是想着写博客，一方面是给自己做笔记，可以提升自己的写作、总结能力，一个技术点我们会使用，并不难，但是要做到让让别人也能听懂我们讲得，还是需要一定的技巧和经验的。很多类似于CSDN、博客园也都可以写文章，但是页面的样式我，不是太喜欢，简书还算好点得。最近看到一些大神们的博客（在我的友情链接里有），貌似都是用hexo写得，我也依葫芦画瓢的搭建了一个。不罗嗦了，直接上搭建步骤。&lt;/p&gt;
+
+&lt;h2 id=&quot;配置环境&quot;&gt;配置环境&lt;/h2&gt;
+
+&lt;h3 id=&quot;安装node必须&quot;&gt;安装Node（必须）&lt;/h3&gt;
+
+&lt;p&gt;作用：用来生成静态页面的
+到Node.js&lt;a href=&quot;https://nodejs.org/&quot;&gt;官网&lt;/a&gt;下载相应平台的最新版本，一路安装即可。&lt;/p&gt;
+
+&lt;h3 id=&quot;安装git必须&quot;&gt;安装Git（必须）&lt;/h3&gt;
+&lt;p&gt;作用：把本地的hexo内容提交到github上去.
+安装Xcode就自带有Git，我就不多说了。&lt;/p&gt;
+
+&lt;h3 id=&quot;申请github必须&quot;&gt;申请GitHub（必须）&lt;/h3&gt;
+&lt;p&gt;作用：是用来做博客的远程创库、域名、服务器之类的，怎么与本地hexo建立连接等下讲。
+&lt;a href=&quot;https://github.com/&quot;&gt;github&lt;/a&gt;账号我也不再啰嗦了,没有的话直接申请就行了，跟一般的注册账号差不多，SSH Keys，看你自己了，可以不配制，不配置的话以后每次对自己的博客有改动提交的时候就要手动输入账号密码，配置了就不需要了，怎么配置我就不多说了，网上有很多教程。&lt;/p&gt;
+
+&lt;h3 id=&quot;正式安装hexo&quot;&gt;正式安装HEXO　&lt;/h3&gt;
+&lt;p&gt;Node和Git都安装好后，可执行如下命令安装hexo：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ sudo npm install -g hexo
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;初始化&quot;&gt;初始化&lt;/h3&gt;
+&lt;p&gt;创建一个文件夹，如：Blog，cd到Blog里执行hexo init的。命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo init
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;好啦，至此，全部安装工作已经完成！&lt;/p&gt;
+
+&lt;h3 id=&quot;生成静态页面&quot;&gt;生成静态页面&lt;/h3&gt;
+&lt;p&gt;继续再Blog目录下执行如下命令，生成静态页面&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo generate （hexo g  也可以）   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;本地启动&quot;&gt;本地启动&lt;/h3&gt;
+&lt;p&gt;启动本地服务，进行文章预览调试，命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo server   
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;浏览器输入&lt;a href=&quot;就可以看到最原始的效果了&quot;&gt;http://localhost:4000&lt;/a&gt;
+我不知道你们能不能，反正我不能，因为我还有环境没配置好&lt;/p&gt;
+
+&lt;h3 id=&quot;常见的hexo配置错误&quot;&gt;常见的HEXO配置错误：&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;ERROR Plugin load failed: hexo-server
+
+原因： Besides, utilities are separated into a standalone module. hexo.util is not reachable anymore.
+
+解决方法，执行命令：$ sudo npm install hexo-server
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;执行命令hexo server，提示：Usage: hexo&amp;lt;Command&amp;gt; ....
+
+原因：我认为是没有生成本地服务
+
+解决方法，执行命令：$ npm install hexo-server --save
+
+提示：hexo-server@0.1.2 node_modules/hexo-server
+.... 
+
+表示成功了[参考](https://hexo.io/zh-cn/docs/server.html)
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这个时候再执行：$ hexo-server&lt;/p&gt;
+
+&lt;p&gt;得到: INFO  Hexo is running at http://0.0.0.0:4000/. Press Ctrl+C to stop.&lt;/p&gt;
+
+&lt;p&gt;这个时候再点击&lt;a href=&quot;http://0.0.0.0:4000&quot;&gt;http://0.0.0.0:4000&lt;/a&gt;，正常情况下应该是最原始的画面，但是我看到的是：
+白板和Cannot GET /   几个字
+原因： 由于2.6以后就更新了，我们需要手动配置些东西，我们需要输入下面三行命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install hexo-renderer-ejs --save
+npm install hexo-renderer-stylus --save
+npm install hexo-renderer-marked --save
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这个时候再重新生成静态文件，命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo generate （或hexo g）
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;启动本地服务器：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo server （或hexo s）
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;再点击网址&lt;a href=&quot;http://0.0.0.0:4000&quot;&gt;http://0.0.0.0:4000&lt;/a&gt; OK终于可以看到属于你自己的blog啦，?，虽然很简陋，但好歹有了一个属于自己的小窝了。&lt;a href=&quot;https://disqus.com/home/discussion/bsspirit/hexogithubweb/&quot;&gt;参考链接&lt;/a&gt;，本地已经简单的设置好了，但是现在域名和服务器都是基于自己的电脑，接下来需要跟github进行关联。&lt;/p&gt;
+
+&lt;h2 id=&quot;配置github&quot;&gt;配置Github&lt;/h2&gt;
+
+&lt;h3 id=&quot;建立repository&quot;&gt;建立Repository&lt;/h3&gt;
+
+&lt;p&gt;建立与你用户名对应的仓库，仓库名必须为【your_user_name.github.io】，固定写法
+然后建立关联，我的Blog在本地/Users/leopard/Blog，Blog是我之前建的东西也全在这里面，有：&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Blog      &lt;br /&gt;
+　｜      &lt;br /&gt;
+　｜－－ _config.yml     &lt;br /&gt;
+　｜－－ node_modules    &lt;br /&gt;
+　｜－－ public              &lt;br /&gt;
+　｜－－ source                                                &lt;br /&gt;
+　｜－－ db.json	        &lt;br /&gt;
+　｜－－ package.json        &lt;br /&gt;
+　｜－－ scaffolds        &lt;br /&gt;
+　｜－－ themes          　　　　　
+　　　&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;现在我们需要_config.yml文件，来建立关联，命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;vim _config.yml
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;翻到最下面，改成我这样子的，注意： &lt;code class=&quot;highlighter-rouge&quot;&gt;: 后面要有空格&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;deploy:
+  type: git
+  repository: https://github.com/leopardpan/leopardpan.github.io.git
+  branch: master
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;执行如下命令才能使用git部署&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;npm install hexo-deployer-git --save
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;网上会有很多说法，有的type是github, 还有repository 最后面的后缀也不一样，是github.com.git，我也踩了很多坑，我现在的版本是hexo: 3.1.1，执行命令hexo -vsersion就出来了,貌似3.0后全部改成我上面这种格式了。
+忘了说了，我没用SSH Keys如果你用了SSH Keys的话直接在github里复制SSH的就行了，总共就两种协议，相信你懂的。
+然后，执行配置命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;　然后再浏览器中输入&lt;a href=&quot;http://leopardpan.github.io/&quot;&gt;http://leopardpan.github.io/&lt;/a&gt;就行了，我的 github 的账户叫 leopardpan ,把这个改成你 github 的账户名就行了&lt;/p&gt;
+
+&lt;h3 id=&quot;部署步骤&quot;&gt;部署步骤&lt;/h3&gt;
+
+&lt;p&gt;每次部署的步骤，可按以下三步来进行。&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo clean
+hexo generate
+hexo deploy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;一些常用命令：&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;hexo new &quot;postName&quot; #新建文章
+hexo new page &quot;pageName&quot; #新建页面
+hexo generate #生成静态页面至public目录
+hexo server #开启预览访问端口（默认端口4000，'ctrl + c'关闭server）
+hexo deploy #将.deploy目录部署到GitHub
+hexo help  #查看帮助
+hexo version  #查看Hexo的版本
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;这里有大量的&lt;a href=&quot;https://github.com/hexojs/hexo/wiki/Themes&quot;&gt;主题列表&lt;/a&gt;使用方法里面
+都有详细的介绍，我就不多说了。    &lt;br /&gt;
+我这里有几款个人认为不错的主题，免去你们，一个一个的选了，欢迎吐槽我的审美，?       &lt;br /&gt;
+　&lt;a href=&quot;https://github.com/daisygao/hexo-themes-cover&quot;&gt;Cover&lt;/a&gt; - A chic theme with facebook-like cover photo    &lt;br /&gt;
+　&lt;a href=&quot;https://github.com/henryhuang/oishi&quot;&gt;Oishi&lt;/a&gt; - A white theme based on Landscape plus and Writing.    &lt;br /&gt;
+　&lt;a href=&quot;https://github.com/hardywu/hexo-theme-sidebar&quot;&gt;Sidebar&lt;/a&gt; - Another theme based on Light with a simple sidebar  &lt;br /&gt;
+　&lt;a href=&quot;https://github.com/SuperKieran/TKL&quot;&gt;TKL&lt;/a&gt; - A responsive design theme for Hexo. 一个设计优雅的响应式主题  &lt;br /&gt;
+　&lt;a href=&quot;https://github.com/levonlin/Tinnypp&quot;&gt;Tinnypp&lt;/a&gt; - A clean, simple theme based on Tinny   &lt;br /&gt;
+　&lt;a href=&quot;https://github.com/yunlzheng/hexo-themes-writing&quot;&gt;Writing&lt;/a&gt; - A small and simple hexo theme based on Light   &lt;br /&gt;
+　&lt;a href=&quot;https://github.com/litten/hexo-theme-yilia&quot;&gt;Yilia&lt;/a&gt; - Responsive and simple style 优雅简洁响应式主题，我用得就是这个。  &lt;br /&gt;
+　&lt;a href=&quot;https://github.com/Voidly/pacman&quot;&gt;Pacman voidy&lt;/a&gt; - A theme with dynamic tagcloud and dynamic snow&lt;/p&gt;
+
+&lt;h2 id=&quot;博客目录介绍&quot;&gt;博客目录介绍&lt;/h2&gt;
+&lt;p&gt;　文章在 source/_posts，编辑器可以用 Sublime，支持 markdown 语法。如果想修改头像可以直接在主题的 _config.yml 文件里面修改，友情链接，之类的都在这里，修改名字在 public/index.html 里修改，开始打理你的博客吧，有什么问题或者建议，都可以提出来，我会继续完善的。&lt;/p&gt;
+
+&lt;p&gt;Markdown语法参考链接: &lt;a href=&quot;https://www.zybuluo.com/mdeditor&quot;&gt;作业部落&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;qa&quot;&gt;Q&amp;amp;A&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;问：如何让文章想只显示一部分和一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;阅读全文&lt;/code&gt; 的按钮？     &lt;br /&gt;
+答：在文章中加一个 &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;!--more--&amp;gt;&lt;/code&gt; ， &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;!--more--&amp;gt;&lt;/code&gt; 后面的内容就不会显示出来了。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;问：本地部署成功了，也能预览效果，但使用 username.github.io 访问，&lt;code class=&quot;highlighter-rouge&quot;&gt;出现 404 &lt;/code&gt; .    &lt;br /&gt;
+答：首先确认 hexo d 命令执行是否报错，如果没有报错，再查看一下你的 github 的 username.github.io 仓库，你的博客是否已经成功提交了，你的 github 邮箱也要通过验证才行。&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt; &lt;/p&gt;
+
+&lt;p&gt;转载请注明原地址，潘柏信的博客：&lt;a href=&quot;http://leopardpan.github.io&quot;&gt;http://leopardpan.github.io&lt;/a&gt; 谢谢！&lt;/p&gt;
+</description>
+        <pubDate>Tue, 25 Aug 2015 00:00:00 -0500</pubDate>
+        <link>http://localhost:4000/15825.html</link>
+        <guid isPermaLink="true">http://localhost:4000/15825.html</guid>
+        
+        <category>hexo</category>
         
         
       </item>
