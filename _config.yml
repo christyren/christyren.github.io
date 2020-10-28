@@ -6,18 +6,7 @@ description: 科技、生活、音乐、人生
 avatarTitle: RobotKang
 # 头像里面的描述
 avatarDesc: 机器人赛事
-<<<<<<< HEAD
 url: "https://robotkang.cc"
-=======
-# url: "christyren.github.io"
-
-# theme: minima
-# remote_theme: benbalter/retlab
-
-# collections:
-#   authors:
-#     output: true
->>>>>>> dbc5cdd9f0f168c80df04d504fb2d96fa49edf2a
 
 # Comment
 comment:
