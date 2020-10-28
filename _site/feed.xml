@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Robotkang</title>
-    <description>科技、生活、音乐、人生</description>
+    <title>潘柏信</title>
+    <description>欢迎来到我的个人站~</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 28 Oct 2020 00:41:10 -0500</pubDate>
-    <lastBuildDate>Wed, 28 Oct 2020 00:41:10 -0500</lastBuildDate>
+    <pubDate>Wed, 28 Oct 2020 01:36:18 -0500</pubDate>
+    <lastBuildDate>Wed, 28 Oct 2020 01:36:18 -0500</lastBuildDate>
     <generator>Jekyll v3.8.5</generator>
     
       <item>
@@ -73,8 +73,8 @@
 
 </description>
         <pubDate>Sat, 11 Jul 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/20711.html</link>
-        <guid isPermaLink="true">http://localhost:4000/20711.html</guid>
+        <link>http://localhost:4000/2020/07/blog_info/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/07/blog_info/</guid>
         
         <category>jekyll</category>
         
@@ -125,8 +125,8 @@
 
 </description>
         <pubDate>Fri, 10 Jul 2020 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/20710.html</link>
-        <guid isPermaLink="true">http://localhost:4000/20710.html</guid>
+        <link>http://localhost:4000/2020/07/ReleaseNode/</link>
+        <guid isPermaLink="true">http://localhost:4000/2020/07/ReleaseNode/</guid>
         
         <category>jekyll</category>
         
@@ -237,8 +237,8 @@ H6 :###### Header 6    &lt;br /&gt;
 
 </description>
         <pubDate>Sun, 20 Nov 2016 00:00:00 -0600</pubDate>
-        <link>http://localhost:4000/161120.html</link>
-        <guid isPermaLink="true">http://localhost:4000/161120.html</guid>
+        <link>http://localhost:4000/2016/11/markdownTool/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/11/markdownTool/</guid>
         
         <category>markdown</category>
         
@@ -509,8 +509,8 @@ Configuration file: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpa
 
 </description>
         <pubDate>Fri, 14 Oct 2016 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/161014.html</link>
-        <guid isPermaLink="true">http://localhost:4000/161014.html</guid>
+        <link>http://localhost:4000/2016/10/jekyll_tutorials1/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/10/jekyll_tutorials1/</guid>
         
         <category>jekyll</category>
         
@@ -601,8 +601,8 @@ Configuration file: /Users/baixinpan/Desktop/OpenSource/Mine/Page-Blog/leopardpa
 &lt;p&gt;转载请注明：&lt;a href=&quot;https://leopardpan.cn&quot;&gt;潘柏信的博客&lt;/a&gt; » &lt;a href=&quot;http://leopardpan.cn/2016/06/HEXO_Advanced/&quot;&gt;点击阅读原文&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 12 Jun 2016 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/16612.html</link>
-        <guid isPermaLink="true">http://localhost:4000/16612.html</guid>
+        <link>http://localhost:4000/2016/06/HEXO_Advanced/</link>
+        <guid isPermaLink="true">http://localhost:4000/2016/06/HEXO_Advanced/</guid>
         
         <category>hexo</category>
         
@@ -817,8 +817,8 @@ hexo version  #查看Hexo的版本
 &lt;p&gt;转载请注明原地址，潘柏信的博客：&lt;a href=&quot;http://leopardpan.github.io&quot;&gt;http://leopardpan.github.io&lt;/a&gt; 谢谢！&lt;/p&gt;
 </description>
         <pubDate>Tue, 25 Aug 2015 00:00:00 -0500</pubDate>
-        <link>http://localhost:4000/15825.html</link>
-        <guid isPermaLink="true">http://localhost:4000/15825.html</guid>
+        <link>http://localhost:4000/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</link>
+        <guid isPermaLink="true">http://localhost:4000/2015/08/HEXO%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2/</guid>
         
         <category>hexo</category>
         
