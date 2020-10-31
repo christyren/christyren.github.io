@@ -1,11 +1,11 @@
 # Basic
-title: Christy Ren - 任梦圆
-subtitle: Personal Blog
+title: Christy Ren 
+subtitle: 任梦圆
 description: Welcome to My Personal Blog!
 # 头像里面的标题
 avatarTitle: Christy Ren
 # 头像里面的描述
-avatarDesc: Data / Analytics
+avatarDesc: Data & Analytics
 url: "christyren.github.io"
 
 # 博客是否自动生成目录，false为不生成
@@ -50,9 +50,17 @@ ga:
 # 《--------------- 下面的信息可以自行选择是否修改 ------------------------》
 
 
-permalink: /:year/:month/:title/
-# Format
+# permalink: /:year/:month/:title/
+# # Format
+permalink: /:short_year:i_month:i_day.html
+# 伪 postid 的方案,便于网站 SEO
+
 highlighter: rouge
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 
 textColor: #FF0000
 
