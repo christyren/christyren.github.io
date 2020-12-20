@@ -24,4 +24,4 @@ Email: christyren@wustl.edu
 
 
 
-Template Credit to [here &rarr;](https://portfolio-template.surge.sh)
+Template Credit to Syed Ali Hussnain [here &rarr;](https://portfolio-template.surge.sh)
