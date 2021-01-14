@@ -1,6 +1,6 @@
 # Christy's Portfolio 
 
-### A Passionate Data Analyst and Blogger✨.
+### A Passionate Data Analyst
 
 MS in Business Analytics at WashU | Python, R, SQL, Tableau | Actively Looking For Full-time Analytics Opportunities
 
